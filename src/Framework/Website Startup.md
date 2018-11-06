@@ -1,0 +1,153 @@
+﻿When using Cofoundry in an asp.net web application, Cofoundry needs to manage the application startup process so that it can make sure everything is registered in the correct order and allow plugins to self-register.
+
+Integrating Cofoundry into your site is easy, simply add the `.AddCofoundry()` and `.UseCofoundry()` extension methods to your startup.cs file.
+
+**Example Startup.cs**
+
+```csharp
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Cofoundry.Web;
+
+namespace MySite 
+{
+    public class Startup
+    {
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            // Register Cofoundry with the DI container. Must be run after AddMvc
+            services
+                .AddMvc()
+                .AddCofoundry(Configuration);
+        }
+
+        public void Configure(IApplicationBuilder app)
+        {
+            // You can register other middleware as normal
+            if (!env.IsDevelopment())
+            {
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+        
+            // Register Cofoundry into the pipeline. As part of this process it also initializes 
+            // the MVC middleware and runs additional startup tasks.
+            app.UseCofoundry();
+        }
+    } 
+}
+```
+
+## What happens at startup?
+
+### AddCofoundry()
+
+This method sets up the dependency resolver for Cofoundry, registering all internal components, modules and any auto-registered types such as command and query handlers. `AddCofoundry()` is called after `AddMvc()` which allows you to customize your MVC configuration independently.
+
+Once dependencies are registered, Cofoundry will look for classes that implement `IStartupServiceConfigurationTask` and execute them. Cofoundry itself only includes a single configuration task, but plugin developers can use this as an integration point.
+
+- **[CofoundryStartupServiceConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ServiceConfigurationTasks/CofoundryStartupServiceConfigurationTask.cs)** Sets up auth (user areas) and configures a number of MVC settings
+
+See the [Startup Tasks](Startup-Tasks) documentation for information on creating your own startup tasks.
+
+### UseCofoundry()
+
+This method registers Cofoundry into the application pipeline by running all registered `IStartupConfigurationTask` implementations in order. 
+
+Here is a list of tasks bundled in Cofoundry (note that plugins authors may inject their own startup tasks):
+
+- **[ErrorHandlingMiddlewareConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ErrorHandlingMiddlewareConfigurationTask.cs)** Configures the error pages returned by the application for both exceptions and error status codes such as 404s. This is done using the built-in the ASP.NET error handling and status code pages middleware. For more information see the docs for [Custom Error Pages](/content-management/custom-error-pages)
+- **[AuthStartupConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/AuthStartupConfigurationTask.cs)** Adds the asp.net auth middleware into the pipeline.
+- **[AutoUpdateMiddlewareStartupConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/AutoUpdateMiddlewareStartupConfigurationTask.cs)** Initializes the [Auto Update](Auto-Update) process.
+- **[JsonConverterStartupConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/JsonConverterStartupConfigurationTask.cs)** Configures the default JsonSerialization settings using `IJsonSerializerSettingsFactory`
+- **[StaticFileStartupConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/StaticFiles/StaticFileStartupConfigurationTask.cs)** Adds the asp.net static files middleware with a default configuration. You can customize this by overriding the [default](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/StaticFiles/DefaultStaticFileOptionsConfiguration.cs) `IStaticFileOptionsConfiguration` implementation using [DI](dependency-injection#overriding-registrations).
+- **[MessageAggregatorStartupConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/MessageAggregatorStartupConfigurationTask.cs)** Bootstraps the [Message Aggregator](Message-Aggregator), registering `IMessageSubscriptionRegistration` classes
+- **[MvcStartupConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/MvcStartupConfigurationTask.cs)** Adds the ASP.Net MVC middleware to the pipeline and sets up [Cofoundry routing](/content-management/routing).
+
+See the [Startup Tasks](Startup-Tasks) documentation for information on creating your own startup tasks.
+
+## Advanced
+
+### Customizing the Startup Process
+
+Many startup tasks include their own insertion points that allow you to include your own registrations e.g. `IRouteRegistration` for [registering MVC routes](/content-management/routing) or `IResourceFileProviderRegistration` for adding extra file providers to the view engine.
+
+Additionally each startup task tends to use an injectable initializer that can be overridden using the [Dependency Injection](dependency-injection) system such as `IJsonSerializerSettingsFactory` or `IStaticFileOptionsConfiguration`.
+
+As a last resort we also provide a configuration option that lets you filter the startup task collection in any way you choose:
+
+```csharp
+public class Startup
+{
+    // ..other startup code ommited
+    
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    {
+        app.UseCofoundry(c =>
+        {
+            c.StartupTaskFilter = MyStartupTaskFilter;
+        });
+    }
+
+    private IEnumerable<IStartupConfigurationTask> MyStartupTaskFilter(IEnumerable<IStartupConfigurationTask> startupTasks)
+    {
+        // e.g. maybe we wanted to remove the JsonConverter config task for some reason
+        return startupTasks.Where(t => !(t is JsonConverterStartupConfigurationTask));
+    }
+}
+```
+
+### AssemblyDiscoveryRules
+
+To support plugins and automatic dependency registration Cofoundry has to scan your applications assemblies at startup. To reduce the impact of scanning for types we only pick out assemblies we think will contain plugins and Cofoundry types. This selection process is based on discovery rules, with the [default rule set](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/AssemblyPartsDiscovery/Rules/CofoundryAssemblyDiscoveryRule.cs) picking up assemblies with a name that either:
+
+- **Starts with "Cofoundry",** e.g. "Cofoundry", "Cofoundry.Domain", "Cofoundry.Admin"
+- **Starts with your applications assembly name,** e.g. "MyApplication", "MyApplication.Domain", "MyApplication.Data"
+- **Includes the word "Plugin" after the start,** e.g. "Cofoundry.Plugin.SiteMap", "MyLib.Plugin.Helpers"
+
+If this ruleset is too restrictive, you can add or replace rules during application startup:
+
+**ExampleAssemblyDiscoveryRule.cs**
+
+```csharp
+using Microsoft.Extensions.DependencyModel;
+using Cofoundry.Web;
+
+public class ExampleAssemblyDiscoveryRule : IAssemblyDiscoveryRule
+{
+    public bool CanInclude(RuntimeLibrary libraryToCheck, IAssemblyDiscoveryRuleContext context)
+    {
+        return libraryToCheck.Name == "MyCompany.CofoundryHelpers";
+    }
+}
+
+```
+
+**Startup.cs**
+
+```csharp
+public class Startup
+{
+    // ..other startup code ommited
+    
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services
+            .AddMvc()
+            .AddCofoundry(Configuration, c =>
+            {
+                c.AssemblyDiscoveryRules.Add(new ExampleAssemblyDiscoveryRule());
+            });
+    }
+}
+

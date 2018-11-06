@@ -1,0 +1,18 @@
+[
+	"Website Startup",
+	"Data Access",
+	"Mail",
+	"Background Tasks",
+	"Dependency Injection",
+	"Startup Tasks",
+	"Auto Update",
+	"CQS",
+	"Roles & Permissions",
+	"Configuration Settings",
+	"Message Aggregator",
+	"Caching",
+	"Entity Framework & DbContext Tools",
+	"Html Sanitizer",
+	"Static Files",
+	"Paged Queries"
+]

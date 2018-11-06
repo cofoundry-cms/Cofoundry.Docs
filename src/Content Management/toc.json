@@ -1,0 +1,19 @@
+[
+	"Routing",
+	"Pages",
+	"Page Templates",
+	"Page Block Types",
+	"Cofoundry View Helper",
+	"Custom Entities",
+	"Custom Entity Pages",
+	"Images",
+	"Documents",
+	"Custom Error Pages",
+	"Locales & Localization",
+	"Data Model Annotations",
+	"User Areas",
+	"Rewrite Rules",
+	"Custom View Model Types",
+	"Entity Versioning",
+	"Disabling Features"
+]
