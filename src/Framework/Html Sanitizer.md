@@ -2,7 +2,7 @@
 
 To use this you can simply request `IHtmlSanitizer` from the DI container, or more commonly you might use the [Cofoundry View Helper](/content-management/cofoundry-view-helper) directly from a view:
 
-```
+```html
 @using Cofoundry.Domain
 
 @model MyTestViewModel
@@ -37,7 +37,7 @@ ruleSet.PermittedAttributes.Add("class");
 
 To use the ruleset you can pass it in as a parameter to the sanitize method:
 
-```
+```html
 var html = "<h1>My Heading</h1><script>alert('uh oh')</script>";
 _htmlSanitizer.Sanitize(html, ruleSet)
 

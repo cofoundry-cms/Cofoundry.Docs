@@ -231,7 +231,7 @@ To check user permissions in code you can use methods on `IPermissionValidationS
 
 The [Cofoundry View Helper](/content-management/cofoundry-view-helper) has a `Role` property e.g. `@Cofoundry.CurrentUser.Role`, which has helper methods like `HasPermission(IPermission permission)`.
 
-```
+```html
 @inject ICofoundryHelper Cofoundry
 
 @{

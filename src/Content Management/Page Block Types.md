@@ -25,6 +25,7 @@ You can take advantage of some additional block type functionality by injecting 
 In this simple example the data model has two text properties which use data annotations to help describe the data. Cofoundry uses this property data to automatically generate a data entry form so you don't have to.
 
 **MyContentDataModel.cs**
+
 ```csharp
 using Cofoundry.Domain;
 using System.ComponentModel.DataAnnotations;
@@ -46,7 +47,8 @@ public class MyContentDataModel : IPageBlockTypeDataModel, IPageBlockTypeDisplay
 ```
 
 **MyContent.cshtml**
-```
+
+```html
 @using Cofoundry.Web
 
 @model PageListDisplayModel
@@ -169,7 +171,7 @@ public class MyContentDisplayModelMapper : IPageBlockTypeDisplayModelMapper<MyCo
 
 **MyContent.cshtml**
 
-```
+```html
 @using Cofoundry.Domain
 @using Cofoundry.Web
 

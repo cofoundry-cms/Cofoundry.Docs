@@ -10,7 +10,7 @@ The admin panel has a whole section devoted to managing documents where users ca
 
 The [Cofoundry View Helper](Cofoundry-View-Helper) is the best way to access this:
 
-```
+```html
 @using Cofoundry.Web
 
 @model MyContentDisplayModel

@@ -17,7 +17,8 @@ create table dbo.MyTable (
 ```
 
 ## Columns
-```
+
+```sql
 alter table dbo.MyTable alter column Name nvarchar(200) null
 alter table dbo.MyTable drop column Name
 ```
@@ -105,7 +106,7 @@ exists (select * from sys.indexes
 
 ## Throw Error
 
-```
+```sql
 throw error_number, msg, state;
 ```
 State must be over 50000 (but does not need to be any particular value - its just for your reference). Always use 1 for the state, e.g.

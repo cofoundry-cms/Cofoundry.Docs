@@ -8,7 +8,7 @@ This behavior can be overridden using the `Cofoundry:Debug:DeveloperExceptionPag
 
 **Example appsettings.json**
 
-```
+```json
 {
   "Cofoundry": {
     "Debug": {

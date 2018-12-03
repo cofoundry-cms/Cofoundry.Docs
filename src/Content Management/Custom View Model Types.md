@@ -2,7 +2,7 @@
 
 - **IPageViewModel:** Used for most dynamic pages. The base type is `PageViewModel`.
 - **ICustomEntityPageViewModel<TDisplayModel>:** Generic view model type used for [custom entity pages](Custom-Entity-Pages). Base type is `CustomEntityPageViewModel<TDisplayModel>`.
-- - **IErrorPageViewModel:** A simple model used for error pages. 
+- **IErrorPageViewModel:** A simple model used for error pages. 
 - **INotFoundPageViewModel:** A simple model used for the 404 page. 
 
 To use a different model you will first need to create a class that implements one of the three view model interfaces or extend one the base classes.

@@ -16,7 +16,7 @@ If you're interested in plugins for other imaging libraries or other 3rd party s
 
 The [Cofoundry View Helper](Cofoundry-View-Helper) is the best way to access this:
 
-```
+```html
 @using Cofoundry.Web
 
 @model MyContentDisplayModel
