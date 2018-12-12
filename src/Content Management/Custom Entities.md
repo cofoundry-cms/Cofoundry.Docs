@@ -9,7 +9,7 @@
 - Special page types can be set up to dynamically generate a page-per-custom entity (e.g. a blog page). This allows custom entity data to be edited in the same visual way that you would edit the data regions in a page.
 - Lifecycle events are integrated with the `IMessageAggregator` framework so they can be subscribed to (e.g. Add/Update/Delete/Publish)
 - [Permission sets](/framework/roles-and-permissions) are automatically generated for each custom entity which you can manage through the *Roles* interface.
-- Automatic handling of relations between entities, i.e. when an entity has a required relationship with another entity, it will not be able to be deleted. This works as long as the relations are specified using [meta data attributes](/framework/data-model-annotations).
+- Automatic handling of relations between entities, i.e. when an entity has a required relationship with another entity, it will not be able to be deleted. This works as long as the relations are specified using [meta data attributes](/content-management/data-model-annotations).
 
 ### When not to use Custom Entities
 

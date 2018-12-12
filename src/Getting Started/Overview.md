@@ -39,7 +39,7 @@ To get a flavor for how Cofoundry works, we suggest you check out one of the [Sa
 
 #### Installing Cofoundry
 
-Cofoundry and Cofoundry Plugins are installed via [Nuget](https://www.nuget.org/packages?q=Cofoundry). Check out the [installation guide](installation) for more information on how to get up and running.
+Cofoundry and Cofoundry Plugins are installed via [Nuget](https://www.nuget.org/packages?q=Cofoundry). Check out the [installation guide](installing) for more information on how to get up and running.
 
 #### Community & Feedback
 
