@@ -1,7 +1,7 @@
 ﻿## Requirements
 
 - .NET Standard 2.0 or later (e.g. .Net Core 2.0 or .Net Framework 4.6.1)
-- For web projects ASP.NET 2.1 is required
+- For web projects ASP.NET Core 2.1 is required
 - SqlServer (Express) 2012 or later, or Azure SqlServer
 
 ## Creating a new project using the .NET CLI
