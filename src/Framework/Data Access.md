@@ -25,7 +25,7 @@ The one drawback of using a CQS framework is discoverability. To remedy this we'
 
 ## Entity Framework
 
-Cofoundry uses Entity Framework Code First as its ORM strategy. You are free to use other tools and methodologies for your data access but using EF will allow you to re-use some of the existing Cofoundry features.
+Cofoundry uses Entity Framework Core for data access and includes a few tools you may wish to use if you are also using EF Core for your own data.
 
 See the section on  [Entity Framework & DbContext Tools](Entity-Framework-&-DbContext-Tools) which details tools to help you:
 
@@ -35,7 +35,7 @@ See the section on  [Entity Framework & DbContext Tools](Entity-Framework-&-DbCo
 
 ## Database Migrations
 
-Cofoundry does not use EF Database Migrations and instead we use our own framework for managing database updates via sql scripts. This framework is also available to you as well as plugin developers.
+Cofoundry does not use EF Database Migrations and instead we use our own framework for managing database updates via SQL scripts. This framework is also available to you as well as plugin developers.
 
 For more information see the [Auto Update Documentation](Auto-Update)
 
