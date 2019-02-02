@@ -229,21 +229,34 @@ To check user permissions in code you can use methods on `IPermissionValidationS
 
 ### In C# Razor Views
 
-The [Cofoundry View Helper](/content-management/cofoundry-view-helper) has a `Role` property e.g. `@Cofoundry.CurrentUser.Role`, which has helper methods like `HasPermission(IPermission permission)`.
+The [Cofoundry View Helper](/content-management/cofoundry-view-helper) has a `CurrentUser` property that can be used to retrieve user information by calling `await Cofoundry.CurrentUser.GetAsync()`. Once fetched the `CurrentUserViewHelperContext` data is cached for the duration of the request, so don't worry about calling this method multiple times in different components.
+
+The `CurrentUserViewHelperContext` provides user and role information and will allow
+e.g. `@Cofoundry.CurrentUser.Role`, which has helper methods like `HasPermission(IPermission permission)`.
 
 ```html
 @inject ICofoundryHelper Cofoundry
 
 @{
-    await Cofoundry.CurrentUser.EnsureInitializedAsync();
+    var user = await Cofoundry.CurrentUser.GetAsync();
 }
 
 <h1> Permission Example</h1>
 
-@if (Cofoundry.CurrentUser.Role.HasPermission<MyTestPermission>())
+@if (user.Role.HasPermission<MyTestPermission>())
 {
     <h2>Restricted Content</h2>
     <p>You have MyTestPermission</p>
+}
+@if (user.Role.IsSuperAdministrator)
+{
+    <h2>SuperAdmin Content</h2>
+    <p>You are a super administrator</p>
+}
+@if (user.Role.UserArea.UserAreaCode == MyCustomUserArea.UserAreaCode)
+{
+    <h2>Custom User Area Content</h2>
+    <p>Special content for MyCustomUserArea users</p>
 }
 ```
 
