@@ -28,7 +28,6 @@ An example demonstrating how to use Cofoundry to create a SPA (Single Page Appli
 The application is also separated into two projects demonstrating an example of how you might structure your domain layer to keep this layer separate from your web layer.
 
 - Startup registration
-- Route registration
 - Web Api and use of `IApiResponseHelper`
 - Structuring commands and queries using CQS 
 - Multiple related custom entities - Cats, Breeds and Features
@@ -37,7 +36,7 @@ The application is also separated into two projects demonstrating an example of 
 - Executing stored procedures using `IEntityFrameworkSqlExecutor`
 - Integrating custom entity data with entity framework data access
 - Using the auto-updater to run sql scripts
-- Email notifications & Email Templating
+- Email notifications & Email Templatingp
 - Registering services with the DI container
 
 [View on GitHub](https://github.com/cofoundry-cms/Cofoundry.Samples.SPASite)
