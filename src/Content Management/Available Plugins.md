@@ -1,4 +1,6 @@
-﻿### [Cofoundry.Plugins.Azure](https://github.com/cofoundry-cms/Cofoundry.Plugins.Azure)
+﻿## Official Plugins
+
+### [Cofoundry.Plugins.Azure](https://github.com/cofoundry-cms/Cofoundry.Plugins.Azure)
 
 This library contains services, abstractions and helpers for running in an Azure environment.
 
@@ -34,4 +36,8 @@ This plugin adds a single data attribute `[Vimeo]` that can be used to markup a 
 
 This plugin adds a single data attribute `[YouTube]` that can be used to markup a property of type `YouTubeVideo`. This will show as a YouTube Video picker in the admin UI.
 
+## Community Plugins
 
+### [Claytondus.Cofoundry.Plugins.Mail.AmazonSes](https://github.com/claytondus/Cofoundry.Plugins.Mail.AmazonSes)
+
+Cofoundry mail service implemention for Amazon Simple Email Service (SES) API.

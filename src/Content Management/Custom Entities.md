@@ -28,7 +28,7 @@ The data model class will allow us to define any additional properties we want t
 1. Create a class that implements `ICustomEntityDataModel`. You should use the naming convention *{MyEntity}DataModel*.
 2. Add any properties you need to store.
 3. Add validation attributes
-4. Add UI MetaData attributes, see a list of options [here](/framework/data-model-annotations).
+4. Add UI MetaData attributes, see a list of options [here](/content-management/data-model-annotations).
 
 Example
 

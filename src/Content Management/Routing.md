@@ -38,4 +38,131 @@ For most scenarios you won't need to worry about the ordering of your route regi
 
 ## Attribute Routing
 
-ASP.NET Core attribute routing is supported so if you prefer to use attribute routing then just use that as you normal would.
+ASP.NET Core attribute routing is supported so if you prefer to use attribute routing then just use that as you normally would.
+
+## Working with URLs
+
+### Urls as properties
+
+Some Cofoundry entity models contain urls properties:
+
+```csharp
+public void LocateUrls(
+    PageRoute pageRoute,
+    PageRenderDetails pageRenderDetails,
+    CustomEntityRenderSummary customEntityRenderSummary,
+    ImageAssetRenderDetails imageAssetRenderDetails
+    )
+{
+    string url;
+            
+    url = pageRoute.FullPath;
+    url = pageRenderDetails.PageRoute.FullPath;
+    url = customEntityRenderSummary.PageUrls.FirstOrDefault();
+    url = imageAssetRenderDetails.Url;
+}
+```
+
+### IContentRouteLibrary
+
+Sometime you need to construct a url, such as for a resized image asset or a downloadable document. `IContentRouteLibrary` is an injectable helper that you can use to do this and can also be used as a consistent way of retrieving urls for entities without having to dig around and find the right property.
+
+```csharp
+using System.Threading.Tasks;
+using Cofoundry.Domain;
+using Microsoft.AspNetCore.Mvc;
+
+public class ExampleController : Controller
+{
+    private readonly IContentRouteLibrary _contentRouteLibrary;
+    private readonly IPageRepository _pageRepository;
+    private readonly IDocumentAssetRepository _documentAssetRepository;
+
+    public ExampleController(
+        IContentRouteLibrary contentRouteLibrary,
+        IPageRepository pageRepository,
+        IDocumentAssetRepository documentAssetRepository
+        )
+    {
+        _contentRouteLibrary = contentRouteLibrary;
+        _pageRepository = pageRepository;
+        _documentAssetRepository = documentAssetRepository;
+    }
+
+    [Route("example/page/{id:int}")]
+    public async Task<IActionResult> Page(int id)
+    {
+        var page = await _pageRepository.GetPageRouteByIdAsync(id);
+        var url = _contentRouteLibrary.Page(page);
+
+        return this.Json(new
+        {
+            page,
+            url
+        });
+    }
+
+    [Route("example/doc/{id:int}")]
+    public async Task<IActionResult> Document(int id)
+    {
+        var document = await _documentAssetRepository.GetDocumentAssetRenderDetailsByIdAsync(id);
+        var url = _contentRouteLibrary.DocumentAssetDownload(document);
+        var absoluteUrl = _contentRouteLibrary.ToAbsolute(url);
+
+        return this.Json(new
+        {
+            document,
+            url,
+            absoluteUrl
+        });
+    }
+}
+
+```
+
+### Routing view helper
+
+By referencing the [Cofoundry view helper](cofoundry-view-helper) in your view you will be able to conveniently access `IContentRouteLibrary` via `@Cofoundry.Routing`.
+
+For example:
+
+```html
+@using Cofoundry.Domain
+
+@model MyTestViewModel
+@inject ICofoundryHelper<MyTestViewModel> Cofoundry
+
+
+<div>
+    <img src="@Cofoundry.Routing.ImageAsset(Model.HeaderImageAsset, 400, 300)">
+    
+    <a href="@Cofoundry.Routing.Page(Model.ExamplePage)">@Model.ExamplePage.Title</a>
+</div>
+```
+
+### Resolving absolute URLs
+
+All standard routing methods and properties are relative urls, but sometimes you'll want to convert them to be absolute.
+
+A good example of this is with the canonical meta tag:
+
+```html
+@{
+    var url = Cofoundry.Routing.ToAbsolute("/my-relative-url");
+}
+
+<meta property="og:url" content="@Html.Raw(url)" />
+<link rel="canonical" href="@Html.Raw(url)" />
+```
+
+By default `Cofoundry.Routing.ToAbsolute("/my-relative-url")` will use the host and scheme of the incoming request to create the url, but it's a better idea to set this manually in your config using the `Cofoundry:SiteUrlResolver:SiteUrlRoot` setting to make sure it's always the same, even if you have multiple domains mapped to the same resource.
+
+This can be set in config:
+
+```json
+{
+  "Cofoundry": {
+    "SiteUrlResolver:SiteUrlRoot": "https://www.cofoundry.org"
+  }
+}
+```

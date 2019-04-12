@@ -21,10 +21,10 @@ When injecting the helper we recommend aliasing it as `Cofoundry`, for example:
 
 ## Helpers
 
-- **@Cofoundry.Routing:** Helpers for generating links to Cofoundry content
+- **@Cofoundry.Routing:** Helpers for generating links to Cofoundry content. [See docs](routing#working-with-urls)
 - **@Cofoundry.Settings:** Helper for accessing configuration settings from a view
 - **@Cofoundry.CurrentUser:** Helpers for accessing information about the currently logged in user
 - **@Cofoundry.StaticFiles:** Helper for resolving versioned urls to static files. [See docs](/framework/static-files)
-- **@Cofoundry.Js:** Helper for working with javascript from .net code
+- **@Cofoundry.Js:** Helper for working with JavaScript from .NET code
 - **@Cofoundry.Sanitizer:** Helper for sanitizing html before it output to the page. You'd typically want to use this when rendering out user inputted data which may be vulnerable to XSS attacks. [See docs](/framework/html-sanitizer)
 - **@Cofoundry.Html:** Miscellaneous helper functions to make working work html views easier.
