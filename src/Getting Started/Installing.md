@@ -1,8 +1,7 @@
-﻿## Requirements
+## Requirements
 
-- .NET Standard 2.0 or later (e.g. .Net Core 2.0 or .Net Framework 4.6.1)
-- For web projects ASP.NET Core 2.1 is required
-- SqlServer (Express) 2012 or later, or Azure SqlServer
+- .NET Core 3.1
+- SqlServer (Express) 2012 or later, or Azure SQL
 
 ## Creating a new project using the .NET CLI
 
@@ -34,13 +33,19 @@ This is just an example of how you'd typically create a new site, but you can qu
 
 ### Creating the site
 
-1. Open Visual Studio 2017 and create a new *ASP.NET Core Web Application* project using ASP.Net Core 2.1.
+1. Open Visual Studio 2019 and select *Create a new project*
 
-2. Choose the *Empty* project template.
+2. Select the *ASP.NET Core Web Application* template and press *Next*
 
-3. Create an empty database in SQL Server.
+3. Fill in the project name, select a location and press *Create*
 
-4. Install the [Cofoundry.Web.Admin](https://www.nuget.org/packages/Cofoundry.Web.Admin/) NuGet package
+4. Choose the *Empty* project template and press *Create*.
+
+5. Create an empty database in SQL Server.
+
+6. Install the [Cofoundry.Web.Admin](https://www.nuget.org/packages/Cofoundry.Web.Admin/) NuGet package
+
+*Note that Visual Studio 2019 doesn't let you select the framework version when creating a new project, so if you have multiple versions of .NET Core installed, make sure your project is targeting .NET 3.1.* 
 
 ### Configuring the site
 
@@ -65,13 +70,13 @@ The NuGet installation is intended to be unobtrusive to avoid causing conflicts 
 Note that exception handling and static file handling is initialized by Cofoundry so we can remove these parts from the startup file.
 
 ```csharp
+using Cofoundry.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Cofoundry.Web;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace MySite 
+namespace MySite
 {
     public class Startup
     {
@@ -84,33 +89,19 @@ namespace MySite
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-            
             // Register Cofoundry with the DI container. Must be run after AddMvc
             services
-                .AddMvc()
+                .AddControllersWithViews()
                 .AddCofoundry(Configuration);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (!env.IsDevelopment())
-            {
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-            
             // Register Cofoundry into the pipeline. As part of this process it also initializes 
             // the MVC middleware and runs additional startup tasks.
             app.UseCofoundry();
         }
-    } 
+    }
 }
 ```
 
@@ -120,7 +111,7 @@ namespace MySite
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <MvcRazorExcludeViewFilesFromPublish>false</MvcRazorExcludeViewFilesFromPublish>
     <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
   </PropertyGroup>

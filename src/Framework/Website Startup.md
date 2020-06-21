@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Cofoundry.Web;
 
 namespace MySite 
@@ -26,19 +27,17 @@ namespace MySite
         {
             // Register Cofoundry with the DI container. Must be run after AddMvc
             services
-                .AddMvc()
+                .AddControllersWithViews()
                 .AddCofoundry(Configuration);
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // You can register other middleware as normal
             if (!env.IsDevelopment())
             {
                 app.UseHsts();
             }
-
-            app.UseHttpsRedirection();
         
             // Register Cofoundry into the pipeline. As part of this process it also initializes 
             // the MVC middleware and runs additional startup tasks.
@@ -52,10 +51,11 @@ namespace MySite
 
 ### AddCofoundry()
 
-This method sets up the dependency resolver for Cofoundry, registering all internal components, modules and any auto-registered types such as command and query handlers. `AddCofoundry()` is called after `AddMvc()` which allows you to customize your MVC configuration independently.
+This method sets up the dependency resolver for Cofoundry, registering all internal components, modules and any auto-registered types such as command and query handlers. `AddCofoundry()` is called after `AddControllersWithViews()` which allows you to customize your MVC configuration independently.
 
-Once dependencies are registered, Cofoundry will look for classes that implement `IStartupServiceConfigurationTask` and execute them. Cofoundry itself only includes a single configuration task, but plugin developers can use this as an integration point.
+Once dependencies are registered, Cofoundry will look for classes that implement `IStartupServiceConfigurationTask` and execute them. Cofoundry itself only includes a couple of configuration tasks, but plugin developers can use this as an integration point.
 
+- **[AutoUpdateServiceConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ServiceConfigurationTasks/AutoUpdateServiceConfigurationTask.cs) Sets up the auto-update hosted service.
 - **[CofoundryStartupServiceConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ServiceConfigurationTasks/CofoundryStartupServiceConfigurationTask.cs)** Sets up auth (user areas) and configures a number of MVC settings
 
 See the [Startup Tasks](Startup-Tasks) documentation for information on creating your own startup tasks.
@@ -72,7 +72,8 @@ Here is a list of tasks bundled in Cofoundry (note that plugins authors may inje
 - **[JsonConverterStartupConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ConfigurationTasks/JsonConverterStartupConfigurationTask.cs)** Configures the default JsonSerialization settings using `IJsonSerializerSettingsFactory`
 - **[StaticFileStartupConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ConfigurationTasks/StaticFiles/StaticFileStartupConfigurationTask.cs)** Adds the asp.net static files middleware with a default configuration. You can customize this by overriding the [default](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ConfigurationTasks/StaticFiles/DefaultStaticFileOptionsConfiguration.cs) `IStaticFileOptionsConfiguration` implementation using [DI](dependency-injection#overriding-registrations).
 - **[MessageAggregatorStartupConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ConfigurationTasks/MessageAggregatorStartupConfigurationTask.cs)** Bootstraps the [Message Aggregator](Message-Aggregator), registering `IMessageSubscriptionRegistration` classes
-- **[MvcStartupConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ConfigurationTasks/MvcStartupConfigurationTask.cs)** Adds the ASP.Net MVC middleware to the pipeline and sets up [Cofoundry routing](/content-management/routing).
+- **[UseRoutingStartupConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ConfigurationTasks/UseRoutingStartupConfigurationTask.cs)** Adds the ASP.NET endpoint routing middleware to the pipeline
+- **[AddEndpointRoutesConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ConfigurationTasks/AddEndpointRoutesStartupConfigurationTask.cs)** Configures [Cofoundry routing](/content-management/routing).
 
 See the [Startup Tasks](Startup-Tasks) documentation for information on creating your own startup tasks.
 

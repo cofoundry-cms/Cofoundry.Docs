@@ -1,4 +1,4 @@
-﻿Cofoundry is split into several packages to make usable in a wide variety of scenarios, not just for websites.
+Cofoundry is split into several packages to make usable in a wide variety of scenarios, not just for websites.
 
 ## Main NuGet Packages
 
@@ -35,7 +35,7 @@ Some features of Cofoundry require additional plugins to be installed in order t
 - [Azure](https://github.com/cofoundry-cms/Cofoundry.Plugins.Azure)
 - [BackgroundTasks.Hangfire](https://github.com/cofoundry-cms/Cofoundry.Plugins.BackgroundTasks.Hangfire)
 - [ErrorLogging](https://github.com/cofoundry-cms/Cofoundry.Plugins.ErrorLogging)
-- [Imaging.ImageSharp](https://github.com/cofoundry-cms/Cofoundry.Plugins.Imaging.ImageSharp)
+- [Imaging.SkiaSharp](https://github.com/cofoundry-cms/Cofoundry.Plugins.Imaging.SkiaSharp)
 - [Mail.MailKit](https://github.com/cofoundry-cms/Cofoundry.Plugins.Mail.MailKit)
 - [Mail.SendGrid](https://github.com/cofoundry-cms/Cofoundry.Plugins.Mail.SendGrid)
 - [SiteMap](https://github.com/cofoundry-cms/Cofoundry.Plugins.SiteMap)

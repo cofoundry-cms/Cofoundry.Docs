@@ -1,7 +1,20 @@
-﻿## Admin Settings
+## Admin Settings
 
 - **Cofoundry:Admin:Disabled** Disables the admin panel, removing all routes from the routing table and disabling login.
 - **Cofoundry:Admin:DirectoryName** The path to the admin panel. Defaults to "admin". Can only contain letters, numbers and dashes.
+
+## Asset File Cleanup Settings
+
+These settings control the background task that runs to clean up deleted asset files. Asset files are deleted as a background process to avoid file locking issues.
+
+- **Cofoundry:AssetFileCleanup:Disabled** If set to true the cleanup background task is disabled.
+- **Cofoundry:AssetFileCleanup:BackgroundTaskFrequencyInMinutes** How often the background task should run, measured in minutes.
+- **Cofoundry:AssetFileCleanup:BatchSize** The number of queue items (files) to process each time the background task runs.
+- **Cofoundry:AssetFileCleanup:CompletedItemRetentionTimeInMinutes** The number of minutes to stored data on completed items in the queue.
+- **Cofoundry:AssetFileCleanup:DeadLetterRetentionTimeInMinutes** The number of minutes to store data on unprocessable items in the queue.
+- **Cofoundry:AssetFileCleanup:MaxRetryWindowInDays** The total number of days to keep attempting to clean up an item in the queue.
+- **Cofoundry:AssetFileCleanup:RetryOffsetInMinutes** The initial time to wait before trying again to clean up an item that previously errored. This is multiplied by the RetryOffsetMultiplier on each failed attempt.
+- **Cofoundry:AssetFileCleanup:RetryOffsetMultiplier** The multiplier to use when incrementing the next attempt date when an item in the queue fails to be processed.
 
 ## Asset File Settings
 
@@ -20,6 +33,8 @@
 - **Cofoundry:Authentication:CookieNamepace** The text to use to namespace the auth cookie. The user area code will be appended to this to make the cookiename, e.g. "MyAppAuth_COF". By default the cookie namespace is created using characters from the entry assembly name of your application.
 
 ## AutoUpdateSettings
+
+Settings that contorl the [auto-update process](/framework/auto-update) that runs at startup. 
 
 - **Cofoundry:AutoUpdate:Disabled** Disables the auto-update process entirely.
 - **Cofoundry:AutoUpdate:ProcessLockTimeoutInSeconds** The amount of time before the process lock expires and allows another auto-update process to start. This is designed to prevent multiple auto-update processes running concurrently in multi-instance deployment scenarios. By default this is set to 10 minutes which should be more than enough time for the process to run, but you may wish to shorten/lengthen this depending on your needs.

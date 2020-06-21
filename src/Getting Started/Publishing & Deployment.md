@@ -1,8 +1,8 @@
-﻿The process for publishing and deploying a Cofoundry website is the same as [deploying regular asp.net core website](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/). There are however some things to consider:
+The process for publishing and deploying a Cofoundry website is the same as [deploying regular asp.net core website](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/). There are however some things to consider:
 
 ## View pre-compilation
 
-[View pre-compilation](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-compilation) is enabled by default in asp.net core which prevents the raw view files being published. This is a problem because Cofoundry relies on these files to load in  page and block templates. 
+[View pre-compilation](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-compilation) is enabled by default in asp.net core which prevents the raw view files being published. This is a problem because Cofoundry relies on these files to load in page and block templates. 
 
 To work around this issue you'll need to add two settings to your .csproj project file and set them both to false:
 
@@ -15,7 +15,7 @@ To work around this issue you'll need to add two settings to your .csproj projec
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <MvcRazorExcludeViewFilesFromPublish>false</MvcRazorExcludeViewFilesFromPublish>
     <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
   </PropertyGroup>

@@ -1,4 +1,4 @@
-﻿Cofoundry is an open source .NET application framework and content management platform. Whilst content management and website tools are a large part of Cofoundry, the functionality is entirely optional and our base framework is available to you to use in any application that references .NET Standard 2.0.
+Cofoundry is an open source .NET application framework and content management platform. Whilst content management and website tools are a large part of Cofoundry, the functionality is entirely optional and our base framework is available to you to use in any application that references .NET Core 3.1.
 
 We see the role of developing an application as very separate from managing content and so we don't squeeze everything into the same management GUI, instead we focus on modular and extensible code-first tools for building sites and a simple, clean interface for managing them.
 
@@ -10,7 +10,7 @@ We see the role of developing an application as very separate from managing cont
 
 Cofoundry is designed to work with a wide range of content. We have the usual [pages](/content-management/pages), [images](/content-management/images) and [documents](/content-management/documents) you'd expect from a CMS, but we also include a flexible [custom entity framework](/content-management/custom-entities) that lets you easily define data types like products, stores, categories or events.
 
-Page templates are just ASP.Net Razor views with strongly typed view modules so you have complete freedom to develop the front-end however you want. Editable content regions can be added anywhere and configured with content type restrictions. This gives you a sliding scale as to whether you give content editors free-form flexibility to create highly customized pages or lock them down so they can't break your designs. 
+Page templates are just ASP.NET Razor views with strongly typed view modules so you have complete freedom to develop the front-end however you want. Editable content regions can be added anywhere and configured with content type restrictions. This gives you a sliding scale as to whether you give content editors free-form flexibility to create highly customized pages or lock them down so they can't break your designs. 
 
 Content editors benefit from inline page editing which makes it really easy to see what's being changed and what impact it will have on the design and flow of the page.
 

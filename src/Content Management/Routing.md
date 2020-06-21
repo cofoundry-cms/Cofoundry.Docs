@@ -15,9 +15,9 @@ Here is an example `IRouteRegistration` class:
 ```csharp
 public class RouteRegistration : IRouteRegistration
 {
-    public void RegisterRoutes(IRouteBuilder routeBuilder)
+    public void RegisterRoutes(IEndpointRouteBuilder routeBuilder)
     {
-        routeBuilder.MapRoute(
+        routeBuilder.MapControllerRoute(
             "Default", 
             "{controller}/{action}/{id?}",
             new { controller = "Home", action = "Index" }
@@ -44,7 +44,7 @@ ASP.NET Core attribute routing is supported so if you prefer to use attribute ro
 
 ### Urls as properties
 
-Some Cofoundry entity models contain urls properties:
+Some Cofoundry entity models contain url properties:
 
 ```csharp
 public void LocateUrls(
