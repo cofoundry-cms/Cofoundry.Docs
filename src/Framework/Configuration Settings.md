@@ -1,4 +1,8 @@
-﻿Cofoundry includes a system for easily creating strongly typed configuration settings just by defining a POCO class that inherits from `IConfigurationSettings`. These settings classes are automatically picked up by the DI system and bound to your config source at runtime using the underlying [.NET Core `IOptions` accessor](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options). 
+﻿*This section deals with the Cofoundry configuration framework, if you're looking for a list of configuration settings you can find these in [our reference section](/references/common-config-settings).*
+
+## Overview
+
+Cofoundry includes a system for easily creating strongly typed configuration settings just by defining a POCO class that inherits from `IConfigurationSettings`. These settings classes are automatically picked up by the DI system and bound to your config source at runtime using the underlying [.NET Core `IOptions` accessor](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options). 
 
 Additionally, configuration is checked to be valid using `IModelValidationService` so you can also take advantage of data annotations such as `[Required]` and `[MaxLength]` to ensure that setting values are entered correctly.
 
