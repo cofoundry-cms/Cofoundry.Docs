@@ -26,11 +26,11 @@ using Cofoundry.Domain;
 
 public class Example
 {
-    private IQueryExecutor _queryExecutor;
+    private IDomainRepository _domainRepository;
 
-    public Example(IQueryExecutor queryExecutor)
+    public Example(IDomainRepository domainRepository)
     {
-        _queryExecutor = queryExecutor;
+        _domainRepository = domainRepository;
     }
 
     public async Task RunPagedQuery()
@@ -43,7 +43,7 @@ public class Example
         };
 
         // Example using a Cofoundry query to get a paged result
-        var pagedResult = await _queryExecutor.ExecuteAsync(query);
+        var pagedResult = await _domainRepository.ExecuteQueryAsync(query);
 
         // Examples of various properties and methods on IPagedResult<TResult>
         ICollection<CustomEntityRenderSummary> pagedItems = pagedResult.Items;

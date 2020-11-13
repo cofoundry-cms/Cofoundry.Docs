@@ -39,7 +39,7 @@ public class UpdatePackageFactory : BaseDbOnlyUpdatePackageFactory
 
 Although not shown in the example above, we also have the option to override and customize the `ScriptPath` property which defaults to "Install/Db/".
 
-#### Sql Scripts
+#### SQL Scripts
 
 Under default conventions your db scripts should be put into folders like so:
 

@@ -68,9 +68,11 @@ Queries are read only and should never cause changes to be made to the data stor
 
 You can execute queries using an instance of `IQueryExecutor`  using `queryExecutor.ExecuteAsync(query)`, this will automatically lookup the handler and run it, providing the contextual information needed to run the query.
 
+It's often simpler to access the query executor through [`IContentRepository`](/content-management/accessing-data-programatically) or  [`IDomainRepository`](idomainrepository) using `repository.ExecuteQueryAsync(query)`.
+
 ## Commands
 
-Commands work in a similar way to queries, first we define a class that implements `ICommand` and then a handler that implements `IAsyncCommandHandler`. Similarly we have an executor for commands called `ICommandExecutor`. 
+Commands work in a similar way to queries, first we define a class that implements `ICommand` and then a handler that implements `IAsyncCommandHandler`. Similarly we have an executor for commands called `ICommandExecutor` which can also be accessed through [`IContentRepository`](/content-management/accessing-data-programatically) or  [`IDomainRepository`](idomainrepository) using `repository.ExecuteCommandAsync(command)`. 
 
 Commands should never return data, which would break the CQS principle. If you need data after a command has been executed, make another query. We have one exception to the rule which is you may return an id when a new entity is created - you can then use this id to perform a query to get any additional data you might want. When returning an output value, create a property on the command named with the prefix *Output* e.g. *OutputUserId* and give it an `[OutputValue]` attribute, which will ensure the value has been set by the command handler.
 
@@ -130,4 +132,4 @@ For validation that requires a database check e.g. 'uniqueness', this can be don
 
 Permissions are also enforced at the handler level, which ensures that we can write secure data access without having to worry about where the handler is being called from.
 
-For more information about permission see the guidance [here](Roles-&-Permissions)
+For more information about permission see the guidance [here](/Framework/Roles-&-Permissions)

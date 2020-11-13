@@ -31,7 +31,7 @@ public class ExampleNotificationMailTemplate : IMailTemplate
     /// <summary>
     /// All templates require a subject
     /// </summary>
-    public string Subject => return "New Contact Request";
+    public string Subject => "New Contact Request";
      
     /// <summary>
     /// We can include any additional data that we

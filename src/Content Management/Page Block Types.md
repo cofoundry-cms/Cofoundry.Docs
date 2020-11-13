@@ -139,13 +139,13 @@ using Cofoundry.Core;
 /// </summary>
 public class MyContentDisplayModelMapper : IPageBlockTypeDisplayModelMapper<MyContentDataModel>
 {
-    private IImageAssetRepository _imageAssetRepository;
+    private readonly IContentRepository _contentRepository;
 
     public MyContentDisplayModelMapper(
-        IImageAssetRepository imageAssetRepository
+        IContentRepository contentRepository
         )
     {
-        _imageAssetRepository = imageAssetRepository;
+        _contentRepository = contentRepository;
     }
 
     public async Task MapAsync(
@@ -154,7 +154,12 @@ public class MyContentDisplayModelMapper : IPageBlockTypeDisplayModelMapper<MyCo
         )
     {
         var imageAssetIds = context.Items.SelectDistinctModelValuesWithoutEmpty(i => i.ThumbnailImageAssetId);
-        var imageAssets = await _imageAssetRepository.GetImageAssetRenderDetailsByIdRangeAsync(imageAssetIds, context.ExecutionContext);
+        var imageAssets = await _contentRepository
+            .WithExecutionContext(context.ExecutionContext)
+            .ImageAssets()
+            .GetByIdRange(imageAssetIds)
+            .AsRenderDetails()
+            .ExecuteAsync();
 
         foreach (var item in context.Items)
         {

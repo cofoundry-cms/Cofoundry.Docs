@@ -23,22 +23,25 @@ using Cofoundry.Domain;
 
 public class ExampleController : Controller
 {
-    private readonly IPageRepository _pageRepository;
+    private readonly IContentRepository _contentRepository;
 
     public ExampleController(
-        IPageRepository pageRepository
+        IContentRepository contentRepository
         )
     {
-        _pageRepository = pageRepository;
+        _contentRepository = contentRepository;
     }
 
     [Route("example/page/{id:int}")]
     public async Task<IActionResult> Page(int id)
     {
-        var query = new GetPageRenderDetailsByIdQuery(id);
-        var page = await _pageRepository.GetPageRenderDetailsByIdAsync(query);
+        var page = await _contentRepository
+            .Pages()
+            .GetById(id)
+            .AsRenderDetails()
+            .ExecuteAsync();
 
-        return this.Json(new
+        return Json(new
         {
             title = page.Title,
             metaDescription = page.MetaDescription,

@@ -27,37 +27,39 @@ public class PageSnippetDisplayModelMapper : IPageBlockTypeDisplayModelMapper<Pa
 {
     // … constructor ommited
 
-    public async Task<IEnumerable<PageBlockTypeDisplayModelMapperOutput>> MapAsync(
-        IReadOnlyCollection<PageBlockTypeDisplayModelMapperInput<PageSnippetDataModel>> inputCollection, 
-        PublishStatusQuery publishStatusQuery
+    public async Task MapAsync(
+            PageBlockTypeDisplayModelMapperContext<PageSnippetDataModel> context,
+            PageBlockTypeDisplayModelMapperResult<PageSnippetDataModel> result
         )
     {
-        var allPageIds = inputCollection.SelectDistinctModelValuesWithoutEmpty(m => m.PageId);
+        var allPageIds = context.Items.SelectDistinctModelValuesWithoutEmpty(m => m.PageId);
 
         // We pass through the PublishStatusQuery to ensure this is respected
         // when querying related data i.e. if we're viewing a draft version then
         // we should also be able to see connected entities in draft status.
-        var pagesQuery = new GetPageRenderDetailsByIdRangeQuery(allPageIds, publishStatusQuery);
-        var allPages = await _pageRepository.GetPageRenderDetailsByIdRangeAsync(pagesQuery);
-        var results = new List<PageBlockTypeDisplayModelMapperOutput>(inputCollection.Count);
+        var pagesQuery = new GetPageRenderDetailsByIdRangeQuery(allPageIds, context.PublishStatusQuery);
+        var allPages = await _contentRepository
+                .Pages()
+                .GetByIdRange(allPageIds)
+                .AsRenderDetails(context.PublishStatusQuery)
+                .ExecuteAsync();
 
-        foreach (var input in inputCollection)
+        foreach (var item in context.Items)
         {
-            var output = new PageSnippetDisplayModel();
-            var page = allPages.GetOrDefault(input.DataModel.PageId);
+            var displayModel = new PageSnippetDisplayModel();
+
+            displayModel.Page = allPages.GetOrDefault(item.DataModel.PageId);
 
             // We have to code defensively here and bear in mind that the related
             // entities may be in draft status and may not be available when viewing
             // the live site.
-            if (page != null)
+            if (displayModel.Page != null)
             {
                 // … mapping ommited
             }
-            
-            results.Add(input.CreateOutput(output));
-        }
 
-        return results;
+            result.Add(item, displayModel);
+        }
     }
 }
 ```
@@ -75,28 +77,34 @@ In the example below we use the service to get an object representing the visual
 ```csharp
 public class HomepageBlogPostsViewComponent : ViewComponent
 {
-    private readonly ICustomEntityRepository _customEntityRepository;
     private readonly IVisualEditorStateService _visualEditorStateService;
+    private readonly IContentRepository _contentRepository;
 
     public HomepageBlogPostsViewComponent(
-        ICustomEntityRepository customEntityRepository,
+        IContentRepository contentRepository,
         IVisualEditorStateService visualEditorStateService
         )
     {
-        _customEntityRepository = customEntityRepository;
         _visualEditorStateService = visualEditorStateService;
+        _contentRepository = contentRepository;
     }
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
         var visualEditorState = await _visualEditorStateService.GetCurrentAsync();
 
-        var query = new SearchCustomEntityRenderSummariesQuery();
-        query.CustomEntityDefinitionCode = BlogPostCustomEntityDefinition.DefinitionCode;
-        query.PublishStatus = visualEditorState.GetAmbientEntityPublishStatusQuery();
-        query.PageSize = 3;
+        var query = new SearchCustomEntityRenderSummariesQuery()
+        {
+            CustomEntityDefinitionCode = BlogPostCustomEntityDefinition.DefinitionCode,
+            PublishStatus = visualEditorState.GetAmbientEntityPublishStatusQuery(),
+            PageSize = 3
+        };
 
-        var entities = await _customEntityRepository.SearchCustomEntityRenderSummariesAsync(query);
+        var entities = await _contentRepository
+            .CustomEntities()
+            .Search()
+            .AsRenderSummaries(query)
+            .ExecuteAsync();
 
         return View(entities);
     }

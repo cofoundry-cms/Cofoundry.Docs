@@ -51,26 +51,31 @@ public class DocumentExample
 
 ## Getting Document Data
 
-The simplest way to get document data is by resolving an instance of `IDocumentAssetRepository` from the DI container.
+The simplest way to get document data is by resolving an instance of `IContentRepositry` from the DI container.
 
 ```csharp
 public class DocumentExample
 {
     private IDocumentAssetRouteLibrary _documentAssetRouteLibrary;
-    private IDocumentAssetRepository _documentAssetRepository;
+    private readonly IContentRepository _contentRepository;
 
     public DocumentExample(
         IDocumentAssetRouteLibrary documentAssetRouteLibrary,
-        IDocumentAssetRepository documentAssetRepository
+        IContentRepository contentRepository
         )
     {
         _documentAssetRouteLibrary = documentAssetRouteLibrary;
-        _documentAssetRepository = documentAssetRepository;
+        _contentRepository = contentRepository;
     }
 
-    public Task<string> GetExampleUrl(int documentId)
+    public async Task<string> GetExampleUrl(int documentId)
     {
-        var document = await _documentAssetRepository.GetDocumentAssetRenderDetailsByIdAsync(documentId);
+        var document = await _contentRepository
+            .DocumentAssets()
+            .GetById(documentId)
+            .AsRenderDetails()
+            .ExecuteAsync();
+
         var url = _documentAssetRouteLibrary.DocumentAsset(document);
 
         return url;
@@ -78,13 +83,11 @@ public class DocumentExample
 }
 ```
 
-Alternatively you can resolve an instance of `CofoundryDbContext` from the DI container and use Entity Framework to completely customize your query.
-
 ## Restricting File Types
 
-By default Cofoundry validates uploaded files against a blacklist of potentially dangerous file extensions and mime types taken from [`DangerousFileConstants.cs`](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Core/Core/Constants/DangerousFileConstants.cs). 
+By default Cofoundry validates uploaded files against a blocklist of potentially dangerous file extensions and mime types taken from [`DangerousFileConstants.cs`](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Core/Core/Constants/DangerousFileConstants.cs). 
 
-This is not intended to be a full-proof validation mechanism, but it does at least prevent a non-technical user accidentally uploading an executable or script file.
+This is not intended to be a bulletproof validation mechanism, but it does at least prevent a non-technical user accidentally uploading an executable or script file.
 
 ### Files with unknown MIME types
 
@@ -118,15 +121,15 @@ File type restrictions can be disabled using configuration settings. Note that t
 
 ### Customizing file type restrictions
 
-You can use `AssetFilesSettings` to fully configure the validation process. For either file extension or mime type validation you can choose to use either a blacklist or whitelist, or disable validation completely.
+You can use `AssetFilesSettings` to fully configure the validation process. For either file extension or mime type validation you can choose to use either a blocklist or an allowlist, or disable validation completely.
 
-This example shows a restrictive whitelist of file types:
+This example shows a restrictive allowlist of file types:
 
 ```json
 {
   "Cofoundry:AssetFiles": {
-    "FileExtensionValidation": "Whitelist",
-    "MimeTypeValidation": "Whitelist",
+    "FileExtensionValidation": "UseAllowList",
+    "MimeTypeValidation": "UseAllowList",
     "FileExtensionValidationList": [
       "png",
       "jpg",

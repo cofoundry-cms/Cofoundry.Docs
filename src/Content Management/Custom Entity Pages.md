@@ -147,20 +147,24 @@ Note that custom entity routes are created and cached in large sets to take adva
 ```csharp
 public class BlogPostRouteDataBuilder : ICustomEntityRouteDataBuilder<BlogPostCustomEntityDefinition, BlogPostDataModel>
 {
-    private readonly ICustomEntityRepository _customEntityRepository;
+    private readonly IContentRepository _contentRepository;
 
     public BlogPostRouteDataBuilder(
-        ICustomEntityRepository customEntityRepository
+        IContentRepository contentRepository
         )
     {
-        _customEntityRepository = customEntityRepository;
+        _contentRepository = contentRepository;
     }
 
-    public async Task BuildAsync(IEnumerable<CustomEntityRouteDataBuilderParameter<BlogPostDataModel>> builderParameters)
+    public async Task BuildAsync(IReadOnlyCollection<CustomEntityRouteDataBuilderParameter<BlogPostDataModel>> builderParameters)
     {
         // get all categories to use in the mapping
         var query = new GetCustomEntityRenderSummariesByDefinitionCodeQuery(BlogCategoryCustomEntityDefinition.DefinitionCode);
-        var categories = await _customEntityRepository.GetCustomEntityRenderSummariesByDefinitionCodeAsync(query);
+        var categories = await _contentRepository
+            .CustomEntities()
+            .GetByDefinition<BlogCategoryCustomEntityDefinition>()
+            .AsRenderSummary()
+            .ExecuteAsync();
 
         // index the categories to speed up the lookup
         var categoriesLookup = categories.ToDictionary(e => e.CustomEntityId);

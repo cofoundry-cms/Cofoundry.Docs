@@ -1,4 +1,4 @@
-Welcome to the Cofoundry developer documentation. 
+﻿Welcome to the Cofoundry developer documentation. 
 
 If you can't find what you're looking for, do let us know by [submitting an issue](https://github.com/cofoundry-cms/cofoundry/issues).
 

@@ -132,7 +132,7 @@ public class ExamplePageViewModelBuilder : IPageViewModelBuilder
         )
     {
         // Constructor injection is supported
-        // Here we make use of the same helpers used in the default PageViewModelBuilder class
+        // Here we make use of the same helpers used in the base class
         _pageViewModelFactory = pageViewModelFactory;
         _pageViewModelMapper = pageViewModelMapper;
     }
@@ -152,8 +152,8 @@ public class ExamplePageViewModelBuilder : IPageViewModelBuilder
     }
 
     public async Task<ICustomEntityPageViewModel<TDisplayModel>> BuildCustomEntityPageViewModelAsync<TDisplayModel>(
-       CustomEntityPageViewModelBuilderParameters mappingParameters
-       ) where TDisplayModel : ICustomEntityPageDisplayModel
+        CustomEntityPageViewModelBuilderParameters mappingParameters
+        ) where TDisplayModel : ICustomEntityPageDisplayModel
     {
         // Create the custom view model instance
         var viewModel = new ExampleCustomEntityPageViewModel<TDisplayModel>();
@@ -161,7 +161,8 @@ public class ExamplePageViewModelBuilder : IPageViewModelBuilder
         // Do the base mapping
         await _pageViewModelMapper.MapCustomEntityViewModelAsync(viewModel, mappingParameters);
 
-        // TODO: insert your custom custom mapping
+        // Example of calling an async custom mapping function
+        await ExampleCustomMappingAsync(viewModel);
 
         return viewModel;
     }
@@ -173,6 +174,23 @@ public class ExamplePageViewModelBuilder : IPageViewModelBuilder
         var viewModel = _pageViewModelFactory.CreateNotFoundPageViewModel();
 
         await _pageViewModelMapper.MapNotFoundPageViewModelAsync(viewModel, mappingParameters);
+
+        return viewModel;
+    }
+
+    private Task ExampleCustomMappingAsync<TDisplayModel>(ICustomEntityPageViewModel<TDisplayModel> model)
+        where TDisplayModel : ICustomEntityPageDisplayModel
+    {
+        return Task.CompletedTask;
+    }
+
+    public async Task<IErrorPageViewModel> BuildErrorPageViewModelAsync(ErrorPageViewModelBuilderParameters mappingParameters)
+    {
+        // This example show using the default behaviour without any customization
+        // You could alternatively inherit from PageViewModelBuilder and use the base implementation
+        var viewModel = _pageViewModelFactory.CreateErrorPageViewModel();
+
+        await _pageViewModelMapper.MapErrorPageViewModelAsync(viewModel, mappingParameters);
 
         return viewModel;
     }

@@ -180,7 +180,7 @@ using Cofoundry.Domain;
 using Cofoundry.Domain.CQS;
 
 public class DeleteCustomEntityCommandHandler
-    : IAsyncCommandHandler<DeleteCustomEntityCommand>
+    : ICommandHandler<DeleteCustomEntityCommand>
     , IIgnorePermissionCheckHandler
 {
     private readonly CofoundryDbContext _dbContext;
@@ -203,7 +203,10 @@ public class DeleteCustomEntityCommandHandler
 
         if (customEntity != null)
         {
-            _permissionValidationService.EnforceCustomEntityPermission<CustomEntityDeletePermission>(customEntity.CustomEntityDefinitionCode);
+            _permissionValidationService.EnforceCustomEntityPermission<CustomEntityDeletePermission>(
+                customEntity.CustomEntityDefinitionCode, 
+                executionContext.UserContext
+                );
 
             // logic code removed
         }

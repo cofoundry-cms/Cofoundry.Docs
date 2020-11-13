@@ -37,11 +37,11 @@ The [Cofoundry View Helper](Cofoundry-View-Helper) is the best way to access thi
 
 ```
 
-Warning: Generating a url from just an image asset id involves getting more information about the image from the database. Although caching is used to speed this up, it is recommended that you try to include the full `ImageAssetRenderDetails` object in your view model to take advantage of batch requests and async methods.
+Warning: Generating a URL from just an image asset id involves getting more information about the image from the database. Although caching is used to speed this up, it is recommended that you try to include the full `ImageAssetRenderDetails` object in your view model to take advantage of batch requests and async methods.
 
 ### From Code
 
-You can request `IImageAssetRouteLibrary` from the DI container and use this to generate urls. It is the same api used by the Cofoundry View Helper above.
+You can request `IImageAssetRouteLibrary` from the DI container and use this to generate urls. It is the same API used by the Cofoundry View Helper above.
 
 ```csharp
 using Cofoundry.Domain;
@@ -57,7 +57,7 @@ public class ImageExample
 
     public string GetExampleUrl(IImageAssetRenderable image)
     {
-        var url = _imageAssetRouteLibrary.ImageAsset(image);
+        var url = _imageAssetRouteLibrary.ImageAsset(image, 200, 200);
 
         return url;
     }
@@ -67,7 +67,7 @@ public class ImageExample
 
 ## Getting Image Data
 
-The simplest way to get image data is by resolving an instance of `IImageAssetRepository` from the DI container.
+The simplest way to get image data is by resolving an instance of `IContentRepositry` from the DI container.
 
 ```csharp
 using Cofoundry.Domain;
@@ -75,25 +75,28 @@ using Cofoundry.Domain;
 public class ImageExample
 {
     private IImageAssetRouteLibrary _imageAssetRouteLibrary;
-    private IImageAssetRepository _imageAssetRepository;
+    private readonly IContentRepository _contentRepository;
 
     public ImageExample(
         IImageAssetRouteLibrary imageAssetRouteLibrary,
-        IImageAssetRepository imageAssetRepository
+        IContentRepository contentRepository
         )
     {
         _imageAssetRouteLibrary = imageAssetRouteLibrary;
-        _imageAssetRepository = imageAssetRepository;
+        _contentRepository = contentRepository;
     }
 
-    public Task<string> GetExampleUrl(int imageId)
+    public async Task<string> GetExampleUrl(int imageId)
     {
-        var image = await _imageAssetRepository.GetImageAssetRenderDetailsByIdAsync(imageId);
-        var url = _imageAssetRouteLibrary.ImageAsset(image);
+        var image = await _contentRepository
+            .ImageAssets()
+            .GetById(imageId)
+            .AsRenderDetails()
+            .ExecuteAsync();
+            
+        var url = _imageAssetRouteLibrary.ImageAsset(image, 400, 600);
 
         return url;
     }
 }
 ```
-
-Alternatively you can resolve an instance of `CofoundryDbContext` from the DI container and use Entity Framework to completely customize your query.

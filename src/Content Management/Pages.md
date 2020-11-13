@@ -1,4 +1,4 @@
-﻿Cofoundry has content management features that let you create and manage your website pages dynamically. Pages use a flexible templating system that augments standard asp.net razor view files with modular content regions to provide you with fine grained control over your code and content.
+﻿Cofoundry has content management features that let you create and manage your website pages dynamically. Pages use a flexible templating system that augments standard ASP.NET razor view files with modular content regions to provide you with fine grained control over your code and content.
 
 To learn more about creating templates see the [page templates documentation](Page-Templates).
 

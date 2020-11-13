@@ -75,24 +75,25 @@ using Microsoft.AspNetCore.Mvc;
 public class ExampleController : Controller
 {
     private readonly IContentRouteLibrary _contentRouteLibrary;
-    private readonly IPageRepository _pageRepository;
-    private readonly IDocumentAssetRepository _documentAssetRepository;
+    private readonly IContentRepository _contentRepository;
 
     public ExampleController(
         IContentRouteLibrary contentRouteLibrary,
-        IPageRepository pageRepository,
-        IDocumentAssetRepository documentAssetRepository
+        IContentRepository contentRepository
         )
     {
         _contentRouteLibrary = contentRouteLibrary;
-        _pageRepository = pageRepository;
-        _documentAssetRepository = documentAssetRepository;
+        _contentRepository = contentRepository;
     }
 
     [Route("example/page/{id:int}")]
     public async Task<IActionResult> Page(int id)
     {
-        var page = await _pageRepository.GetPageRouteByIdAsync(id);
+        var page = await _contentRepository
+            .Pages()
+            .GetById(id)
+            .AsRoute()
+            .ExecuteAsync();
         var url = _contentRouteLibrary.Page(page);
 
         return this.Json(new
@@ -105,7 +106,11 @@ public class ExampleController : Controller
     [Route("example/doc/{id:int}")]
     public async Task<IActionResult> Document(int id)
     {
-        var document = await _documentAssetRepository.GetDocumentAssetRenderDetailsByIdAsync(id);
+        var document = await _contentRepository
+            .DocumentAssets()
+            .GetById(id)
+            .AsRenderDetails()
+            .ExecuteAsync();
         var url = _contentRouteLibrary.DocumentAssetDownload(document);
         var absoluteUrl = _contentRouteLibrary.ToAbsolute(url);
 
@@ -117,7 +122,6 @@ public class ExampleController : Controller
         });
     }
 }
-
 ```
 
 ### Routing view helper

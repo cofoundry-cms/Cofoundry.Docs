@@ -11,19 +11,19 @@ using Cofoundry.Core.BackgroundTasks;
 
 public class ImportDataBackgroundTask : IAsyncRecurringBackgroundTask
 {
-    private readonly ICommandExecutor _commandExecutor;
+    private readonly IDomainRepository _domainRepository;
 
     public ImportDataBackgroundTask(
-        ICommandExecutor commandExecutor
+        IDomainRepository domainRepository
         )
     {
-        _commandExecutor = commandExecutor;
+        _domainRepository = domainRepository;
     }
 
     public Task ExecuteAsync()
     {
         var command = new ImportDataCommand();
-        return _commandExecutor.ExecuteAsync(command);
+        return _domainRepository.ExecuteCommandAsync(command);
     }
 }
 ```
