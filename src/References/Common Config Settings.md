@@ -18,10 +18,10 @@ These settings control the background task that runs to clean up deleted asset f
 
 ## Asset File Settings
 
-- **Cofoundry:AssetFiles:FileExtensionValidation** Indicates the type of validation to perform against a file extension and is used in combination with the values in the  `FileExtensionValidationList` setting. The default is `UseBlacklist`, and other options are `UseWhitelist` or `Disable`.
-- **Cofoundry:AssetFiles:FileExtensionValidationList** The list of file extensions to use when validating an uploaded file by it's file extension. By default this is a list of potentially harmful file extensions and is treated as a blacklist, but the `FileExtensionValidation` setting can be used to change this  behavior to interpret it as a whitelist, or disabled this validation entirely
-- **Cofoundry:AssetFiles:MimeTypeValidation** Indicates the type of validation to perform against a mime type and is used in combination with the values in the `MimeTypeValidationList` setting. The default is `UseBlacklist`, and other options are `UseWhitelist` or `Disable`.
-- **Cofoundry:AssetFiles:FileExtensionValidationList** The list of mime types to use when validating an uploaded file by it's mime type. By default this is a list of potentially  harmful mime types and is treated as a blacklist, but the `MimeTypeValidation` setting can be used to change this behavior to interpret it as a whitelist, or disabled this validation entirely.
+- **Cofoundry:AssetFiles:FileExtensionValidation** Indicates the type of validation to perform against a file extension and is used in combination with the values in the  `FileExtensionValidationList` setting. The default is `UseBlocklist`, and other options are `UseAllowlist` or `Disable`.
+- **Cofoundry:AssetFiles:FileExtensionValidationList** The list of file extensions to use when validating an uploaded file by it's file extension. By default this is a list of potentially harmful file extensions and is treated as a blocklist, but the `FileExtensionValidation` setting can be used to change this  behavior to interpret it as an allowlist, or disabled this validation entirely
+- **Cofoundry:AssetFiles:MimeTypeValidation** Indicates the type of validation to perform against a mime type and is used in combination with the values in the `MimeTypeValidationList` setting. The default is `UseBlocklist`, and other options are `UseAllowlist` or `Disable`.
+- **Cofoundry:AssetFiles:FileExtensionValidationList** The list of mime types to use when validating an uploaded file by it's mime type. By default this is a list of potentially  harmful mime types and is treated as a blocklist, but the `MimeTypeValidation` setting can be used to change this behavior to interpret it as an allowlist, or disabled this validation entirely.
 
 ## AuthenticationSettings
 
