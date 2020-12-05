@@ -1,8 +1,21 @@
 [
-	"Getting Started",
-	"Content Management",
-	"Framework",
-	"Admin Panel",
-	"Plugins",
-	"References"
+	"Routing",
+	"Pages",
+	"Page Templates",
+	"Page Block Types",
+	"Cofoundry View Helper",
+	"Accessing Data Programatically",
+	"Custom Entities",
+	"Custom Entity Pages",
+	"Images",
+	"Documents",
+	"Custom Error Pages",
+	"SEO",
+	"Locales & Localization",
+	"Data Model Annotations",
+	"User Areas",
+	"Rewrite Rules",
+	"Custom View Model Types",
+	"Entity Versioning",
+	"Disabling Features"
 ]

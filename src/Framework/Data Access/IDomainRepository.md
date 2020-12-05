@@ -36,7 +36,7 @@ Executing the queries in this way allows you to benefit from many of the additio
 
 ### Mapping
 
-Queries executed using `WithQuery` can benefit from the same mapping features found in [content repository queries](/content-management/accessing-data-progamatically):
+Queries executed using `WithQuery` can benefit from the same mapping features found in [content repository queries](/content-management/accessing-data-programatically):
 
 ```csharp
 var results = await _domainRepository
@@ -55,7 +55,7 @@ Execution of queries and commands is restricted by [permissions](/framework/role
 An example of when this might be useful would be registering a new user from a public sign-up form. The anonymous user role does not typically have permissions to create a user, so we'd need to elevate permissions:
 
 ```csharp
-public async Task<IActionResult> RegisterUser(string email, string password)
+public async Task RegisterUser(string email, string password)
 {
     var exampleRole = await _advancedContentRepository
         .Roles()
