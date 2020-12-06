@@ -1,4 +1,4 @@
-Cofoundry is an open source .NET application framework and content management platform. Whilst content management and website tools are a large part of Cofoundry, the functionality is entirely optional and our base framework is available to you to use in any application that references .NET Core 3.1.
+﻿Cofoundry is an open source .NET application framework and content management platform. Whilst content management and website tools are a large part of Cofoundry, the functionality is entirely optional and our base framework is available to you to use in any application that references .NET Core 3.1.
 
 We see the role of developing an application as very separate from managing content and so we don't squeeze everything into the same management GUI, instead we focus on modular and extensible code-first tools for building sites and a simple, clean interface for managing them.
 
@@ -18,7 +18,7 @@ Content editors benefit from inline page editing which makes it really easy to s
 
 Cofoundry includes many tools, helpers and abstractions to solve problems that are common to many applications such as sending [mail](/framework/mail), running [background tasks](/framework/background-tasks), [applying updates automatically](/framework/auto-update) and managing files. 
 
-Also included are tools and helpers that represent our approach to structuring code such as our [CQS](/framework/CQS) framework, modular registrations and WebApi helpers. We realize however that development style and architecture can be a personal choice and so we keep their use optional.
+Also included are tools and helpers that represent our approach to structuring code such as our [CQS](/framework/data-access/CQS) framework, modular registrations and WebApi helpers. We realize however that development style and architecture can be a personal choice and so we keep their use optional.
 
 The aim is for Cofoundry to augment your existing development skills, without getting in the way of building an application with the tools and methodologies you know.
 

@@ -20,7 +20,7 @@ Cofoundry is primarily a CMS and this section covers all the content manageable 
 
 The content management features of Cofoundry are built on a base framework of tools that you can use to rapidly build out your application using a structured and modular methodology.
 
-This includes documentation features such as [mail](framework/mail), [roles & permissions](framework/roles-and-permissions) and [background tasks](framework/background-tasks) as well as lower level elements such as our [CQS implementation](framework/cqs), [data access APIs](framework/data-access) and [auto-update framework](framework/auto-update).
+This includes documentation features such as [mail](framework/mail), [roles & permissions](framework/roles-and-permissions) and [background tasks](framework/background-tasks) as well as lower level elements such as our [CQS implementation](framework/data-access/cqs), [data access APIs](framework/data-access) and [auto-update framework](framework/auto-update).
 
 [Go to section](framework)
 

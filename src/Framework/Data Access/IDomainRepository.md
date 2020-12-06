@@ -36,7 +36,7 @@ Executing the queries in this way allows you to benefit from many of the additio
 
 ### Mapping
 
-Queries executed using `WithQuery` can benefit from the same mapping features found in [content repository queries](/content-management/accessing-data-programatically):
+Queries executed using `WithQuery` can benefit from the same mapping features found in [content repository queries](/content-management/accessing-data-programmatically):
 
 ```csharp
 var results = await _domainRepository

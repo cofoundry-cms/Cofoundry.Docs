@@ -34,7 +34,7 @@ public class AddBlogPostHandler
 
 ## Accessing via Repositories
 
-Instead of using `ITransactionScopeManager` directly, it's often simpler to access this functionality from our [repository classes](/content-management/accessing-data-programatically) such as [`IDomainRepository`](idomainrepository). In this case, the database connection associated with the ambient Cofoundry DbContext is used.
+Instead of using `ITransactionScopeManager` directly, it's often simpler to access this functionality from our [repository classes](/content-management/accessing-data-programmatically) such as [`IDomainRepository`](idomainrepository). In this case, the database connection associated with the ambient Cofoundry DbContext is used.
 
 ```csharp
 public class TransactionExample

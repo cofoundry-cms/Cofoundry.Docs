@@ -29,7 +29,7 @@ public class MarketingRole : IRoleDefinition
 
     /// <summary>
     /// The role code is a unique three letter code that can be used to reference the
-    /// role programatically. The code must be unique and convention is to use upper 
+    /// role programmatically. The code must be unique and convention is to use upper 
     /// case, although code matching is case insensitive.
     /// </summary>
     public string RoleCode => MarketingRoleCode;
@@ -127,7 +127,7 @@ There are a number of ways to enforce a permission:
 
 #### IPermissionRestrictedCommandHandler & IPermissionRestrictedQueryHandler
 
-Permissions enforcement is built right into the [CQS Framework](CQS) we use to structure data access. 
+Permissions enforcement is built right into the [CQS Framework](data-access/CQS) we use to structure data access. 
 
 The most common way to enforce a permission will be implement `IPermissionRestrictedCommandHandler` or `IPermissionRestrictedQueryHandler` on your command/query handler. When implemented this will automatically call the `GetPermissions` method on the handler to enforce any permissions you return. 
 
