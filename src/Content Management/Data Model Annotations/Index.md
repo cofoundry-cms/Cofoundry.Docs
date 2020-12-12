@@ -16,7 +16,7 @@ Cofoundry has a range of built in data annotations that either enhance existing 
 
 #### UI/Validation Attributes
 
-- **CheckboxList:** Use this to decorate a collection property to indicate it should be rendered as a list of checkbox inputs in the admin UI. The collection type  should use the same type as the associated option values. The option source could be an `Enum` type, or a class that inherits from either `IListOptionSource` (a static set of options) or `IListOptionApiSource` (options generated from an API request).
+- **[CheckboxList](data-model-annotations/selection-lists#checkboxlist):** Use this to decorate a collection property to indicate it should be rendered as a list of checkbox inputs in the admin UI. Specify an option source to describe the items to display in the list.
 - **Color:** Use this to decorate a string field and provide a UI hint to the admin interface to display an html editor field. Toolbar options can be specified in the constructor and the CustomToolbar property can be used to show a completely custom toolbar.
 - **[CustomEntity](data-model-annotations/Custom-Entities):** Use this to decorate an integer and indicate that it should be the id for a custom entity of a specific type.
 - **[CustomEntityCollection](data-model-annotations/Custom-Entities#customentitycollection):** Allows a user to pick multiple custom entities of a specific type, which can optionally have 'drag and drop' ordering. Designed to be applied to an `ICollection<int>` property.
@@ -34,8 +34,8 @@ Cofoundry has a range of built in data annotations that either enhance existing 
 - **PreviewTitle:** Indicates the property of a model that can be used as a title, name or short textual identifier. Typically this is used in a grid of items to identify the row.
 - **PreviewImage:** Indicates the property of a model that can be used as the main image when displaying the model. Typically this is used in a grid of items to show an image representation of the row.
 - **PreviewDescription:** Indicates the property of a model that can be used as a description field. Typically this is used in a grid of items to describe the item.
-- **RadioListList:** Use this to decorate a collection property to indicate it should be rendered as a radio input list in the admin UI. The collection type should use the same type as the associated option values. The option source could be an `Enum` type, or a class that inherits from either `IListOptionSource` (a static set of options) or `IListOptionApiSource` (options generated from an API request).
-- **SelectListList:** Use this to decorate a collection property to indicate it should be rendered as a select list (drop down list) in the admin UI. The collection type  should use the same type as the associated option values. The option source could be an `Enum` type, or a class that inherits from either `IListOptionSource` (a static set of options) or `IListOptionApiSource` (options generated from an API request).
+- **[RadioListList](data-model-annotations/selection-lists#radiolist):** Use this to decorate a collection property to indicate it should be rendered as a radio input list in the admin UI. Specify an option source to describe the items to display in the list.
+- **[SelectListList:](data-model-annotations/selection-lists#selectlist)** Use this to decorate a collection property to indicate it should be rendered as a select list (drop down list) in the admin UI. Specify an option source to describe the items to display in the list.
 
 #### Special Behaviour Attributes
 
