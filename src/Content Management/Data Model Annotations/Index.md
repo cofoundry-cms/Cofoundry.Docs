@@ -28,7 +28,7 @@ Cofoundry has a range of built in data annotations that either enhance existing 
 - **[Image](/content-management/data-model-annotations/Images):** Use with an (optionally nullable) integer to indicate this is for the id of an ImageAsset. A non-null integer indicates this is a required field. Optional parameters allow the search filter to be restricted e.g. width/height etc
 - **[ImageCollection](/content-management/data-model-annotations/Images#imagecollection):** Use this to decorate an integer array of ImageAssetIds and indicate that it should be a collection of image assets. The editor allows for sorting of linked assets and you can set filters for restricting image sizes.
 - **MultiLineText:** Use this to decorate a string field and provide a UI hint to the admin interface to display a text area field
-- **NestedDataModelCollection:** Use this to decorate a collection of INestedDataModel objects, allowing them to be edited in the admin UI. Optional parameters indicate whether the collection is sortable.
+- **[NestedDataModelCollection](data-model-annotations/nested-data-models):** Use this to decorate a collection of `INestedDataModel` objects, allowing them to be edited in the admin UI.
 - **Number:** Use this to decorate a numeric field and provide a UI hint to the admin interface to display an html5 number field. The step property can be used to specify the precision of the number e.g. 2 decimal places
 - **Placeholder:** Use this to provide a UI hint to the admin interface to add a placeholder attribute to an html input field.
 - **PreviewTitle:** Indicates the property of a model that can be used as a title, name or short textual identifier. Typically this is used in a grid of items to identify the row.
@@ -37,59 +37,11 @@ Cofoundry has a range of built in data annotations that either enhance existing 
 - **[RadioListList](data-model-annotations/selection-lists#radiolist):** Use this to decorate a collection property to indicate it should be rendered as a radio input list in the admin UI. Specify an option source to describe the items to display in the list.
 - **[SelectListList:](data-model-annotations/selection-lists#selectlist)** Use this to decorate a collection property to indicate it should be rendered as a select list (drop down list) in the admin UI. Specify an option source to describe the items to display in the list.
 
-#### Special Behaviour Attributes
+#### Special Behavior Attributes
 
 - **EntityDependency:** This can be used to decorate an integer id property that links to another entity. The entity must have a definition that implements `IDependableEntityDefinition`. Defining relations allow the system to detect and prevent entities used in required fields from being removed.
 - **EntityDependencyCollection:** This can be used to decorate an integer id array property that links to a set of entities. The entity must have a definition that implements `IDependableEntityDefinition`. Defining relations allow the system to detect and prevent entities used in required fields from being removed.
 - **CustomEntityRouteData:** Use this to mark up a property in a custom entity data model, this property will be extracted and added to the cached `CustomEntityRoute` object and therefore make the property available for routing operations without having to re-query the db. E.g. for a blog post custom entity you could mark up a category Id and then use this in an `ICustomEntityRoutingRule` to create a /category/blog-post URL route
-
-## Nested Data Models
-
-Cofoundry allows you to nest data models, which is a simple and flexible way to create more complex data with an auto-generating admin interface. Nested data models should implement the `INestedDataModel` interface, and can then be included as a child property of your data model. 
-
-The `NestedDataModelCollection` data attribute is used to markup the property and tell the admin UI to render an editor that let's you update the collection.
-
-A good example of this is creating a page block type data model for a carousel, which contains a collection of items for each slide:
-
-```csharp
-using System.ComponentModel.DataAnnotations;
-using Cofoundry.Domain;
-
-public class CarouselDataModel : IPageBlockTypeDataModel, IPageBlockTypeDisplayModel
-{
-    [MaxLength(100)]
-    [Required]
-    public string Title { get; set; }
-
-    [Required]
-    [NestedDataModelCollection(IsOrderable = true, MinItems = 2, MaxItems = 6)]
-    public ICollection<CarouselItemDataModel> Items { get; set; }
-}
-
-public class CarouselItemDataModel : INestedDataModel
-{
-    [PreviewImage]
-    [Image]
-    public int ImageId { get; set; }
-
-    [PreviewTitle]
-    [Required]
-    [MaxLength(100)]
-    public string Title { get; set; }
-
-    [PreviewDescription]
-    [Required]
-    [MultiLineText]
-    [MaxLength(200)]
-    public string Summary { get; set; }
-}
-```
-
-Note that you can optionally specify whether the nested collection is sortable, and specify a minimum and maximum number of items in the collection.
-
-You can also use the *preview* set of attributes to control which properties display as columns in the selection grid in the admin UI e.g. `PreviewTitle`, `PreviewDescription` or `PreviewImage`. If no preview attributes are found, it will look for a property named `Title` or fallback to displaying "Item 1", "Item 2" etc..
-
-For more information we have a detailed [blog post on nested data models](https://www.cofoundry.org/blog/14/introducing-nested-data-models) with more examples.
 
 ## Creating Your Own Attributes
 
