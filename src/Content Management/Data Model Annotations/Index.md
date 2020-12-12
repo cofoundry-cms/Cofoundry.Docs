@@ -31,9 +31,9 @@ Cofoundry has a range of built in data annotations that either enhance existing 
 - **[NestedDataModelCollection](data-model-annotations/nested-data-models):** Use this to decorate a collection of `INestedDataModel` objects, allowing them to be edited in the admin UI.
 - **Number:** Use this to decorate a numeric field and provide a UI hint to the admin interface to display an html5 number field. The step property can be used to specify the precision of the number e.g. 2 decimal places
 - **Placeholder:** Use this to provide a UI hint to the admin interface to add a placeholder attribute to an html input field.
-- **PreviewTitle:** Indicates the property of a model that can be used as a title, name or short textual identifier. Typically this is used in a grid of items to identify the row.
-- **PreviewImage:** Indicates the property of a model that can be used as the main image when displaying the model. Typically this is used in a grid of items to show an image representation of the row.
-- **PreviewDescription:** Indicates the property of a model that can be used as a description field. Typically this is used in a grid of items to describe the item.
+- **[PreviewTitle](data-model-annotations/display-preview):** Indicates the property of a model that can be used as a title, name or short textual identifier. Typically this is used in a grid of items to identify the row.
+- **[PreviewImage](data-model-annotations/display-preview):** Indicates the property of a model that can be used as the main image when displaying the model. Typically this is used in a grid of items to show an image representation of the row.
+- **[PreviewDescription](data-model-annotations/display-preview):** Indicates the property of a model that can be used as a description field. Typically this is used in a grid of items to describe the item.
 - **[RadioListList](data-model-annotations/selection-lists#radiolist):** Use this to decorate a collection property to indicate it should be rendered as a radio input list in the admin UI. Specify an option source to describe the items to display in the list.
 - **[SelectListList:](data-model-annotations/selection-lists#selectlist)** Use this to decorate a collection property to indicate it should be rendered as a select list (drop down list) in the admin UI. Specify an option source to describe the items to display in the list.
 

@@ -35,7 +35,7 @@ public class CarouselSlideDataModel : INestedDataModel
 }
 ```
 
-Note that the *preview* set of attributes can be used to control which properties display as columns in a selection grid.
+Note that the [display preview](Display-Preview) set of attributes can be used to control which properties display as columns in a selection grid.
 
 The next section shows you how you can use this data model to create the data model for a carousel. 
 
