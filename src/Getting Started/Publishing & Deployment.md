@@ -1,4 +1,4 @@
-The process for publishing and deploying a Cofoundry website is the same as [deploying regular asp.net core website](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/). There are however some things to consider:
+﻿The process for publishing and deploying a Cofoundry website is the same as [deploying regular asp.net core website](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/). There are however some things to consider:
 
 ## View pre-compilation
 
@@ -29,4 +29,4 @@ This is an area we intended to work on to reduce friction, and it is also someth
 
 ## Multi-instance & web farm deployment
 
-Multi-instance deployment is not yet supported, mainly because we need to add a distributed cache implementation for `IObjectCacheFactory`. This shouldn't be too difficult to do, it just isn't done yet! See [issue #46](https://github.com/cofoundry-cms/cofoundry/issues/46).
+If you're deploying to a multi-instance environment, you'll need to configure the cache to support this, otherwise you'll have issues with stale data. See the [caching docs](/framework/caching) for more details.

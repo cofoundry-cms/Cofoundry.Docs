@@ -81,6 +81,11 @@ Settings that contorl the [auto-update process](/framework/auto-update) that run
 - **Cofoundry:ImageAssets:MaxResizeHeight** The maximum height in pixels of that an image is permitted to be resized to. Defaults to 3200.
 - **Cofoundry:ImageAssets:CacheMaxAge**  The default max-age to use for the cache control header, measured in seconds. Image asset file URLs are designed to be permanently cacheable so the default value is 1 year.
 
+## InMemoryObjectCacheSettings
+
+These settings are specificaly for the default in-memory object cache implementation.
+
+- **Cofoundry:InMemoryObjectCache:CacheMode**  The cache mode that should be used to determine the lifetime of data stored in the cache. Defaults to InMemoryObjectCacheMode.Persitent, which is the preferred mode for a single-server deployment. InMemoryObjectCacheMode.PerScope can be used to enable a simple multi-server deployment.
 
 ## MailSettings
 
