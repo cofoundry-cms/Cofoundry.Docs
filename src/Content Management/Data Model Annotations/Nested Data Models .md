@@ -2,7 +2,12 @@
 
 This is useful for creating rich data structures for your block types and custom entities, and enables the creation of more complex components such as multi-layered menus, advanced carousels and other nested content scenarios.
 
-Currently the only data model attribute that supports nested data models is the [`[NestedDataModelCollection]`](#nesteddatamodelcollection) attribute.
+There are two types of nested data model annotations:
+
+- [`[NestedDataModelCollection]`](#nesteddatamodelcollection)
+- [`[NestedDataModelMultiTypeCollection]`](#nesteddatamodelmultitypecollection)
+
+Each of these annotations are explained further down the page, but first we need to understand how to define a nested data model.
 
 ## Defining a Nested Data Model
 
@@ -41,7 +46,7 @@ The next section shows you how you can use this data model to create the data mo
 
 ## [NestedDataModelCollection]
 
-The `[NestedDataModelCollection]` attribute is used to markup a property that contains a collection of nested data model types.
+The `[NestedDataModelCollection]` attribute is used to mark a property that contains a collection of nested data model types.
 
 #### Optional Properties
 
@@ -69,6 +74,87 @@ public class CarouselDataModel : IPageBlockTypeDataModel, IPageBlockTypeDisplayM
 }
 ```
 
-#### Further Examples
+
+## [NestedDataModelMultiTypeCollection]
+
+The `[NestedDataModelMultiTypeCollection]` data annotation can be used to decorate a collection of `NestedDataModelMultiTypeItem` objects, indicating the property represents a set of nested data models of mixed types. The types must be defined in the attribute constructor by passing in a type reference for each nested data model you want to be able to add.
+
+#### Optional Properties
+
+- **MinItems:** The minimum number of items that need to be included in the collection. 0 indicates no minimum.
+- **MaxItems:** The maximum number of items that can be included in the collection. 0 indicates no maximum.
+- **IsOrderable:** Set to true to allow the collection ordering to be set by an editor using a drag and drop interface. Defaults to false.
+- **TitleColumnHeader:** The text to use in the column header for the title field. Defaults to "Title".
+- **DescriptionColumnHeader:** The text to use in the column header for the description field. Defaults to "Description".
+- **ImageColumnHeader:** The text to use in the column header for the image field. Defaults to empty string.
+- **TypeColumnHeader:** The text to use in the column header for the model type field. Defaults to "Type".
+
+#### Example
+
+The following example shows a property that links to different types of social media profiles. 
+
+```csharp
+using Cofoundry.Domain;
+
+public class ExampleDataModel : ICustomEntityDataModel
+{
+    [NestedDataModelMultiTypeCollection(
+        new Type[] {
+            typeof(FacebookProfileDataModel),
+            typeof(TwitterProfileDataModel),
+            typeof(LinkedInProfileDataModel),
+            typeof(BlogLinkDataModel)
+        },
+        IsOrderable = true,
+        MinItems = 1,
+        MaxItems = 3,
+        TitleColumnHeader = "Profile"
+        )]
+    public ICollection<NestedDataModelMultiTypeItem> SocialProfiles { get; set; }
+}
+```
+
+Output:
+
+![Social profiles editor example using the nested data model multi-type collection attribute.](images/nested-data-model-multi-type-collection-example.png)
+
+The nested data models references in the example are shown below:
+
+```csharp
+using Cofoundry.Domain;
+
+[Display(Name = "Facebook")]
+public class FacebookProfileDataModel : INestedDataModel
+{
+    [Display(Name = "Facebook Id")]
+    [PreviewTitle]
+    public string FacebookId { get; set; }
+}
+
+[Display(Name = "Twitter")]
+public class TwitterProfileDataModel : INestedDataModel
+{
+    [PreviewTitle]
+    public string TwitterHandle { get; set; }
+}
+
+[Display(Name = "LinkedIn")]
+public class LinkedInProfileDataModel : INestedDataModel
+{
+    [Display(Name = "Profile Id")]
+    [PreviewTitle]
+    public string ProfileId { get; set; }
+}
+
+[Display(Name = "Blog")]
+public class BlogLinkDataModel : INestedDataModel
+{
+    [PreviewTitle]
+    [Url]
+    public string Url { get; set; }
+}
+```
+
+## Further Examples
 
 You can find a full walk through of nested data models on [our blog](https://www.cofoundry.org/blog/14/introducing-nested-data-models), and more examples in our [Menus](https://github.com/cofoundry-cms/Cofoundry.Samples.Menus) and [Page Block Types](https://github.com/cofoundry-cms/Cofoundry.Samples.PageBlockTypes) samples projects.
