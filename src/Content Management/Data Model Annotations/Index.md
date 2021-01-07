@@ -23,7 +23,10 @@ Cofoundry has a range of built in data annotations that either enhance existing 
 - **[CustomEntity](data-model-annotations/Custom-Entities):** Use this to decorate an integer property and indicate that it should be the id for a custom entity of a specific type.
 - **[CustomEntityCollection](data-model-annotations/Custom-Entities#customentitycollection):** Allows a user to pick multiple custom entities of a specific type, which can optionally have 'drag and drop' ordering. Designed to be applied to an `ICollection<int>` property.
 - **[CustomEntityMultiTypeCollection](data-model-annotations/Custom-Entities#customentitymultitypecollection):** Use this to decorate a collection of `CustomEntityIdentity` objects, indicating the property represents a set of custom entities of mixed types. Optional parameters indicate whether the collection is sortable.
-- **Date:** Use this to decorate a DateTime field and provide a UI hint to the admin interface to display a date picker field
+- **[DateAndTime](data-model-annotations/dates-and-times#dateandtime):** Use this to decorate a DateTime, DateTimeOffset or string property and provide a UI hint to the admin interface to display a timezone-insensitive date and time picker field.
+- **[DateAndTimeLocal](data-model-annotations/dates-and-times#dateandtimelocal):** Use this to decorate a DateTime, DatimeOffset or string property and provide a UI hint to the admin interface to display a timezone-sensitive date and time picker field.
+- **[Date](data-model-annotations/dates-and-times#date):** Use this to decorate a DateTime, DateTimeOffset or string property and provide a UI hint to the admin interface to display a timezone-insensitive date picker field.
+- **[DateLocal](data-model-annotations/dates-and-times#datelocal):** Use this to decorate a DateTime, DatimeOffset or string property and provide a UI hint to the admin interface to display a timezone-sensitive date picker field.
 - **[Document](/content-management/data-model-annotations/Documents):** Use with an (optionally nullable) integer to indicate this is for the id of a document asset.
 - **[DocumentCollection](/content-management/data-model-annotations/Documents#documentcollection):** This data annotation can be used to decorate a collection of integers, indicating the property represents a set of document asset ids. The editor allows for sorting and you can set filters for restricting file types.
 - **[Html](/content-management/data-model-annotations/Html):** Use this to decorate a string property and provide a UI hint to the admin interface to display an html editor field. Toolbar options can be specified in the constructor and the CustomToolbar property can be used to show a completely custom toolbar.
@@ -38,6 +41,7 @@ Cofoundry has a range of built in data annotations that either enhance existing 
 - **[PreviewDescription](data-model-annotations/display-preview):** Indicates the property of a model that can be used as a description field. Typically this is used in a grid of items to describe the item.
 - **[RadioListList](data-model-annotations/selection-lists#radiolist):** Use this to decorate a collection property to indicate it should be rendered as a radio input list in the admin UI. Specify an option source to describe the items to display in the list.
 - **[SelectListList:](data-model-annotations/selection-lists#selectlist)** Use this to decorate a collection property to indicate it should be rendered as a select list (drop down list) in the admin UI. Specify an option source to describe the items to display in the list.
+- **[Time](data-model-annotations/dates-and-times#time):** Use this to decorate a TimeSpan or string property and provide a UI hint to the admin interface to display a time picker field.
 
 #### Special Behavior Attributes
 
