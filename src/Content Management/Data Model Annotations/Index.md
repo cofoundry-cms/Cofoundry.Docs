@@ -20,7 +20,6 @@ The following .NET DataAnnotations will also provide client-side enhancements in
 - `[Required]`: Validates that a field has a value.
 - `[Url]`: Displays a url input field.
 
-
 ## Built-in Cofoundry Attributes
 
 Cofoundry has a range of built in data annotations that either enhance existing types or compliment Cofoundry entities like images and documents. 
