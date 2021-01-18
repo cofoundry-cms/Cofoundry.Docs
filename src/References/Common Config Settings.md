@@ -1,6 +1,7 @@
 ﻿## Admin Settings
 
 - **Cofoundry:Admin:Disabled** Disables the admin panel, removing all routes from the routing table and disabling login.
+- **Cofoundry:Admin:AutoInjectVisualEditor**  Indicates whether to inject the visual editor into your content managed pages and other MVC results. Enabled by default.
 - **Cofoundry:Admin:DirectoryName** The path to the admin panel. Defaults to "admin". Can only contain letters, numbers and dashes.
 
 ## Asset File Cleanup Settings
