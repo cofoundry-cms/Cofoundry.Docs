@@ -74,7 +74,7 @@ Like *Page Templates*, *Page Block Types* are automatically scanned and added at
 
 ### DataModel DataAnnotations
 
-Most existing data annotations like `[Required]`, `[MaxLength(10)]` and `[Display(Name="Title")]` should work as expected, but there are also some Cofoundry specific annotations like `[Image]` and `[CustomEntityCollection]`. You can also create your own, or implement an `IModelMetaDataDecorator` to add additional metadata to an existing attribute.
+Most existing data annotations like `[Required]`, `[MaxLength(10)]` and `[Display(Name="Title")]` will work as expected, but there are also Cofoundry specific annotations like `[Date]`, `[Image]` and `[CustomEntityCollection]`. You can also create your own, or implement an `IModelMetaDataDecorator` to add additional metadata to an existing attribute.
 
 For more information see [Data Model Annotations](Data-Model-Annotations)
 

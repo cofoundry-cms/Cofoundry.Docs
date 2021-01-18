@@ -53,6 +53,10 @@ The `[CustomEntityMultiTypeCollection]` data annotation can be used to decorate 
 #### Optional parameters:
 
 - **IsOrderable:** Set to true to allow the collection ordering to be set by an editor using a drag and drop interface. Defaults to false.
+- **TitleColumnHeader:** The text to use in the column header for the title field. Defaults to "Title".
+- **DescriptionColumnHeader:** The text to use in the column header for the description field. Defaults to "Description".
+- **ImageColumnHeader:** The text to use in the column header for the image field. Defaults to empty string.
+- **TypeColumnHeader:** The text to use in the column header for the model type field. Defaults to "Type".
 
 #### Example:
 

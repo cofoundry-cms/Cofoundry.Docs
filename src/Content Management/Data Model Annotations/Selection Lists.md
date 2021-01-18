@@ -173,32 +173,24 @@ Using an API source gives you the flexibility of generating your list options fr
 
 #### Creating an API
 
-You'll first need to create your API endpoint. There are two main requirements here:
+You'll first need to create your API endpoint. The response will need to conform the following constraints:
 
-- The endpoint must be in the "/admin/" directory (see issue [320](https://github.com/cofoundry-cms/cofoundry/issues/320#issuecomment-493667098))
-- The response must be JSON and nested in a `data` object. You can make use of `IApiResponseHelper` to ensure you response is in the correct format.
+- The data should an array of models. `Object` is used in the example below for simplicity.
+- The data can be at the root of the JSON document, or can be nested in a `data` property (lower case).
 
-Here's an example API that uses `IApiResponseHelper` to format the response:
+In the example below we inherit from `BaseAdminApiController` to ensure that the API is only permitted to be accessed by users logged into the Cofoundry admin panel.
 
 ```csharp
-using Cofoundry.Web;
 using Microsoft.AspNetCore.Mvc;
+using Cofoundry.Web.Admin;
 
-public class PetsController : Controller
+[Route("admin/api/pets")]
+[ApiController]
+public class PetsApiController : BaseAdminApiController
 {
-    private readonly IApiResponseHelper _apiResponseHelper;
-
-    public PetsController(
-        IApiResponseHelper apiResponseHelper
-        )
+    public ActionResult<object[]> Get()
     {
-        _apiResponseHelper = apiResponseHelper;
-    }
-
-    [Route("admin/api/pets")]
-    public IActionResult Pets()
-    {
-        var results = new object[] 
+        var result = new object[]
         {
             new { Id = 1, Title = "Dog" },
             new { Id = 2, Title = "Cat" },
@@ -206,7 +198,7 @@ public class PetsController : Controller
             new { Id = 4, Title = "Stick Insect" }
         };
 
-        return _apiResponseHelper.SimpleQueryResponse(this, results);
+        return result;
     }
 }
 ```
@@ -214,26 +206,24 @@ public class PetsController : Controller
 This example API returns this response:
 
 ```json
-{
-  "data": [
+[
     {
-      "id": 1,
-      "title": "Dog"
+        "id": 1,
+        "title": "Dog"
     },
     {
-      "id": 2,
-      "title": "Cat"
+        "id": 2,
+        "title": "Cat"
     },
     {
-      "id": 3,
-      "title": "Fish"
+        "id": 3,
+        "title": "Fish"
     },
     {
-      "id": 4,
-      "title": "Stick Insect"
+        "id": 4,
+        "title": "Stick Insect"
     }
-  ]
-}
+]
 ```
 
 #### Linking your API using IListOptionApiSource
@@ -264,5 +254,4 @@ public class ExampleDataModel : ICustomEntityDataModel
     [CheckboxList(typeof(PetsApiOptionSource))]
     public ICollection<int> PetIds { get; set; }
 }
-
 ```

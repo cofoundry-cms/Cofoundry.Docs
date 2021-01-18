@@ -75,9 +75,9 @@ Settings that contorl the [auto-update process](/framework/auto-update) that run
 - **Cofoundry:ImageAssets:Disabled** Disables image asset functionality, removing it from the admin panel and skipping registration of image asset routes. Access to images is still possible from code if you choose to use those APIs from a user account with permissions.
 - **Cofoundry:ImageAssets:EnableCompatibilityRoutesFor0_4** Enables image asset routes that work for URLs generated prior to v0.4 of Cofoundry. It isn't recommended to enable these unless you really need to because the old routes were vulnerable to enumeration.
 - **Cofoundry:ImageAssets:DisableResizing** Indicates whether dynamic image resizing should be disabled. Defaults to false. An exception will be thrown if image resizing is requested but not enabled.
-- **Cofoundry:ImageAssets:MaxUploadWidth** The maximum size in pixels of the image that can be uploaded. Defaults to 3200.
-- **Cofoundry:ImageAssets:MaxUploadHeight** The maximum height in pixels of the image that can be uploaded. Defaults to 3200.
-- **Cofoundry:ImageAssets:MaxUploadWidth** The maximum width in pixels of that an image is permitted to be resized to. Defaults to 3200.
+- **Cofoundry:ImageAssets:MaxUploadWidth** The maximum size in pixels of the image that can be uploaded. Defaults to 3200. If uploading via the admin panel, oversized images will be resized automatically before uploading.
+- **Cofoundry:ImageAssets:MaxUploadHeight** The maximum height in pixels of the image that can be uploaded. Defaults to 3200. Defaults to 3200. If uploading via the admin panel, oversized images will be resized automatically before uploading.
+- **Cofoundry:ImageAssets:MaxResizeWidth** The maximum width in pixels of that an image is permitted to be resized to. Defaults to 3200.
 - **Cofoundry:ImageAssets:MaxResizeHeight** The maximum height in pixels of that an image is permitted to be resized to. Defaults to 3200.
 - **Cofoundry:ImageAssets:CacheMaxAge**  The default max-age to use for the cache control header, measured in seconds. Image asset file URLs are designed to be permanently cacheable so the default value is 1 year.
 

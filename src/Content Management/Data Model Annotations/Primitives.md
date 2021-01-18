@@ -1,19 +1,12 @@
-﻿Primitive and basic types such as `string` and `int` display using a default editor that corresponds with their type. The default editor can be overriden by adding data annotations.
+﻿Primitive and basic types such as `string` and `int` display using a default editor that corresponds with their type. The default editor can be overridden by adding data annotations.
 
 Supported primitive types include:
 
-- `string`: Displays as a text input
-- `int`: Displays as a number input
 - `bool`: Displays as a checkbox
-
-The following primitives are supported by using the [`[Number]`](#number) data annotation:
-
-- `byte`
-- `short`
-- `long`
-- `float`
-- `double`
-- `decimal`
+- `char`: Displays as a single-character text input
+- `string`: Displays as a text input
+- `byte`, `sbyte`, `short`, `ushort`, `int`, `uint`, `long`, `ulong`: Displays as an integer number input
+- `float`, `double`, `decimal`: Displays as a numerical input
 
 The following data annotations can be used to enhance the standard editors:
 

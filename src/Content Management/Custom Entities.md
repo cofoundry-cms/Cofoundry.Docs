@@ -1,7 +1,7 @@
 ﻿Cofoundry allows you to define custom data types which can be fully managed in the admin panel with minimal configuration. We call these *Custom Entities* and they are useful for quickly defining custom content for your site that isn't easily represented by a page. The classic example is a blog post, but this could easily be a product or other piece of data used in various places around your site. Custom entities have the following features:
 
 - Configuration is done in code via a simple definition class
-- Any custom data you want to add to the custom entity is defined in code in a simple object, which is persisted as json in the database.
+- Any custom data you want to add to the custom entity is defined in code in a simple object, which is persisted as JSON in the database.
 - Data is versioned using the same draft/publish system as Pages
 - A section in the admin panel is created for each custom entity which allows you to search, view and manage them.
 - There are built in editors for all the core data types (strings, ints, images, image collections, custom entity collections). Editor behavior is controlled via data attributes, and you can make you own if you need to support a custom editor specific to your application.
@@ -30,7 +30,7 @@ The data model class will allow us to define any additional properties we want t
 3. Add validation attributes
 4. Add UI MetaData attributes, see a list of options [here](/content-management/data-model-annotations).
 
-Example
+Example:
 
 ```csharp
 using Cofoundry.Domain;
@@ -49,7 +49,6 @@ public class CatDataModel : ICustomEntityDataModel
     [ImageCollection]
     public int[] ImageAssetIds { get; set; }
 }
-
 ```
 
 ### Create a Definition
@@ -147,11 +146,37 @@ Implement this interface to define custom terminology to use in the UI for a cus
 
 - **CustomTerms:** A dictionary of any custom terminology to use when displaying the custom entity, e.g. you could replace the terms for "Title" or "Url Slug". You can use the values in `CustomizableCustomEntityTermKeys` constants class for the keys.
 
+## Additional Data Model Features
+
+### Default Property Values
+
+Any default values you set in a data model will be used to populate a new instance of your model in the admin panel.
+
+Example:
+
+```csharp
+using Cofoundry.Domain;
+using System.ComponentModel.DataAnnotations;
+
+public class DogDataModel : ICustomEntityDataModel
+{
+    public DogDataModel()
+    {
+        DateOfBirth = DateTime.UtcNow;
+    }
+
+    [Date]
+    public DateTime DateOfBirth { get; set; }
+
+    [Color]
+    public string FurColor { get; set; } = "#663399";
+}
+```
 ## Accessing & Displaying Custom Entity Data
 
 Custom entity data can be used in a number of different ways:
 
-- **Repository Access:** `ICustomEntityRepository` gives you a wide range of data access APIs that you can use in any way you choose.
+- **Repository Access:** `IContentRepository` gives you a wide range of data access APIs that you can use in any way you choose. See [Accessing Data Programmatically](Accessing Data Programmatically) for more details.
 - **Page Blocks:** When creating data models for page block types, you can use the `[CustomEntity]`, `[CustomEntityCollection]` or `[CustomEntityMultiTypeCollection]` data annotations to create data fields that link to custom entities.
 - **Custom Entity Pages:** To dynamically create a details page for every custom entity (e.g. a blog article or product details page) follow the guidance [here](custom-entity-pages).
 

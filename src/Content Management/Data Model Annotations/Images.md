@@ -81,6 +81,7 @@ The `[ImageCollection]` data annotation can be used to decorate a collection of 
 
 #### Optional parameters
 
+- **Tags:** Filters the image selection to only show images with tags that match this value.
 - **Width:** Filters the image selection to only show items with a width exactly the same as this value.
 - **Height:** Filters the image selection to only show items with a height exactly the same as this value.
 - **MinWidth:** Filters the image selection to only show items with a width the same or greater than this value.

@@ -12,5 +12,6 @@
 	"Caching",
 	"Html Sanitizer",
 	"Static Files",
+	"JSON Configuration",
 	"Paged Queries"
 ]
