@@ -6,13 +6,16 @@ Currently Available Plugins:
 
 - **[Cofoundry.Plugins.Mail.MailKit](https://github.com/cofoundry-cms/Cofoundry.Plugins.Mail.MailKit):** Dispatch mail using MailKit, a cross platform alternative to `System.Net.Mail`.
 - **[Cofoundry.Plugins.Mail.SendGrid](https://github.com/cofoundry-cms/Cofoundry.Plugins.Mail.SendGrid):** Dispatch mail using the popular SendGrid service.
-- **[QueuedMail](https://github.com/cofoundry-cms/Cofoundry.Plugins.QueuedMail):** Queues mail for dispatching via a background service, supporting retries and queue management.
 
 ## Mail Templates
 
-In order to send an email you first need to create a mail template. A mail template comprises of a .net class implementing `IMailTemplate` and a pair of accompanying view files, one for the html template and one for the plain text fallback.
+In order to send an email you first need to create a mail template. A mail template comprises of a .NET class implementing `IMailTemplate` and either an HTML view file or a plain text view file, or both.
 
-Here's an example:
+Although most email recipients will be able to view HTML emails, it may be blocked or unreadable by some. A plain text email will have the best change of being delivered and read.
+
+If you create both an HTML and plain text view file then a multi-part email will be sent, where the plain text version is only used as a fallback when the HTML version is not permitted. Using both is good practice and will ensure your email can be received and read by all recipients.
+
+Here's an example of a multi-part email:
 
 **ExampleNotificationMailTemplate.cs**
 
@@ -88,7 +91,7 @@ Cofoundry
 
 #### Template Rendering
 
-Templates are rendered using razor outside of the http request scope using a faked ViewContext. This provides the important benefit of being able to render razor templates outside of a website project, e.g. in a background task or external service. Most razor features should work, however be aware that anything that relies on an http request will fail.
+Templates are rendered using razor, and is done outside of the http request scope using a faked `ViewContext`. This provides the important benefit of being able to render razor templates outside of a web request, e.g. in a background task or external service. Most razor features should work, however be aware that anything that relies on an http request will fail.
 
 You can customize the mail rending process by implementing `IMailViewRenderer` and overriding the base implementation using the [DI system](Dependency-Injection).
 
@@ -98,7 +101,9 @@ Where you place your template files is up to you, but here's two suggested scena
 
 **Simple**
 
-Place your `IMailTemplate` code files with your models or domain and place your template files in your views directory. For an example of this see  [Cofoundry.Samples.SimpleSite](https://github.com/cofoundry-cms/Cofoundry.Samples.SimpleSite)
+Place your `IMailTemplate` code files with your models or domain and place your template files in your views directory. For an example of this see  [Cofoundry.Samples.SimpleSite](https://github.com/cofoundry-cms/Cofoundry.Samples.SimpleSite).
+
+Or if you preferred to keep your files together, you could place them next to each other, as shown in the [Cofoundry.Samples.Mail](https://github.com/cofoundry-cms/Cofoundry.Samples.Mail) sample.
 
 **In a separate project**
 
@@ -125,7 +130,7 @@ public class MailExample
         var template = new ExampleNotificationMailTemplate();
         template.Message = "Wibble, wibble";
 
-        return _mailService.SendAsync("hq@cofoundry.org", template);
+        return _mailService.SendAsync("hq@example.com", template);
     }
 }
 ```
