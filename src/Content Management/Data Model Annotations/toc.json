@@ -1,11 +1,12 @@
 [
 	"Primitives",
+	"Custom Entities",
+	"Dates & Times",
+	"Display Preview",
+	"Documents",
 	"Html",
 	"Images",
-	"Documents",
-	"Selection Lists",
-	"Custom Entities",
 	"Nested Data Models",
-	"Display Preview",
+	"Selection Lists",
 	"Miscellaneous",
 ]
