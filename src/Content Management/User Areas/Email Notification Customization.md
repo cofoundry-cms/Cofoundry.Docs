@@ -1,25 +1,27 @@
-﻿Cofoundry allows you to customize the email notifications sent out by the admin panel. This can be useful to add your own branding or to add your own messaging to the templates.
+﻿Cofoundry uses a default set of mail templates for user account notifications from your custom user area. These default templates are basic and unbranded, so in most cases you'll want to customize them to the unique characteristics of your user area or brand.
 
-This feature is demonstrated in the [Cofoundry.Samples.Mail](https://github.com/cofoundry-cms/Cofoundry.Samples.Mail) sample project.
+This feature is demonstrated in the [Cofoundry.Samples.UserAreas](https://github.com/cofoundry-cms/Cofoundry.Samples.UserAreas) sample project.
 
-## Creating an admin mail template builder
+## Creating a mail template builder
 
-The first step is to override the default mail template builder by creating a class that implements `IUserMailTemplateBuilder<CofoundryAdminUserArea>`.
+Customizing email notifications for your user area is done in a very similar way to [customizing emails for the admin panel](/admin-panel/email-notification-customization).
 
-Once this interface is defined, the Cofoundry DI system will automatically find it and use it to create mail templates for the Cofoundry admin user area.
+The first step is to override the default mail template builder by creating a class that implements `IUserMailTemplateBuilder<TUserAreaDefinition>`.
+
+Once this interface is defined, the Cofoundry DI system will automatically find it and use it to create mail templates for your user area.
 
 Each email notification has it's own builder function with a context parameter that contains all the key data to build that template:
 
 - **BuildNewUserWithTemporaryPasswordTemplateAsync:** The email template that is used when a new user is created with a temporary password. The context contains their temporary password.
 - **BuildPasswordChangedTemplateAsync:** The email template that is used when a user has their password reset by an administrator. The context contains data contains their new temporary password.
-- **BuildPasswordResetByAdminTemplateAsync:** The email template that is used when a user requests to reset their password e.g. via a forgot password page. The context contains the parameters required to build a password reset url.  
+- **BuildPasswordResetByAdminTemplateAsync:** The email template that is used when a user requests to reset their password e.g. via a forgot password page. The context contains the parameters required to build a password reset URL.  
 - **BuildPasswordResetRequestedByUserTemplateAsync:** The email template that is used to notify a user that their password has been changed.
 
-## Making use of ICofoundryAdminMailTemplateBuilder
+## Making use of IDefaultMailTemplateBuilder
 
-Each builder method only needs to return an `IMailTemplate` instance, so you are free to use any template class and build it in any way you want. However, it is more likely that you will want to make adaptations to the existing templates, such as changing the layout, subjects or view files.
+Each builder method only needs to return an `IMailTemplate` instance, so you are free to use any template class and build it in any way you want. However, you may prefer to only make adaptations to the existing templates, such as changing the layout, subjects or view files.
 
-You can take advantage of the the default builder functions by making use of `ICofoundryAdminMailTemplateBuilder`, simply inject it into your builder and use the equivalent methods.
+You can take advantage of the the default builder functions by making use of `IDefaultMailTemplateBuilder<TUserAreaDefinition>`, simply inject it into your builder and use the equivalent methods.
 
 Here is an baseline implementation without any customization:
 
@@ -27,40 +29,40 @@ Here is an baseline implementation without any customization:
 using Cofoundry.Core.Mail;
 using Cofoundry.Domain;
 using Cofoundry.Domain.MailTemplates;
-using Cofoundry.Domain.MailTemplates.AdminMailTemplates;
+using Cofoundry.Domain.MailTemplates.DefaultMailTemplates;
 
-public class AdminMailTemplateBuilder : IUserMailTemplateBuilder<CofoundryAdminUserArea>
+public class MemberMailTemplateBuilder : IUserMailTemplateBuilder<MemberUserAreaDefinition>
 {
-    private readonly ICofoundryAdminMailTemplateBuilder _cofoundryAdminMailTemplateBuilder;
+    private readonly IDefaultMailTemplateBuilder<MemberUserAreaDefinition> _defaultMailTemplateBuilder;
 
-    public AdminMailTemplateBuilder(
-        ICofoundryAdminMailTemplateBuilder cofoundryAdminMailTemplateBuilder
+    public MemberMailTemplateBuilder(
+        IDefaultMailTemplateBuilder<MemberUserAreaDefinition> defaultMailTemplateBuilder
         )
     {
-        _cofoundryAdminMailTemplateBuilder = cofoundryAdminMailTemplateBuilder;
+        _defaultMailTemplateBuilder = defaultMailTemplateBuilder;
     }
 
     public async Task<IMailTemplate> BuildNewUserWithTemporaryPasswordTemplateAsync(NewUserWithTemporaryPasswordTemplateBuilderContext context)
     {
-        var template = await _cofoundryAdminMailTemplateBuilder.BuildNewUserWithTemporaryPasswordTemplateAsync(context);
+        var template = await _defaultMailTemplateBuilder.BuildNewUserWithTemporaryPasswordTemplateAsync(context);
         return template;
     }
 
     public async Task<IMailTemplate> BuildPasswordChangedTemplateAsync(PasswordChangedTemplateBuilderContext context)
     {
-        var template = await _cofoundryAdminMailTemplateBuilder.BuildPasswordChangedTemplateAsync(context);
+        var template = await _defaultMailTemplateBuilder.BuildPasswordChangedTemplateAsync(context);
         return template;
     }
 
     public async Task<IMailTemplate> BuildPasswordResetByAdminTemplateAsync(PasswordResetByAdminTemplateBuilderContext context)
     {
-        var template = await _cofoundryAdminMailTemplateBuilder.BuildPasswordResetByAdminTemplateAsync(context);
+        var template = await _defaultMailTemplateBuilder.BuildPasswordResetByAdminTemplateAsync(context);
         return template;
     }
 
     public async Task<IMailTemplate> BuildPasswordResetRequestedByUserTemplateAsync(PasswordResetRequestedByUserTemplateBuilderContext context)
     {
-        var template = await _cofoundryAdminMailTemplateBuilder.BuildPasswordResetRequestedByUserTemplateAsync(context);
+        var template = await _defaultMailTemplateBuilder.BuildPasswordResetRequestedByUserTemplateAsync(context);
         return template;
     }
 }
@@ -120,6 +122,3 @@ public async Task<IMailTemplate> BuildPasswordResetByAdminTemplateAsync(Password
     return template;
 }
 ```
-
-
-

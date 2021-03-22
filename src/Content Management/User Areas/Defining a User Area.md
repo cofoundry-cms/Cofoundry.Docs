@@ -40,7 +40,7 @@ public class MemberUserArea : IUserAreaDefinition
     
     /// <summary>
     /// Cofoundry creates an auth schema for each user area. Use this property to set this
-    /// user area as the default auth schema, which means the HttpContext.User property will 
+    /// user area as the default auth schema, which means the HttpContext.User property will
     /// be set to this identity.
     /// </summary>
     public bool IsDefaultAuthSchema { get; } = false;
