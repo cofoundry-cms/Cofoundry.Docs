@@ -12,10 +12,10 @@
 - [PageUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageUpdatedMessage.cs)
 - [PageUrlChangedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageUrlChangedMessage.cs)
 - [PageVersionDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionDeletedMessage.cs)
-- [PageVersionModuleAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionModuleAddedMessage.cs)
-- [PageVersionModuleDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionModuleDeletedMessage.cs)
-- [PageVersionModuleMovedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionModuleMovedMessage.cs)
-- [PageVersionModuleUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionModuleUpdatedMessage.cs)
+- [PageVersionBlockAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionBlockAddedMessage.cs)
+- [PageVersionBlockDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionBlockDeletedMessage.cs)
+- [PageVersionBlockMovedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionBlockMovedMessage.cs)
+- [PageVersionBlockUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionBlockUpdatedMessage.cs)
 
 #### Custom Entities
 
@@ -29,10 +29,10 @@
 - [CustomEntityUnPublishedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityUnPublishedMessage.cs)
 - [CustomEntityUrlChangedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityUrlChangedMessage.cs)
 - [CustomEntityDraftVersionDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityDraftVersionDeletedMessage.cs)
-- [CustomEntityVersionModuleAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionModuleAddedMessage.cs)
-- [CustomEntityVersionModuleDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionModuleDeletedMessage.cs)
-- [CustomEntityVersionModuleMovedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionModuleMovedMessage.cs)
-- [CustomEntityVersionModuleUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionModuleUpdatedMessage.cs)
+- [CustomEntityVersionBlockAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionBlockAddedMessage.cs)
+- [CustomEntityVersionBlockDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionBlockDeletedMessage.cs)
+- [CustomEntityVersionBlockMovedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionBlockMovedMessage.cs)
+- [CustomEntityVersionBlockUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionBlockUpdatedMessage.cs)
 - [CustomEntityVersionUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionUpdatedMessage.cs)
 
 ## Image Assets
