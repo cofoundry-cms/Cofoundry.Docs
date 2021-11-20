@@ -1,4 +1,4 @@
-﻿Cofoundry uses a default set of mail templates for user account notifications from your custom user area. These default templates are basic and unbranded, so in most cases you'll want to customize them to the unique characteristics of your user area or brand.
+﻿Cofoundry uses a default set of mail templates for user account notifications. These default templates are basic and unbranded, so in most cases you'll want to customize them to the unique characteristics of your user area or brand.
 
 This feature is demonstrated in the [Cofoundry.Samples.UserAreas](https://github.com/cofoundry-cms/Cofoundry.Samples.UserAreas) sample project.
 
@@ -70,7 +70,7 @@ public class MemberMailTemplateBuilder : IUserMailTemplateBuilder<MemberUserArea
 
 ### Example Customization
 
-Full examples can be found in the [Cofoundry.Samples.Mail sample project](https://github.com/cofoundry-cms/Cofoundry.Samples.Mail).
+Full examples can be found in the [Cofoundry.Samples.UserAreas sample project](https://github.com/cofoundry-cms/Cofoundry.Samples.UserAreas).
 
 #### Changing the layout
 
@@ -80,10 +80,10 @@ This example simply customizes the layout file using the `LayoutFile` property, 
 public async Task<IMailTemplate> BuildNewUserWithTemporaryPasswordTemplateAsync(NewUserWithTemporaryPasswordTemplateBuilderContext context)
 {
     // build the default template so we can modify any properties we want to customize
-    var template = await _cofoundryAdminMailTemplateBuilder.BuildNewUserWithTemporaryPasswordTemplateAsync(context);
+    var template = await _defaultMailTemplateBuilder.BuildNewUserWithTemporaryPasswordTemplateAsync(context);
 
     // Change the layout file
-    template.LayoutFile = "~/MailTemplates/_ExampleAdminMailLayout";
+    template.LayoutFile = "~/MailTemplates/_MemberMailLayout";
 
     return template;
 }
@@ -97,10 +97,10 @@ This example shows you how to change the email subject:
 public async Task<IMailTemplate> BuildPasswordChangedTemplateAsync(PasswordChangedTemplateBuilderContext context)
 {
     // build the default template
-    var template = await _cofoundryAdminMailTemplateBuilder.BuildPasswordChangedTemplateAsync(context);
+    var template = await _defaultMailTemplateBuilder.BuildPasswordChangedTemplateAsync(context);
 
     // customize the subject, the optional {0} token is replaced with the application name
-    template.SubjectFormat = "{0}: You've changed your password!";
+    template.SubjectFormat = "{0} Member: You've changed your password!";
 
     return template;
 }
@@ -114,10 +114,10 @@ In this example, the view file is customized, which is useful if you want to cha
 public async Task<IMailTemplate> BuildPasswordResetByAdminTemplateAsync(PasswordResetByAdminTemplateBuilderContext context)
 {
     // build the default template
-    var template = await _cofoundryAdminMailTemplateBuilder.BuildPasswordResetByAdminTemplateAsync(context);
+    var template = await _defaultMailTemplateBuilder.BuildPasswordResetByAdminTemplateAsync(context);
 
     // customize the view file
-    template.ViewFile = "~/MailTemplates/ExampleAdminPasswordResetByAdminMailTemplate";
+    template.ViewFile = "~/MailTemplates/MemberPasswordResetByAdminMailTemplate";
 
     return template;
 }

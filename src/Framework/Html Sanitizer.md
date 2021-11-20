@@ -16,7 +16,7 @@ To use this you can simply request `IHtmlSanitizer` from the DI container, or mo
 
 ## Customizing the sanitization ruleset
 
-The Cofoundry HtmlSanitizer relies on the excellent [mganss/HtmlSanitizer](https://github.com/mganss/HtmlSanitizer) package to perform sanitization and uses it's default ruleset with a couple of modifications – adding the `class` attribute and the `mailto` url scheme to the whitelist. This means the default ruleset is quite liberal, so you may wish to create your own ruleset or modify the default if you want to be more restrictive. 
+The Cofoundry HtmlSanitizer relies on the excellent [mganss/HtmlSanitizer](https://github.com/mganss/HtmlSanitizer) package to perform sanitization and uses it's default ruleset with a couple of modifications – adding the `class` attribute and the `mailto` url scheme to the allow-list. This means the default ruleset is quite liberal, so you may wish to create your own ruleset or modify the default if you want to be more restrictive. 
 
 Here's an example that shows how to create a ruleset, using the mganss sanitizer defaults.
 

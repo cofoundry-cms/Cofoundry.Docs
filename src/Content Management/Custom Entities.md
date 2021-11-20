@@ -176,7 +176,7 @@ public class DogDataModel : ICustomEntityDataModel
 
 Custom entity data can be used in a number of different ways:
 
-- **Repository Access:** `IContentRepository` gives you a wide range of data access APIs that you can use in any way you choose. See [Accessing Data Programmatically](Accessing Data Programmatically) for more details.
+- **Repository Access:** `IContentRepository` gives you a wide range of data access APIs that you can use in any way you choose. See [Accessing Data Programmatically](accessing-data programmatically) for more details.
 - **Page Blocks:** When creating data models for page block types, you can use the `[CustomEntity]`, `[CustomEntityCollection]` or `[CustomEntityMultiTypeCollection]` data annotations to create data fields that link to custom entities.
 - **Custom Entity Pages:** To dynamically create a details page for every custom entity (e.g. a blog article or product details page) follow the guidance [here](custom-entity-pages).
 
