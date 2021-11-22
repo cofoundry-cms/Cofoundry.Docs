@@ -16,6 +16,11 @@
 - [PageVersionModuleDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionModuleDeletedMessage.cs)
 - [PageVersionModuleMovedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionModuleMovedMessage.cs)
 - [PageVersionModuleUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionModuleUpdatedMessage.cs)
+- [PageAccessRulesUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageAccessRulesUpdatedMessage.cs)
+
+#### Page Directories
+
+- [PageDirectoryAccessRulesUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryAccessRulesUpdatedMessage.cs)
 
 #### Custom Entities
 
