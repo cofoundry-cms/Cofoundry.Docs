@@ -1,4 +1,4 @@
-﻿To learn how the message subscriptions work, see the documentation for the [Message Aggregator](/framework/message-aggregator)
+To learn how the message subscriptions work, see the documentation for the [Message Aggregator](/framework/message-aggregator)
 
 #### Pages
 
@@ -20,6 +20,10 @@
 
 #### Page Directories
 
+- [PageDirectoryAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryAddedMessage.cs)
+- [PageDirectoryDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryDeletedMessage.cs)
+- [PageDirectoryUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryUpdatedMessage.cs)
+- [PageDirectoryUrlChangedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryUrlChangedMessage.cs)
 - [PageDirectoryAccessRulesUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryAccessRulesUpdatedMessage.cs)
 
 #### Custom Entities
