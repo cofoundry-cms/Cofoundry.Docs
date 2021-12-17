@@ -40,7 +40,7 @@ using Cofoundry.Domain;
 
 public class MemberUserArea : IUserAreaDefinition
 {
-    public const string Code = "Member";
+    public const string Code = "MEM";
 
     public string UserAreaCode => Code;
 
