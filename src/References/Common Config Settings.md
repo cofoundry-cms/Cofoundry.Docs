@@ -1,4 +1,4 @@
-﻿## Admin Settings
+## Admin Settings
 
 - **Cofoundry:Admin:Disabled** Disables the admin panel, removing all routes from the routing table and disabling login.
 - **Cofoundry:Admin:AutoInjectVisualEditor**  Indicates whether to inject the visual editor into your content managed pages and other MVC results. Enabled by default.
@@ -35,7 +35,7 @@ These settings control the background task that runs to clean up deleted asset f
 
 ## AutoUpdateSettings
 
-Settings that contorl the [auto-update process](/framework/auto-update) that runs at startup. 
+Settings that control the [auto-update process](/framework/auto-update) that runs at startup. 
 
 - **Cofoundry:AutoUpdate:Disabled** Disables the auto-update process entirely.
 - **Cofoundry:AutoUpdate:ProcessLockTimeoutInSeconds** The amount of time before the process lock expires and allows another auto-update process to start. This is designed to prevent multiple auto-update processes running concurrently in multi-instance deployment scenarios. By default this is set to 10 minutes which should be more than enough time for the process to run, but you may wish to shorten/lengthen this depending on your needs.
@@ -70,6 +70,16 @@ Settings that contorl the [auto-update process](/framework/auto-update) that run
 ## FileSystemFileStorageSettings
 
 - **Cofoundry:FileSystemFileStorage:FileRoot** The directory root in which to store files such as images, documents and file caches. The default value is "~/App_Data/Files/". `IPathResolver` is used to resolve this path so by default you should be able to use application relative and absolute file paths.
+
+## IdentitySettings
+
+### Password
+
+Controls the default password policy used for all user areas, including the Cofoundry admin user area.
+
+- **Cofoundry:Identity:Password:MinLength:** The minimum length of a password. Defaults to 10 and anything less is not recommended. Must be between 6 and 2048 characters.
+- **Cofoundry:Identity:Password:MaxLength:** The maximum length of a password. Defaults to 300 characters and must be between 6 and 2048 characters.
+- **Cofoundry:Identity:Password:MinUniqueCharacters:** The number of unique characters required in a password. This is to prevent passwords like "aabbccdd". Defaults to 5 unique characters.
 
 ## ImageAssetSettings
 
