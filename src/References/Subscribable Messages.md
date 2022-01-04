@@ -1,57 +1,73 @@
 To learn how the message subscriptions work, see the documentation for the [Message Aggregator](/framework/message-aggregator)
 
-#### Pages
+## Custom Entities
 
-- [IPageContentUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/IPageContentUpdatedMessage.cs)
-- [PageAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageAddedMessage.cs)
-- [PageDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageDeletedMessage.cs)
-- [PageDraftVersionAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageDraftVersionAddedMessage.cs)
-- [PageDraftVersionUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageDraftVersionUpdatedMessage.cs)
-- [PagePublishedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PagePublishedMessage.cs)
-- [PageUnPublishedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageUnPublishedMessage.cs)
-- [PageUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageUpdatedMessage.cs)
-- [PageUrlChangedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageUrlChangedMessage.cs)
-- [PageVersionDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionDeletedMessage.cs)
-- [PageVersionModuleAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionModuleAddedMessage.cs)
-- [PageVersionModuleDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionModuleDeletedMessage.cs)
-- [PageVersionModuleMovedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionModuleMovedMessage.cs)
-- [PageVersionModuleUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionModuleUpdatedMessage.cs)
-- [PageAccessRulesUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageAccessRulesUpdatedMessage.cs)
-
-#### Page Directories
-
-- [PageDirectoryAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryAddedMessage.cs)
-- [PageDirectoryDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryDeletedMessage.cs)
-- [PageDirectoryUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryUpdatedMessage.cs)
-- [PageDirectoryUrlChangedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryUrlChangedMessage.cs)
-- [PageDirectoryAccessRulesUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryAccessRulesUpdatedMessage.cs)
-
-#### Custom Entities
-
-- [ICustomEntityContentUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/ICustomEntityContentUpdatedMessage.cs)
-- [CustomEntityAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityAddedMessage.cs)
-- [CustomEntityDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityDeletedMessage.cs)
-- [CustomEntityDraftVersionAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityDraftVersionAddedMessage.cs)
-- [CustomEntityDraftVersionUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityDraftVersionUpdatedMessage.cs)
-- [CustomEntityOrderingUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityOrderingUpdatedMessage.cs)
-- [CustomEntityPublishedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityPublishedMessage.cs)
-- [CustomEntityUnPublishedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityUnPublishedMessage.cs)
-- [CustomEntityUrlChangedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityUrlChangedMessage.cs)
-- [CustomEntityDraftVersionDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityDraftVersionDeletedMessage.cs)
-- [CustomEntityVersionModuleAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionModuleAddedMessage.cs)
-- [CustomEntityVersionModuleDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionModuleDeletedMessage.cs)
-- [CustomEntityVersionModuleMovedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionModuleMovedMessage.cs)
-- [CustomEntityVersionModuleUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionModuleUpdatedMessage.cs)
-- [CustomEntityVersionUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionUpdatedMessage.cs)
-
-## Image Assets
-
-- [ImageAssetAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/ImageAssets/Messages/ImageAssetAddedMessage.cs)
-- [ImageAssetDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/ImageAssets/Messages/ImageAssetDeletedMessage.cs)
-- [ImageAssetUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/ImageAssets/Messages/ImageAssetUpdatedMessage.cs)
+- [ICustomEntityContentUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/ICustomEntityContentUpdatedMessage.cs): Indicates that the content of a custom entity has changed, e.g. any content elements like page blocks or data model properties that for example might require a change to a search index.
+- [CustomEntityAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityAddedMessage.cs): Message published when a new custom entity has been added.
+- [CustomEntityUrlChangedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityUrlChangedMessage.cs): Message published when the information that makes up a url on a custom entity has been changed (slug/locale).
+- [CustomEntityOrderingUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityOrderingUpdatedMessage.cs):  Message published when the ordering of a custom entity has been changed. This message is often published in a batch, so if you're handling this message it's best to use `IBatchMessageHandler<CustomEntityOrderingUpdatedMessage>`.
+- [CustomEntityPublishedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityPublishedMessage.cs): Message published when a custom entity has gone from a draft to publish state. This is not invoked when a new custom entity is created, to capture that event use `CustomEntityAddedMessage` and check the `HasPublishedVersionChanged` property.
+- [CustomEntityUnPublishedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityUnPublishedMessage.cs): Message published when a custom entity has moved from published to draft state.
+- [CustomEntityDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityDeletedMessage.cs): Message published when a custom entity has been deleted.
+- [CustomEntityDraftVersionAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityDraftVersionAddedMessage.cs): Message published when a new draft version has been added to a custom entity.
+- [CustomEntityDraftVersionUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityDraftVersionUpdatedMessage.cs): Message published when a custom entity draft version has been updated.
+- [CustomEntityDraftVersionDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityDraftVersionDeletedMessage.cs): Message published when a custom entity draft version is deleted. 
+- [CustomEntityVersionBlockAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionBlockAddedMessage.cs): Message published when a page block has been added to a custom entity.
+- [CustomEntityVersionBlockUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionBlockUpdatedMessage.cs): Message published when a page block has been updated on a custom entity.
+- [CustomEntityVersionBlockMovedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionBlockMovedMessage.cs): Message published when a page block has been removed from a custom entity.
+- [CustomEntityVersionBlockDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/CustomEntities/Messages/CustomEntityVersionBlockDeletedMessage.cs): Message published when a page block has been removed from a custom entity.
 
 ## Document Assets
 
-- [DocumentAssetAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/DocumentAssets/Messages/DocumentAssetAddedMessage.cs)
-- [ImageAssetDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/DocumentAssets/Messages/DocumentAssetDeletedMessage.cs)
-- [ImageAssetUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/DocumentAssets/Messages/DocumentAssetUpdatedMessage.cs)
+- [DocumentAssetAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/DocumentAssets/Messages/DocumentAssetAddedMessage.cs): Message published when a document is added.
+- [DocumentAssetUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/DocumentAssets/Messages/DocumentAssetUpdatedMessage.cs): This message is published when a document is updated.
+- [DocumentAssetDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/DocumentAssets/Messages/DocumentAssetDeletedMessage.cs): Message published when a document is deleted.
+
+## Image Assets
+
+- [ImageAssetAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/ImageAssets/Messages/ImageAssetAddedMessage.cs): Message published when an image is added.
+- [ImageAssetUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/ImageAssets/Messages/ImageAssetUpdatedMessage.cs): This message is published when an image is updated.
+- [ImageAssetDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/ImageAssets/Messages/ImageAssetDeletedMessage.cs): Message published when an image is deleted.
+
+## Pages
+
+- [IPageContentUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/IPageContentUpdatedMessage.cs): Indicates that the content of a page has changed e.g. any content elements like blocks or other page properties. This is also triggered when a new page has been added.
+- [PageAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageAddedMessage.cs): Message published when a page is added.
+- [PageUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageUpdatedMessage.cs): This message is published when the data directly associated with a page has been updated. To be notified when any part of a page (including versions) changes you should subscribe to `IPageContentUpdatedMessage`.
+- [PageUrlChangedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageUrlChangedMessage.cs): Message published when properties that affect the URL of a page has changed (e.g. PageDirectoryId, UrlSlug, LocaleId etc). This message is not triggered if the URL indirectly changes e.g. if a parent directory changes.
+- [PageAccessRulesUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageAccessRulesUpdatedMessage.cs): Message published when access rules have been updated on a page, including any additions, deletions or updates.
+- [PagePublishedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PagePublishedMessage.cs): Message published when a page draft is published. Note that pages can also be published when created, use `PageAddedMessage` to capture that event.
+- [PageUnPublishedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageUnPublishedMessage.cs): Message published when a page has gone from published to draft state.
+- [PageDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageDeletedMessage.cs): Message published when a page is deleted. When a directory is deleted, all child directories and pages are also deleted which will generate multiple messages in the same batch, one for each page deleted.
+- [PageDraftVersionAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageDraftVersionAddedMessage.cs): Message published when a draft version is added to a page.
+- [PageDraftVersionUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageDraftVersionUpdatedMessage.cs): This message is published when page draft has been  updated. To be notified when any part of a page changes (including page data and publish changes) you should subscribe to `IPageContentUpdatedMessage`.
+- [PageVersionDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionDeletedMessage.cs): Message published when a draft version of a page has been deleted.
+- [PageVersionBlockAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionBlockAddedMessage.cs): Message published when a block has been added to a page.
+- [PageVersionBlockUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionBlockUpdatedMessage.cs): Message published when a block has been updated on a page.
+- [PageVersionBlockMovedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionBlockMovedMessage.cs): Message published when a block has been moved on a page.
+- [PageVersionBlockDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Pages/Messages/PageVersionBlockDeletedMessage.cs): Message published when a block has been removed from a page.
+
+## Page Directories
+
+- [PageDirectoryAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryAddedMessage.cs): Message published when a new page directory is added.
+- [PageDirectoryUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryUpdatedMessage.cs): This message is published when the properties directly associated with a page directory have been updated.
+- [PageDirectoryUrlChangedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryUrlChangedMessage.cs): Message published when properties that affect the URL of a page directory has changed (e.g. ParentPageDirectoryId or UrlSlug). This message is also triggered when the URL indirectly changes because a parent directory URL has changed.
+- [PageDirectoryAccessRulesUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryAccessRulesUpdatedMessage.cs): Message published when access rules have been updated on a page directory, including any additions, deletions or updates. This message is not dispatched for child directories that inherit the rule.
+- [PageDirectoryDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/PageDirectories/Messages/PageDirectoryDeletedMessage.cs): Message published when a page directory is deleted. When a directory is deleted, it's child directories are also deleted which will generate multiple messages in the same batch, one for each directory deleted.
+
+## Users
+
+- [UserAddedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Users/Messages/UserAddedMessage.cs): Message published when a user is added.
+- [UserDeletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Users/Messages/UserDeletedMessage.cs): Message published when a user is deleted.
+- [UserUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Users/Messages/UserUpdatedMessage.cs): This message is published when a user is updated, including when a username or email address is updated, which also publishes their own more specific events `UserEmailUpdatedMessage` and `UserUsernameUpdatedMessage`.
+- [UserUsernameUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Users/Messages/UserUsernameUpdatedMessage.cs): This message is published when the username for a user is updated. The less specific `UserUpdatedMessage` is also published when a username is updated.
+- [UserEmailUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Users/Messages/UserEmailUpdatedMessage.cs): Message published published when the email for a user is updated. The less specific `UserUpdatedMessage` is also published when an email is updated, and if the email address is used as a username then a `UserUsernameUpdatedMessage` is published too.
+- [UserPasswordResetInitiatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Users/Messages/UserPasswordResetInitiatedMessage.cs): This message is published when a user successfully initiates the password reset process via `InitiateUserPasswordResetRequestCommand`.
+- [UserPasswordResetCompletedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Users/Messages/UserPasswordResetCompletedMessage.cs): This message is published when a user successfully completes the password reset process via `CompleteUserPasswordResetRequestCommand`. This command will also trigger `UserPasswordUpdatedMessage`.
+- [UserPasswordResetMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Users/Messages/UserPasswordResetMessage.cs): This message is published when a user password is reset via the admin panel or via `ResetUserPasswordCommand`, assigning a new temporary password. This is a separate action to the self-service password reset flow initiated using `InitiateUserPasswordResetRequestCommand`.
+- [UserPasswordUpdatedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Users/Messages/UserPasswordUpdatedMessage.cs): This message is published when a user password is updated by a user. This message is not published when a password is reset by an admin user.
+- [UserLoggedInMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Users/Messages/UserLoggedInMessage.cs) This message is published when a user successfully logs in.
+- [UserLoggedOutMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Users/Messages/UserLoggedOutMessage.cs): This message is published when a user logs out.
+- [UserAuthenticationFailedMessage](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Domain/Domain/Users/Messages/UserAuthenticationFailedMessage.cs): Triggered when an user fails to authenticate e.g. when logging in or validating a password change request.
+
+
