@@ -4,7 +4,8 @@
 	"Controlling Access,
 	"Authentication",
 	"Data APis",
-	"Advanced Customization",
+	"Email Address Formatting & Validation",
+	"Username Formatting & Validation",
+	"Password Policy Customization",
 	"Email Notification Customization",
-	"Password Policy Customization"
 ]

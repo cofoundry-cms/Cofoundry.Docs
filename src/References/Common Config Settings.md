@@ -81,6 +81,29 @@ Controls the default password policy used for all user areas, including the Cofo
 - **Cofoundry:Identity:Password:MaxLength:** The maximum length of a password. Defaults to 300 characters and must be between 6 and 2048 characters.
 - **Cofoundry:Identity:Password:MinUniqueCharacters:** The number of unique characters required in a password. This is to prevent passwords like "aabbccdd". Defaults to 5 unique characters.
 
+### EmailAddress
+
+Controls the default email address validation rules used for all user areas, including the Cofoundry admin user area.
+
+- **Cofoundry:Identity:EmailAddress:AllowAnyCharacter:** Allows any character in an email, effectively bypassing characters validation. Defaults to `true`, to ensure maximum compatibility to the widest range of email addresses. When `true` any settings for `AllowAnyLetters`, `AllowAnyDigit` and `AdditionalAllowedCharacters` are ignored.
+- **Cofoundry:Identity:EmailAddress:AllowAnyLetter:** Allows an email to contain any character classed as a unicode letter as determined by `Char.IsLetter`. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
+- **Cofoundry:Identity:EmailAddress:AllowAnyDigit:** Allows an email to contain any character classed as a decimal digit as determined by `Char.IsDigit` i.e 0-9. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
+- **Cofoundry:Identity:EmailAddress:AdditionalAllowedCharacters:** Allows any of the specified characters in addition to the letters or digit characters permitted by the `AllowAnyLetters` and `AllowAnyDigit` settings. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior. The @ symbol is always permitted. The default settings specifies the range of special characters permitted in unquoted email addresses, excluding comment parentheses "()", and the square brackets "[]" that are used to denote an IP address instead of a domain i.e "!#$%&'*+-/=?^_`{|}~.@". When enabling or altering these settings please be aware of the [full extent of acceptable email formats](https://en.wikipedia.org/wiki/Email_address#Syntax).
+- **Cofoundry:Identity:EmailAddress:MinLength:** The minimum length of an email address. Defaults to 3. Must be between 3 and 150 characters. 
+- **Cofoundry:Identity:EmailAddress:MaxLength:** The maximum length of an email address. Defaults to 150 characters and must be between 3 and 150 characters.
+- **Cofoundry:Identity:EmailAddress:RequireUnique:** Set this to `true` to ensure that an email cannot be allocated to more than one user per user area. Note that if `IUserAreaDefinition.UseEmailAsUsername` is set to `true` then this setting is ignored because usernames have to be unique. This defaults to `false` because a uniqueness check during registration can expose whether an email is registered or not, which may be sensitive information depending on the nature of the application.
+
+### EmailAddress
+
+Controls the default username validation rules used for all user areas.
+
+- **Cofoundry:Identity:Username:AllowAnyCharacter:** Allows any character in a username, effectively bypassing characters validation. Defaults to `true`, to ensure maximum compatibility to the widest range of usernames when integrating with external systems. When `true` any settings for `AllowAnyLetters`, `AllowAnyDigit` and `AdditionalAllowedCharacters` are ignored. Note that username character validation is ignored when `IUserAreaDefinition.UseEmailAsUsername` is set to `true`, because the format is already validated against the configured `EmailAddressOptions`.
+- **Cofoundry:Identity:Username:AllowAnyLetter:** Allows a username to contain any character classed as a unicode letter as determined by `Char.IsLetter`. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
+- **Cofoundry:Identity:Username:AllowAnyDigit:** Allows a username to contain any character classed as a decimal digit as determined by `Char.IsDigit` i.e 0-9. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
+- **Cofoundry:Identity:Username:AdditionalAllowedCharacters:** Allows any of the specified characters in addition to the letters or digit characters permitted by the `AllowAnyLetter` and `AllowAnyDigit` settings. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior. The default settings specifies a handful of special characters commonly found in usernames: "-._' ".
+- **Cofoundry:Identity:Username:MinLength:** The minimum length of a username. Defaults to 1. Must be between 1 and 150 characters. 
+- **Cofoundry:Identity:Username:MaxLength:** The maximum length of a username. Defaults to 150 characters and must be between 1 and 150 characters.
+
 ## ImageAssetSettings
 
 - **Cofoundry:ImageAssets:Disabled** Disables image asset functionality, removing it from the admin panel and skipping registration of image asset routes. Access to images is still possible from code if you choose to use those APIs from a user account with permissions.

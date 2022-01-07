@@ -1,4 +1,4 @@
-﻿There are several different data annotations available for representing dates and times:
+There are several different data annotations available for representing dates and times:
 
 - [`[Date]`](#date)
 - [`[DateLocal]`](#datelocal)

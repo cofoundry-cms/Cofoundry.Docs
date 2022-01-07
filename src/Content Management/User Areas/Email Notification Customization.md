@@ -1,4 +1,4 @@
-﻿Cofoundry uses a default set of mail templates for user account notifications. These default templates are basic and unbranded, so in most cases you'll want to customize them to the unique characteristics of your user area or brand.
+Cofoundry uses a default set of mail templates for user account notifications. These default templates are basic and unbranded, so in most cases you'll want to customize them to the unique characteristics of your user area or brand.
 
 This feature is demonstrated in the [Cofoundry.Samples.UserAreas](https://github.com/cofoundry-cms/Cofoundry.Samples.UserAreas) sample project.
 

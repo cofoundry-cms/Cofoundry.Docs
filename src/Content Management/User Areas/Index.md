@@ -9,9 +9,10 @@ User areas are built on the same underlying framework that powers the admin pane
 - [Controlling Access](/content-management/user-areas/controlling-access): Learn how to restrict access to your pages and controllers.
 - [Authentication](/content-management/user-areas/authentication): Build a login page or authentication API.
 - [Data APIs](/content-management/user-areas/data-apis): Query and manage users using our data APIs.
-- [Advanced Customization](/content-management/user-areas/advanced-customization): Customize advanced features such as username and email address normalization.
-- [Email Notification Customization](/content-management/user-areas/email-notification-customization): Customize our default user notification templates with your own style and branding.
+- [Email Address Formatting & Validation](/content-management/user-areas/email-address-formatting-and-validation): Customize the email address normalization, uniquification and validation processes.
+- [Username Formatting & Validation](/content-management/user-areas/username-formatting-and-validation): Customize the username normalization, uniquification and validation processes.
 - [Password Policy Customization](/content-management/user-areas/password-policy-customization): Customize the validation of new user passwords.
+- [Email Notification Customization](/content-management/user-areas/email-notification-customization): Customize our default user notification templates with your own style and branding.
 
 
 
