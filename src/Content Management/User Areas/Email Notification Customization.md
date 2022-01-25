@@ -12,10 +12,10 @@ Once this interface is defined, the Cofoundry DI system will automatically find 
 
 Each email notification has it's own builder function with a context parameter that contains all the key data to build that template:
 
-- **BuildNewUserWithTemporaryPasswordTemplateAsync:** The email template that is used when a new user is created with a temporary password. The context contains their temporary password.
-- **BuildPasswordChangedTemplateAsync:** The email template that is used when a user has their password reset by an administrator. The context contains data contains their new temporary password.
-- **BuildPasswordResetByAdminTemplateAsync:** The email template that is used when a user requests to reset their password e.g. via a forgot password page. The context contains the parameters required to build a password reset URL.  
-- **BuildPasswordResetRequestedByUserTemplateAsync:** The email template that is used to notify a user that their password has been changed.
+- **BuildNewUserWithTemporaryPasswordTemplateAsync:** The email template that is used when a new user is created with a temporary password. This is typically used when a user is not available to provide their own password e.g. when a user is created in the admin panel.
+- **BuildPasswordChangedTemplateAsync:** The email template that is used to notify a user that their password has been changed.
+- **BuildPasswordResetTemplateAsync:** The email template that is used when a user has their password reset by an administrator. The context contains data contains their new temporary password.
+- **BuildAccountRecoveryTemplateAsync:** The email template that is used when a user user initiates an account recovery flow e.g. via a forgot password page. The context contains an account recovery URL, as well as the raw reset token if you want to build your own URL.  
 
 ## Making use of IDefaultMailTemplateBuilder
 
@@ -54,15 +54,15 @@ public class MemberMailTemplateBuilder : IUserMailTemplateBuilder<MemberUserArea
         return template;
     }
 
-    public async Task<IMailTemplate> BuildPasswordResetByAdminTemplateAsync(PasswordResetByAdminTemplateBuilderContext context)
+    public async Task<IMailTemplate> BuildPasswordResetTemplateAsync(PasswordResetTemplateBuilderContext context)
     {
-        var template = await _defaultMailTemplateBuilder.BuildPasswordResetByAdminTemplateAsync(context);
+        var template = await _defaultMailTemplateBuilder.BuildPasswordResetTemplateAsync(context);
         return template;
     }
 
-    public async Task<IMailTemplate> BuildPasswordResetRequestedByUserTemplateAsync(PasswordResetRequestedByUserTemplateBuilderContext context)
+    public async Task<IMailTemplate> BuildAccountRecoveryTemplateAsync(AccountRecoveryTemplateBuilderContext context)
     {
-        var template = await _defaultMailTemplateBuilder.BuildPasswordResetRequestedByUserTemplateAsync(context);
+        var template = await _defaultMailTemplateBuilder.BuildAccountRecoveryTemplateAsync(context);
         return template;
     }
 }
@@ -111,10 +111,10 @@ public async Task<IMailTemplate> BuildPasswordChangedTemplateAsync(PasswordChang
 In this example, the view file is customized, which is useful if you want to change the wording of the email, but don't need any additional properties in the template model.
 
 ```csharp
-public async Task<IMailTemplate> BuildPasswordResetByAdminTemplateAsync(PasswordResetByAdminTemplateBuilderContext context)
+public async Task<IMailTemplate> BuildPasswordResetTemplateAsync(PasswordResetTemplateBuilderContext context)
 {
     // build the default template
-    var template = await _defaultMailTemplateBuilder.BuildPasswordResetByAdminTemplateAsync(context);
+    var template = await _defaultMailTemplateBuilder.BuildPasswordResetTemplateAsync(context);
 
     // customize the view file
     template.ViewFile = "~/MailTemplates/MemberPasswordResetByAdminMailTemplate";

@@ -26,7 +26,6 @@ These settings control the background task that runs to clean up deleted asset f
 
 ## AuthenticationSettings
 
-- **Cofoundry:Authentication:NumHoursPasswordResetLinkValid** The number of hours a password reset link is valid for. Defaults to 16 hours.
 - **Cofoundry:Authentication:MaxIPAttempts** The maximum number of failed login attempts allowed per IP address during the time window described by the MaxIPAttemptsBoundaryInMinutes property. The default value is 60 minutes.
 - **Cofoundry:Authentication:MaxUsernameAttempts** The maximum number of failed login attempts allowed per username during the time window described by the MaxUsernameAttemptsBoundaryInMinutes property. The default value is 40 minutes.
 - **Cofoundry:Authentication:MaxIPAttemptsBoundaryInMinutes** The time window to measure login attempts when testing for blocking by IP address. The default value is 40 minutes.
@@ -71,39 +70,6 @@ Settings that control the [auto-update process](/framework/auto-update) that run
 
 - **Cofoundry:FileSystemFileStorage:FileRoot** The directory root in which to store files such as images, documents and file caches. The default value is "~/App_Data/Files/". `IPathResolver` is used to resolve this path so by default you should be able to use application relative and absolute file paths.
 
-## IdentitySettings
-
-### Password
-
-Controls the default password policy used for all user areas, including the Cofoundry admin user area.
-
-- **Cofoundry:Identity:Password:MinLength:** The minimum length of a password. Defaults to 10 and anything less is not recommended. Must be between 6 and 2048 characters.
-- **Cofoundry:Identity:Password:MaxLength:** The maximum length of a password. Defaults to 300 characters and must be between 6 and 2048 characters.
-- **Cofoundry:Identity:Password:MinUniqueCharacters:** The number of unique characters required in a password. This is to prevent passwords like "aabbccdd". Defaults to 5 unique characters.
-
-### EmailAddress
-
-Controls the default email address validation rules used for all user areas, including the Cofoundry admin user area.
-
-- **Cofoundry:Identity:EmailAddress:AllowAnyCharacter:** Allows any character in an email, effectively bypassing characters validation. Defaults to `true`, to ensure maximum compatibility to the widest range of email addresses. When `true` any settings for `AllowAnyLetters`, `AllowAnyDigit` and `AdditionalAllowedCharacters` are ignored.
-- **Cofoundry:Identity:EmailAddress:AllowAnyLetter:** Allows an email to contain any character classed as a unicode letter as determined by `Char.IsLetter`. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
-- **Cofoundry:Identity:EmailAddress:AllowAnyDigit:** Allows an email to contain any character classed as a decimal digit as determined by `Char.IsDigit` i.e 0-9. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
-- **Cofoundry:Identity:EmailAddress:AdditionalAllowedCharacters:** Allows any of the specified characters in addition to the letters or digit characters permitted by the `AllowAnyLetters` and `AllowAnyDigit` settings. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior. The @ symbol is always permitted. The default settings specifies the range of special characters permitted in unquoted email addresses, excluding comment parentheses "()", and the square brackets "[]" that are used to denote an IP address instead of a domain i.e "!#$%&'*+-/=?^_`{|}~.@". When enabling or altering these settings please be aware of the [full extent of acceptable email formats](https://en.wikipedia.org/wiki/Email_address#Syntax).
-- **Cofoundry:Identity:EmailAddress:MinLength:** The minimum length of an email address. Defaults to 3. Must be between 3 and 150 characters. 
-- **Cofoundry:Identity:EmailAddress:MaxLength:** The maximum length of an email address. Defaults to 150 characters and must be between 3 and 150 characters.
-- **Cofoundry:Identity:EmailAddress:RequireUnique:** Set this to `true` to ensure that an email cannot be allocated to more than one user per user area. Note that if `IUserAreaDefinition.UseEmailAsUsername` is set to `true` then this setting is ignored because usernames have to be unique. This defaults to `false` because a uniqueness check during registration can expose whether an email is registered or not, which may be sensitive information depending on the nature of the application.
-
-### EmailAddress
-
-Controls the default username validation rules used for all user areas.
-
-- **Cofoundry:Identity:Username:AllowAnyCharacter:** Allows any character in a username, effectively bypassing characters validation. Defaults to `true`, to ensure maximum compatibility to the widest range of usernames when integrating with external systems. When `true` any settings for `AllowAnyLetters`, `AllowAnyDigit` and `AdditionalAllowedCharacters` are ignored. Note that username character validation is ignored when `IUserAreaDefinition.UseEmailAsUsername` is set to `true`, because the format is already validated against the configured `EmailAddressOptions`.
-- **Cofoundry:Identity:Username:AllowAnyLetter:** Allows a username to contain any character classed as a unicode letter as determined by `Char.IsLetter`. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
-- **Cofoundry:Identity:Username:AllowAnyDigit:** Allows a username to contain any character classed as a decimal digit as determined by `Char.IsDigit` i.e 0-9. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
-- **Cofoundry:Identity:Username:AdditionalAllowedCharacters:** Allows any of the specified characters in addition to the letters or digit characters permitted by the `AllowAnyLetter` and `AllowAnyDigit` settings. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior. The default settings specifies a handful of special characters commonly found in usernames: "-._' ".
-- **Cofoundry:Identity:Username:MinLength:** The minimum length of a username. Defaults to 1. Must be between 1 and 150 characters. 
-- **Cofoundry:Identity:Username:MaxLength:** The maximum length of a username. Defaults to 150 characters and must be between 1 and 150 characters.
-
 ## ImageAssetSettings
 
 - **Cofoundry:ImageAssets:Disabled** Disables image asset functionality, removing it from the admin panel and skipping registration of image asset routes. Access to images is still possible from code if you choose to use those APIs from a user account with permissions.
@@ -142,3 +108,51 @@ These settings are specificaly for the default in-memory object cache implementa
 
 - **Cofoundry:StaticFiles:MaxAge** The default max-age to use for the cache control header, measured in seconds. The default value is 1 year. General advice here for a maximum is 1 year.
 - **Cofoundry:StaticFiles:CacheMode** The type of caching rule to use when adding caching headers. This defaults to StaticFileCacheMode.OnlyVersionedFiles which only sets caching headers for files using the "v" querystring parameter convention.
+
+## UsersSettings
+
+These settings can be controlled on a per-user-area basis by implementing `IUserAreaDefinition.ConfigureOptions(UserAreaOptions)`. See [User Area documentation](/content-management/user-areas/).
+
+### Cookies
+
+- **Cofoundry:Users:Cookies:ClaimsValidationInterval:** The interval at which the claims principal should be validated and refreshed, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "00:30:00" to represent 30 minutes. This is the equivalent of `Microsoft.AspNetCore.Identity.SecurityStampValidatorOptions.ValidationInterval` and is therefore primarily concerned with validating the security stamp and invalidating any out of date cookies after key user data has changed (e.g. username or password), but it also refreshes the claims principal too. The default value is 30 minutes, which matches the default value in `Microsoft.AspNetCore.Identity.SecurityStampValidatorOptions.ValidationInterval`. Reducing the interval decreases the window for stale cookie sessions or claims data, but increases the workload on the server in validating and reloading claims data from the database.
+
+### EmailAddress
+
+Controls the default email address validation rules used for all user areas, including the Cofoundry admin user area.
+
+- **Cofoundry:Users:EmailAddress:AllowAnyCharacter:** Allows any character in an email, effectively bypassing characters validation. Defaults to `true`, to ensure maximum compatibility to the widest range of email addresses. When `true` any settings for `AllowAnyLetters`, `AllowAnyDigit` and `AdditionalAllowedCharacters` are ignored.
+- **Cofoundry:Users:EmailAddress:AllowAnyLetter:** Allows an email to contain any character classed as a unicode letter as determined by `Char.IsLetter`. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
+- **Cofoundry:Users:EmailAddress:AllowAnyDigit:** Allows an email to contain any character classed as a decimal digit as determined by `Char.IsDigit` i.e 0-9. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
+- **Cofoundry:Users:EmailAddress:AdditionalAllowedCharacters:** Allows any of the specified characters in addition to the letters or digit characters permitted by the `AllowAnyLetters` and `AllowAnyDigit` settings. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior. The @ symbol is always permitted. The default settings specifies the range of special characters permitted in unquoted email addresses, excluding comment parentheses "()", and the square brackets "[]" that are used to denote an IP address instead of a domain i.e "!#$%&'*+-/=?^_`{|}~.@". When enabling or altering these settings please be aware of the [full extent of acceptable email formats](https://en.wikipedia.org/wiki/Email_address#Syntax).
+- **Cofoundry:Users:EmailAddress:MinLength:** The minimum length of an email address. Defaults to 3. Must be between 3 and 150 characters. 
+- **Cofoundry:Users:EmailAddress:MaxLength:** The maximum length of an email address. Defaults to 150 characters and must be between 3 and 150 characters.
+- **Cofoundry:Users:EmailAddress:RequireUnique:** Set this to `true` to ensure that an email cannot be allocated to more than one user per user area. Note that if `IUserAreaDefinition.UseEmailAsUsername` is set to `true` then this setting is ignored because usernames have to be unique. This defaults to `false` because a uniqueness check during registration can expose whether an email is registered or not, which may be sensitive information depending on the nature of the application.
+
+### Password
+
+Controls the default password policy used for all user areas, including the Cofoundry admin user area.
+
+- **Cofoundry:Users:Password:MinLength:** The minimum length of a password. Defaults to 10 and anything less is not recommended. Must be between 6 and 2048 characters.
+- **Cofoundry:Users:Password:MaxLength:** The maximum length of a password. Defaults to 300 characters and must be between 6 and 2048 characters.
+- **Cofoundry:Users:Password:MinUniqueCharacters:** The number of unique characters required in a password. This is to prevent passwords like "aabbccdd". Defaults to 5 unique characters.
+
+### AccountRecovery
+
+Controls the behavior of the self-service account recovery feature for all user areas, including the Cofoundry admin user area (unless otherwise stated).
+
+- **Cofoundry:Users:AccountRecovery:RecoveryUrlBase:** The relative base path used to construct the URL for the account recovery completion form. A unique token will be added as a query parameter to the URL, it is then resolved using `ISiteUrlResolver.MakeAbsolute` and added to the email notification e.g. "/auth/account-recovery" would be transformed to "https://example.com/auth/account-recovery?t={token}". The path can include other query parameters, which will be merged into the resulting URL. This setting is required when using the account recovery feature, unless you are building the URL yourself in a custom `IDefaultMailTemplateBuilder` implementation. Changing this setting does not affect the Cofoundry Admin account recovery feature.
+- **Cofoundry:Users:AccountRecovery:MaxAttempts:** The maximum number of account recovery attempts to allow within the given `MaxAttemptsWindow`. If zero or less, then max attempt validation does not occur.
+- **Cofoundry:Users:AccountRecovery:MaxAttemptsWindow:** The time-window in which to count account recovery attempts when enforcing `MaxAttempts` validation, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "01:00:00" to represent 1 hour. Defaults to 24 hours. If zero or less, then max attempt validation does not occur.
+- **Cofoundry:Users:AccountRecovery:ValidityPeriod:** The number of hours an account recovery token is valid for, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "01:00:00" to represent 1 hour. Defaults to 16 hours. If zero or less, then time-based validation does not occur.
+
+### Username
+
+Controls the default username validation rules used for all user areas.
+
+- **Cofoundry:Users:Username:AllowAnyCharacter:** Allows any character in a username, effectively bypassing characters validation. Defaults to `true`, to ensure maximum compatibility to the widest range of usernames when integrating with external systems. When `true` any settings for `AllowAnyLetters`, `AllowAnyDigit` and `AdditionalAllowedCharacters` are ignored. Note that username character validation is ignored when `IUserAreaDefinition.UseEmailAsUsername` is set to `true`, because the format is already validated against the configured `EmailAddressOptions`.
+- **Cofoundry:Users:Username:AllowAnyLetter:** Allows a username to contain any character classed as a unicode letter as determined by `Char.IsLetter`. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
+- **Cofoundry:Users:Username:AllowAnyDigit:** Allows a username to contain any character classed as a decimal digit as determined by `Char.IsDigit` i.e 0-9. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
+- **Cofoundry:Users:Username:AdditionalAllowedCharacters:** Allows any of the specified characters in addition to the letters or digit characters permitted by the `AllowAnyLetter` and `AllowAnyDigit` settings. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior. The default settings specifies a handful of special characters commonly found in usernames: "-._' ".
+- **Cofoundry:Users:Username:MinLength:** The minimum length of a username. Defaults to 1. Must be between 1 and 150 characters. 
+- **Cofoundry:Users:Username:MaxLength:** The maximum length of a username. Defaults to 150 characters and must be between 1 and 150 characters.

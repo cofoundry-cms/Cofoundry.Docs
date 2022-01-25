@@ -52,6 +52,17 @@ public class MemberUserArea : IUserAreaDefinition
     /// be set to this identity.
     /// </summary>
     public bool IsDefaultAuthScheme { get; } = true;
+    
+    /// <summary>
+    /// Optionally implement this method to configure any additional settings.
+    /// </summary>
+    /// <param name="options">
+    /// The current configuration with any values from configuration providers (e.g. appsettings.json) applied.
+    /// </param>
+    public void ConfigureOptions(UserAreaOptions options)
+    {
+        // Default: No additional config
+    }
 }
 ```
 
