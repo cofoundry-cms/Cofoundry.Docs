@@ -11,9 +11,10 @@ Once this interface is defined, the Cofoundry DI system will automatically find 
 Each email notification has it's own builder function with a context parameter that contains all the key data to build that template:
 
 - **BuildNewUserWithTemporaryPasswordTemplateAsync:** The email template that is used when a new user is created with a temporary password. This is typically used when a user is not available to provide their own password e.g. when a user is created in the admin panel.
+- **BuildAccountRecoveryTemplateAsync:** The email template that is used when a user user initiates an account recovery flow e.g. via a forgot password page. The context contains an account recovery URL, as well as the raw reset token if you want to build your own URL. 
 - **BuildPasswordChangedTemplateAsync:** The email template that is used to notify a user that their password has been changed.
-- **BuildPasswordResetTemplateAsync:** The email template that is used when a user has their password reset by an administrator. The context contains data contains their new temporary password.
-- **BuildAccountRecoveryTemplateAsync:** The email template that is used when a user user initiates an account recovery flow e.g. via a forgot password page. The context contains an account recovery URL, as well as the raw reset token if you want to build your own URL.  
+- **BuildPasswordResetTemplateAsync:** The email template that is used when a user has their password reset by an administrator. The context data contains their new temporary password. 
+- **BuildAccountVerificationTemplateAsync:** The admin user area does not implement an account verification flow, therefore this method does not need an implementation and can simply throw a `NotSupportedException`.
 
 ## Making use of ICofoundryAdminMailTemplateBuilder
 
@@ -21,7 +22,7 @@ Each builder method only needs to return an `IMailTemplate` instance, so you are
 
 You can take advantage of the the default builder functions by making use of `ICofoundryAdminMailTemplateBuilder`, simply inject it into your builder and use the equivalent methods.
 
-Here is an baseline implementation without any customization:
+Here is a baseline implementation without any customization:
 
 ```csharp
 using Cofoundry.Core.Mail;
@@ -62,6 +63,12 @@ public class AdminMailTemplateBuilder : IUserMailTemplateBuilder<CofoundryAdminU
     {
         var template = await _cofoundryAdminMailTemplateBuilder.BuildAccountRecoveryTemplateAsync(context);
         return template;
+    }
+    
+    public async Task<IMailTemplate> BuildAccountVerificationTemplateAsync(AccountRecoveryTemplateBuilderContext context)
+    {
+        // No implementation required
+        throw new NotSupportedException();
     }
 }
 ```
