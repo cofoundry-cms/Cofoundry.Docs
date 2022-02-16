@@ -15,6 +15,12 @@ Under the covers Cofoundry uses a lightweight [CQS](/framework/data-access/CQS) 
 
 [Go to section](/framework/data-access/idomainrepository)
 
+## File Sources
+
+When passing files to commands you'll encounter the `IFileSource` abstraction. This section covers the range of `IFileSource` implementations that you can use to upload files to Cofoundry.
+
+[Go to section](/framework/data-access/file-sources)
+
 ## Transactions
 
 Cofoundry has a transaction manager abstraction that provides a few benefits over `System.Transactions`.
