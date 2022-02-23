@@ -24,21 +24,13 @@ These settings control the background task that runs to clean up deleted asset f
 - **Cofoundry:AssetFiles:MimeTypeValidation** Indicates the type of validation to perform against a mime type and is used in combination with the values in the `MimeTypeValidationList` setting. The default is `UseBlocklist`, and other options are `UseAllowlist` or `Disable`.
 - **Cofoundry:AssetFiles:FileExtensionValidationList** The list of mime types to use when validating an uploaded file by it's mime type. By default this is a list of potentially  harmful mime types and is treated as a blocklist, but the `MimeTypeValidation` setting can be used to change this behavior to interpret it as an allowlist, or disabled this validation entirely.
 
-## AuthenticationSettings
-
-- **Cofoundry:Authentication:MaxIPAttempts** The maximum number of failed login attempts allowed per IP address during the time window described by the MaxIPAttemptsBoundaryInMinutes property. The default value is 60 minutes.
-- **Cofoundry:Authentication:MaxUsernameAttempts** The maximum number of failed login attempts allowed per username during the time window described by the MaxUsernameAttemptsBoundaryInMinutes property. The default value is 40 minutes.
-- **Cofoundry:Authentication:MaxIPAttemptsBoundaryInMinutes** The time window to measure login attempts when testing for blocking by IP address. The default value is 40 minutes.
-- **Cofoundry:Authentication:MaxUsernameAttemptsBoundaryInMinutes** The time window to measure login attempts when testing for blocking by username. The default value is 20 minutes.
-- **Cofoundry:Authentication:CookieNamepace** The text to use to namespace the auth cookie. The user area code will be appended to this to make the cookiename, e.g. "MyAppAuth_COF". By default the cookie namespace is created using characters from the entry assembly name of your application.
-
 ## AuthorizedTaskCleanupSettings
 
 These settings control the background task that runs to clean up completed, invalid or expired authorized tasks.
 
 - **Cofoundry:AuthorizedTaskCleanup:Enabled**  If set to `false` the cleanup background task is disabled.
-- **Cofoundry:AuthorizedTaskCleanup:BackgroundTaskFrequencyInHours**  How often the background task should run, measured in hours. Defaults to 11.
-- **Cofoundry:AuthorizedTaskCleanup:RetentionPeriodInDays** The time period to store data for completed, invalid or expired tasks, measured in days. Defaults to 30 days. If zero, then data is removed as soon as the background task is run. If <see langword="null"/> or less than zero then task data is stored indefinately.
+- **Cofoundry:AuthorizedTaskCleanup:BackgroundTaskFrequencyInMinutes** How often the background task should run, measured in minutes. Defaults to 11 hours and 51 minutes.
+- **Cofoundry:AuthorizedTaskCleanup:RetentionPeriodInDays** The time period to store data for completed, invalid or expired tasks, measured in days. Defaults to 30 days. If zero, then data is removed as soon as the background task is run. If `null` or less than zero then task data is stored indefinitely.
 
 ## AutoUpdateSettings
 
@@ -114,7 +106,7 @@ These settings are specifically for the default in-memory object cache implement
 
 ## SiteUrlResolverSettings
 
-- **Cofoundry:SiteUrlResolver:SiteUrlRoot** The root url to use when resolving a relative to absolute URL, e.g. 'http://www.cofoundry.org'. If this value is not defined then the default implementation will fall back to using URL url from the request.
+- **Cofoundry:SiteUrlResolver:SiteUrlRoot** The root URL to use when resolving a relative to absolute URL, e.g. 'http://www.cofoundry.org'. If this value is not defined then the default implementation will fall back to using URL from the request.
 
 ## StaticFilesSettings
 
@@ -130,10 +122,25 @@ These settings can be controlled on a per-user-area basis by implementing `IUser
 - **Cofoundry:Users:Authentication:ExecutionDuration:Enabled** Controls whether the randomized execution duration feature is enabled for credential authorization. Defaults to `true`, extending the execution duration on `AuthenticateUserCredentialsQuery` and any commands that utilize credential authentication such as `UpdateUserPasswordByCredentialsCommand`. This helps mitigate time-based enumeration attacks to discover valid usernames.
 - **Cofoundry:Users:Authentication:ExecutionDuration:MinInMilliseconds** The inclusive lower bound of the randomized credential authorization execution duration, measured in milliseconds (1000ms = 1s). Defaults to 1 second.
 - **Cofoundry:Users:Authentication:ExecutionDuration:MaxInMilliseconds** The inclusive upper bound of the randomized credential authorization execution duration, measured in milliseconds (1000ms = 1s). Defaults to 1.5 seconds.
+- **Cofoundry:Users:Authentication:IPAddressRateLimit:Quantity** The maximum number of failed authentication attempts allowed per IP address during the rate limit time window. The default value is 50 attempts.
+- **Cofoundry:Users:Authentication:IPAddressRateLimit:Window** The time window to measure authentication attempts when rate limiting by IP address, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "00:30:00" to represent 30 minutes. The default value is 60 minutes.
+- **Cofoundry:Users:Authentication:UsernameRateLimit:Quantity** The maximum number of failed authentication attempts allowed per username during the rate limiting time window. The default value is 20 attempts.
+- **Cofoundry:Users:Authentication:UsernameRateLimit:Window** The time window to measure authentication attempts when rate limiting by username, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "00:30:00" to represent 30 minutes. The default value is 60 minutes. The default value is 60 minutes.
+
+### Cleanup
+
+These settings control the background task that runs to clean up stale user data. Note that background tasks need to be enabled for the user cleanup task to run.
+
+- **Cofoundry:Users:Cleanup:Enabled** If set to `false` the cleanup background task is disabled.
+- **Cofoundry:Users:Cleanup:BackgroundTaskFrequencyInMinutes** How often the background task should run, measured in hours. Defaults to 11 hours and 27 minutes. Note that the background task processed all user areas and so customizing this setting for a specific user area has no effect.
+- **Cofoundry:Users:Cleanup:DefaultRetentionPeriodInDays** The default retention period for stale data, measured in days. If zero, then data is removed as soon as the background task is run. If `null` or less than zero then task data is stored indefinitely.
+- **Cofoundry:Users:Cleanup:AuthenticationLogRetentionPeriodInDays** The amount of time to keep records in the `UserAuthenticationLog` table, measured in days. If `null` then the value defaults to the `DefaultRetentionPeriod`. If set to less than zero then task data is stored indefinitely.
+- **Cofoundry:Users:Cleanup:AuthenticationFailLogRetentionPeriodInDays** The amount of time to keep records in the  `UserAuthenticationFailLog` table, measured in days. If `null` then the value defaults to the `DefaultRetentionPeriod`. If set to less than zero then task data is stored indefinitely.
 
 ### Cookies
 
 - **Cofoundry:Users:Cookies:ClaimsValidationInterval:** The interval at which the claims principal should be validated and refreshed, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "00:30:00" to represent 30 minutes. This is the equivalent of `Microsoft.AspNetCore.Identity.SecurityStampValidatorOptions.ValidationInterval` and is therefore primarily concerned with validating the security stamp and invalidating any out of date cookies after key user data has changed (e.g. username or password), but it also refreshes the claims principal too. The default value is 30 minutes, which matches the default value in `Microsoft.AspNetCore.Identity.SecurityStampValidatorOptions.ValidationInterval`. Reducing the interval decreases the window for stale cookie sessions or claims data, but increases the workload on the server in validating and reloading claims data from the database.
+- **Cofoundry:Users:Cookies:Namespace:** The text to use to namespace the auth cookie. The user area code will be appended to this to make the cookie name, e.g. "MyAppAuth_COF". By default the cookie namespace is created using characters from the entry assembly name of your application. 
 
 ### EmailAddress
 
@@ -161,8 +168,8 @@ Controls the default password policy used for all user areas, including the Cofo
 Controls the behavior of the self-service account recovery feature for all user areas, including the Cofoundry admin user area (unless otherwise stated).
 
 - **Cofoundry:Users:AccountRecovery:RecoveryUrlBase:** The relative base path used to construct the URL for the account recovery completion form. A unique token will be added as a query parameter to the URL, it is then resolved using `ISiteUrlResolver.MakeAbsolute` and added to the email notification e.g. "/auth/account-recovery" would be transformed to "https://example.com/auth/account-recovery?t={token}". The path can include other query parameters, which will be merged into the resulting URL. This setting is required when using the account recovery feature, unless you are building the URL yourself in a custom `IDefaultMailTemplateBuilder` implementation. Changing this setting does not affect the Cofoundry Admin account recovery feature.
-- **Cofoundry:Users:AccountRecovery:RateLimitQuantity:** The maximum number of account recovery attempts to allow within the given `RateLimitWindow`. Defaults to 16 attempts. If zero or less, then max attempt validation does not occur.
-- **Cofoundry:Users:AccountRecovery:RateLimitWindow:** The time-window in which to count account recovery attempts when enforcing `MaxAttempts` validation, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "01:00:00" to represent 1 hour. Defaults to 24 hours. If zero or less, then max attempt validation does not occur.
+- **Cofoundry:Users:AccountRecovery:InitiationRateLimit:Quantity:** The maximum number of account recovery initiation attempts to allow within the rate limit time window. Defaults to 16 attempts. If zero or less, then rate limiting does not occur.
+- **Cofoundry:Users:AccountRecovery:InitiationRateLimit:Window:** The time-window in which to count account recovery initiation attempts when rate limiting, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "01:00:00" to represent 1 hour. Defaults to 24 hours. If zero or less, then rate limiting does not occur.
 - **Cofoundry:Users:AccountRecovery:ExpireAfter:** The number of hours an account recovery token is valid for, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "01:00:00" to represent 1 hour. Defaults to 16 hours. If zero or less, then time-based validation does not occur.
 - **Cofoundry:Users:AccountRecovery:ExecutionDuration:Enabled** Controls whether the randomized execution duration feature is enabled for the account recovery (forgot password) initiation command. Defaults to `true`, mitigating time-based enumeration attacks to discover valid usernames
 - **Cofoundry:Users:AccountRecovery:ExecutionDuration:MinInMilliseconds** The inclusive lower bound of the randomized execution duration of the `InitiateUserAccountRecoveryByEmailCommand`, measured in milliseconds (1000ms = 1s). Defaults to 1.5 second.
@@ -174,8 +181,8 @@ Controls the behavior of the account verification feature. Note that the Cofound
 
 - **Cofoundry:Users:AccountVerification:RequireVerification:** If set to `true`, then an account is required to be verified before being able to log in. Defaults to `false`.
 - **Cofoundry:Users:AccountVerification:ExpireAfter:** The length of time an account verification token is valid for, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "01:00:00" to represent 1 hour. Defaults to 7 days. If zero or less, then expiry validation does not occur.
-- **Cofoundry:Users:AccountVerification:RateLimitQuantity:** The maximum number of account verification attempts to allow within the given `RateLimitWindow`. Defaults to 16 attempts. If zero or less, then rate limiting does not occur.
-- **Cofoundry:Users:AccountVerification:RateLimitWindow:** The time-window in which to count account verification attempts when enforcing `RateLimitQuantity` validation, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "01:00:00" to represent 1 hour. Defaults to 24 hours. If zero or less, then rate limiting does not occur.
+- **Cofoundry:Users:AccountVerification:InitiationRateLimit:Quantity:** The maximum number of account verification initiation attempts to allow within the rate limit window. Defaults to 16 attempts. If zero or less, then rate limiting does not occur.
+- **Cofoundry:Users:AccountVerification:InitiationRateLimit:Window:** The time-window in which to count account verification initiation attempts when rate limiting, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "01:00:00" to represent 1 hour. Defaults to 24 hours. If zero or less, then rate limiting does not occur.
 - **Cofoundry:Users:AccountVerification:VerificationUrlBase:** The relative base path used to construct the URL for the account verification completion page. A unique token will be added as a query parameter to the URL, it is then resolved using `ISiteUrlResolver.MakeAbsolute(string)` and added to the email notification e.g. "/auth/account/verify" would be transformed to "https://example.com/auth/account/verify?t={token}". The path can include other query parameters, which will be merged into the resulting URL. This setting is required when using the account verification feature, unless you are building the url yourself in a custom  `MailTemplates.DefaultMailTemplates.IDefaultMailTemplateBuilder` implementation.
 
 ### Username
@@ -188,3 +195,4 @@ Controls the default username validation rules used for all user areas.
 - **Cofoundry:Users:Username:AdditionalAllowedCharacters:** Allows any of the specified characters in addition to the letters or digit characters permitted by the `AllowAnyLetter` and `AllowAnyDigit` settings. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior. The default settings specifies a handful of special characters commonly found in usernames: "-._' ".
 - **Cofoundry:Users:Username:MinLength:** The minimum length of a username. Defaults to 1. Must be between 1 and 150 characters. 
 - **Cofoundry:Users:Username:MaxLength:** The maximum length of a username. Defaults to 150 characters and must be between 1 and 150 characters.
+- **Cofoundry:Users:Username:UseAsDisplayName:** If `true` then the normalized username is automatically copied to the display name field whenever it is updated. The display name field will no longer be able to be updated independently, but this is useful if your usernames are display-friendly and you don't want them to have to fill out a separate field.
