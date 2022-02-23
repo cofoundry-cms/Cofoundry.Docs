@@ -12,14 +12,13 @@ Using [Pages](https://github.com/cofoundry-cms/cofoundry/tree/master/src/Cofound
 #### Example IPermission Implementation
 
 ```csharp
-public class ErrorLogReadPermission : IPermission
+public class VIPDealsPermission : IPermission
 {
-    public PermissionType PermissionType => new PermissionType("ERRLOG", "Error logs", "View error logs in the admin panel");
+    public PermissionType PermissionType => new PermissionType("VIPDEA", "VIP Deals", "Access to VIP deals");
 }
 ```
 
 #### Example IEntityPermission Implementation
-
 
 ```csharp
 public class PageReadPermission : IEntityPermission

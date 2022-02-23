@@ -1,5 +1,5 @@
 
-Roles and permissions can be managed either through the admin panel or defined and initialized in code.
+Roles and permissions can be managed either through the admin panel or defined in code.
 
 ## Managing Roles in the Admin Panel
 
@@ -7,12 +7,14 @@ Roles can be managed in the admin panel in the *Roles* section. Here you can add
 
 There are two built-in roles that cannot be removed:
 
-- **Anonymous:** The role assigned to users who are not logged in i.e. browsing your site without logging in. The permissions for this role can be managed in the admin panel.
+- **Anonymous:** The role assigned to users who are not signed in i.e. browsing your site without signing in. The permissions for this role can be managed in the admin panel.
 - **Super Administrator:** This is the default administrator role which is assigned all permissions. This role is not editable.
 
 ## Managing Roles in Code
 
 Managing a role in code has two advantages: the first is that it is automatically added to the system on startup, the second is that code-based roles use a unique string code that makes it easier and more reliable to query the role programmatically.
+
+### Defining a role
 
 To define a role in code, create a class that implements `IRoleDefinition`:
 
@@ -45,54 +47,59 @@ public class MarketingRole : IRoleDefinition
     /// the Cofoundry user area so they will have access to the Cofoundry admin panel.
     /// </summary>
     public string UserAreaCode => CofoundryAdminUserArea.AreaCode;
+    
+    /// <summary>
+    /// This method determines which permissions the role is granted when it is first created. 
+    /// To help do this you are provided with a builder that contains all permissions in the 
+    /// system which you can use to either include or exclude permissions based on rules.
+    /// </summary>
+    public void ConfigurePermissions(IPermissionSetBuilder builder)
+    {
+        builder
+            .IncludeAll()
+            .ExcludeAllDelete()
+            .ExcludeUserInAllUserAreas()
+            .ExcludeRole()
+            .IncludeRole(c => c.Read())
+            .ExcludeSettings(c => c.UpdateGeneral());
+    }
 }
 
 ```
 
-To add permissions to this role you define a class that implements `IRoleInitializer<TRoleDefinition>`
+### Configuring permissions in code
+
+In the example above, the `ConfigurePermissions(IPermissionSetBuilder builder)` method is used to define the permissions for the role. This configuration is applied when the role is first created, and will only run again to apply any new permissions that are added to the system during an update. This means that the permissions assigned to a code-based role can be updated via the admin panel after it has been created.
+
+Leaving this method empty will prevent any permissions being assigned at startup, but it's good practice to add in some default permissions so they can get automatically applied across environments.
+
+The "Marketing" role example above uses an opt-out configuration style, starting with a baseline of all permissions and removing those which are not needed. This is useful if there are only a few particular permissions you want to exclude, but more commonly you might want to start from a minimal baseline, in which case it's useful to copy from the anonymous role:
+
+```csharp
+public void ConfigurePermissions(IPermissionSetBuilder builder)
+{
+    builder
+        .ApplyAnonymousRoleConfiguration()
+        .IncludeCurrentUser(c => c.Update());
+}
+```
+
+You can also copy permission configuration from any other role using `builder.ApplyRoleConfiguration<ExampleRole>()`.
+
+### Customizing the Anonymous Role
+
+By default the anonymous role only includes read permissions to entities (excluding users). If you want to customize this you can create a class that inherits from `IAnonymousRolePermissionConfiguration`:
 
 ```csharp
 using Cofoundry.Domain;
 
-public class MarketingRoleInitializer : IRoleInitializer<MarketingRole>
+public class ExampleAnonymousRoleInitializer : IAnonymousRolePermissionConfiguration
 {
-    /// <summary>
-    /// This method determins what permissions the role has. To help do this
-    /// you are provided with a collection of all permissions in the system and
-    /// you can query the collection to either filter out permissions you dont want
-    /// or create a new collection and mix permissions in that you do want. There are
-    /// a number of extension method on the collection that make this easier.
-    /// </summary>
-    public IEnumerable<IPermission> GetPermissions(IEnumerable<IPermission> allPermissions)
+    public void ConfigurePermissions(IPermissionSetBuilder builder)
     {
-        return allPermissions
-            .ExceptDeletePermissions()
-            .ExceptUserManagementPermissions()
-            .ExceptEntityPermissions<RoleEntityDefinition>()
-            .ExceptPermission<SettingsAdminModulePermission>()
-            ;
-    }
-}
-```
-
-The initializer runs when the role is first created, and will only run again when new permissions are added to the system. This ensures that you don't get any nasty surprises when new permissions are added to the system because any newly defined permissions are added using the rules defined in the role initializer.
-
-After a role has been initialized it can be managed in the admin panel.
-
-### Customizing the Anonymous Role
-
-By default the anonymous role only includes read permissions to entities (excluding users). If you want to customize this you can create a class that inherits from `IRoleInitializer<AnonymousRole>` in the same way as described above for custom roles:
-
-```csharp
-public class ExampleAnonymousRoleInitializer : IRoleInitializer<AnonymousRole>
-{
-    public IEnumerable<IPermission> GetPermissions(IEnumerable<IPermission> allPermissions)
-    {
-        var additionalPermissions = allPermissions.FilterByType<ExamplePermission>();
-        
-        return allPermissions
-            .FilterToAnonymousRoleDefaults()
-            .Union(additionalPermissions);
+        builder
+            .IncludeAnonymousRoleDefaults()
+            .Include<ExamplePermission>();
     }
 }
 ```

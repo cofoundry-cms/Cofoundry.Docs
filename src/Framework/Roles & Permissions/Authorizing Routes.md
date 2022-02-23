@@ -29,6 +29,13 @@ public class VIPMemberRole : IRoleDefinition
     public string RoleCode { get { return Code; } }
 
     public string UserAreaCode { get { return MemberUserArea.Code; } }
+    
+    public void ConfigurePermissions(IPermissionSetBuilder builder)
+    {
+        builder
+            .ApplyAnonymousRoleConfiguration()
+            .Include<VIPDealsPermission>();
+    }
 }
 ```
 
