@@ -1,36 +1,52 @@
-﻿Cofoundry includes `ITransactionScopeManager` for managing transactions across multiple statements and handling nested scopes.
+﻿Cofoundry includes `ITransactionScopeManager` for managing transactions across multiple statements. This is actually a light wrapper around [`System.Transaction.TransactionScope`](https://docs.microsoft.com/en-us/dotnet/api/system.transactions.transactionscope?view=net-6.0) and supports the same functionality, but includes some extra features to help with coordinating transactions when executing nested commands.
+
+Here's an example:
 
 ```csharp
-public class AddBlogPostHandler
+using Cofoundry.Core.Data;
+using Cofoundry.Domain.CQS;
+
+public class AddProductHandler
 {
     private readonly MyDbContext _myDbContext;
     private readonly ITransactionScopeManager _transactionScopeManager;
+    private readonly ICommandExecutor _commandExecutor;
 
-    public AddBlogPostHandler(
+    public AddProductHandler(
         MyDbContext myDbContext,
-        ITransactionScopeManager transactionScopeManager
+        ITransactionScopeManager transactionScopeManager,
+        ICommandExecutor commandExecutor
         )
     {
         _myDbContext = myDbContext;
         _transactionScopeManager = transactionScopeManager;
+        _commandExecutor = commandExecutor;
     }
 
-    public async Task ExecuteAsync(AddBlogPostCommand command)
+    public async Task ExecuteAsync(AddProductCommand command)
     {
+        // …add product to myDbContext (omitted) 
+
+        // Create a new scope to manage the transaction using the connection associated with _myDbContext
         using (var scope = _transactionScopeManager.Create(_myDbContext))
         {
-            // …code to create and add a draft blog post to the context
+            // Save the EF context inside the transaction
             await _myDbContext.SaveChangesAsync();
 
-            var publishBlogPostCommand = new PublishBlogPostCommand();
-            // …set some variables on the PublishBlogPostCommand
-            await PublishBlogPostAsync(command);
+            // Execute a nested command
+            await _commandExecutor.ExecuteAsync(new AllocateProductOwnerCommand()
+            {
+                // …set some properties on the command (omitted)
+            });
 
+            // Complete the scope
             await scope.CompleteAsync();
         }
     }
 }
 ```
+
+In this example our command uses a transaction to ensure that local `_myDbContext.SaveChangesAsync()` operation and any data access executed inside  `AllocateProductOwnerCommand` fails or succeeds as a single operation. `AllocateProductOwnerCommand` itself may also use `ITransactionScopeManager` which will utilize the ambient transaction initiated in the outer command.
 
 ## Accessing via Repositories
 

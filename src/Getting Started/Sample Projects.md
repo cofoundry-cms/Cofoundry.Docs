@@ -28,14 +28,14 @@ An example demonstrating how to use Cofoundry to create a SPA (Single Page Appli
 The application is also separated into two projects demonstrating an example of how you might structure your domain layer to keep this layer separate from your web layer.
 
 - Startup registration
-- Web Api and use of `IApiResponseHelper`
+- Web API and use of `IApiResponseHelper`
 - Structuring commands and queries using CQS 
 - Multiple related custom entities - Cats, Breeds and Features
 - A member area with a registration and sign in process
 - Using an entity framework DbContext to represent custom database tables
 - Executing stored procedures using `IEntityFrameworkSqlExecutor`
 - Integrating custom entity data with entity framework data access
-- Using the auto-updater to run sql scripts
+- Using the auto-updater to run SQL scripts
 - Email notifications & email templating
 - Registering services with the DI container
 
@@ -44,6 +44,16 @@ The application is also separated into two projects demonstrating an example of 
 ## Individual Samples
 
 These samples focus on specific areas of functionality in Cofoundry.
+
+### [Cofoundry.Samples.Mail](https://github.com/cofoundry-cms/Cofoundry.Samples.Mail)
+
+This sample shows a couple of examples of how you can use the Cofoundry mail abstraction to send emails, including:
+
+- Creating custom mail templates
+- Sending mail with `IMailService`
+- Customizing email notifications for admin panel accounts
+
+[View on GitHub](https://github.com/cofoundry-cms/Cofoundry.Samples.Mail)
 
 ### [Cofoundry.Samples.Menus](https://github.com/cofoundry-cms/Cofoundry.Samples.Menus)
 
@@ -64,13 +74,6 @@ A bare website showing various examples of how to implement page block types inc
 - Managing related entities and versions
 
 [View on GitHub](https://github.com/cofoundry-cms/Cofoundry.Samples.PageBlockTypes)
-
-### [Cofoundry.Samples.Mail](https://github.com/cofoundry-cms/Cofoundry.Samples.Mail)
-
-TODO
-
-[View on GitHub](https://github.com/cofoundry-cms/Cofoundry.Samples.Mail)
-
 
 ### [Cofoundry.Samples.UserAreas](https://github.com/cofoundry-cms/Cofoundry.Samples.UserAreas)
 
@@ -99,7 +102,7 @@ This sample is written using ASP.NET MVC and implements the following features:
 
 - Self-service user account registration
 - User accounts verified by email
-- Re-sending of verification emails
+- Re-sending verification emails
 - Custom user verification mail template
 - Credential-based authentication (separate username and email address)
 - Sign in/sign out
