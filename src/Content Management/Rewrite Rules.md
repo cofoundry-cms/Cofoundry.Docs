@@ -1,4 +1,4 @@
-﻿*NB the Rewrite Rules functionality currently has no user interface, you'll need to insert rules into the Cofoundry.RewriteRule table manually and refresh the cache to see the changes. Tracked in [issue 143](https://github.com/cofoundry-cms/cofoundry/issues/143)*
+*NB the Rewrite Rules functionality currently has no user interface, you'll need to insert rules into the Cofoundry.RewriteRule table manually and refresh the cache to see the changes. Tracked in [issue 143](https://github.com/cofoundry-cms/cofoundry/issues/143)*
 
 Rewrite rules allow you to redirect requests when a page no longer exists. This runs as part of the catch-all dynamic routing, so if a route exists it will always be found and rewrites will only take place as the last step of the routing.
 

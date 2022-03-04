@@ -178,7 +178,7 @@ You'll first need to create your API endpoint. The response will need to conform
 - The data should an array of models. `Object` is used in the example below for simplicity.
 - The data can be at the root of the JSON document, or can be nested in a `data` property (lower case).
 
-In the example below we inherit from `BaseAdminApiController` to ensure that the API is only permitted to be accessed by users logged into the Cofoundry admin panel.
+In the example below we inherit from `BaseAdminApiController` to ensure that the API is only permitted to be accessed by users signed into the Cofoundry admin panel.
 
 ```csharp
 using Microsoft.AspNetCore.Mvc;

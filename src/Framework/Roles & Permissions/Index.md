@@ -1,4 +1,4 @@
-Cofoundry uses a fairly simple permissions system. At the most basic level a *permission* represents a single action and a *role* represents a collection of many permitted permissions. Roles are assigned to users, or if you are not logged in then a special *Anonymous* role is assigned to you.
+Cofoundry uses a fairly simple permissions system. At the most basic level a *permission* represents a single action and a *role* represents a collection of many permitted permissions. Roles are assigned to users, or if you are not signed in then a special *Anonymous* role is assigned to you.
 
 As with other roles, the *Anonymous* role is assigned a set of permissions which you can customize to the requirements of your application, but by default the role is assigned read-only access to most entities to allow basic website functions to work.
 

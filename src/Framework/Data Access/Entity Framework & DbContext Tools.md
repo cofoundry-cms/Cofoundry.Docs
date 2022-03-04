@@ -92,8 +92,8 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 public class SetCatFavoriteCommandHandler 
-    : IAsyncCommandHandler<SetCatFavoriteCommand>
-    , ILoggedInPermissionCheckHandler
+    : ICommandHandler<SetCatFavoriteCommand>
+    , ISignedInPermissionCheckHandler
 {
     private readonly IEntityFrameworkSqlExecutor _entityFrameworkSqlExecutor;
     private readonly CofoundryDbContext _dbContext;

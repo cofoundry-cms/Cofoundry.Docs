@@ -14,7 +14,7 @@ The inspiration is taken from [this post](https://www.cuttingedge.it/blogs/steve
 
 To define a query, just create a class that inherits from `IQuery<TResult>`. This class should define the parameters of your query - this might be a complex set of filters but more likely it may just contain an id field or even no parameters at all. By convention we add a 'Query' postfix so that a query might be called `GetAnimalByIdQuery` or `GetAnimalsByCountryQuery`.
 
-To execute a query you'll need a handler associated with it that implements `IAsyncQueryHandler<TQuery, TQueryHandler`. Handlers are automatically injected with dependencies so you should use constructor injection to get hold of a DbContext or other services. 
+To execute a query you'll need a handler associated with it that implements `IQueryHandler<TQuery, TQueryHandler`. Handlers are automatically injected with dependencies so you should use constructor injection to get hold of a DbContext or other services. 
 
 The `ExecuteAsync` method gets an instance of `IExecutionContext` which you can use to get the UTC `DateTime` of execution and information about the user performing the query.
 
@@ -37,7 +37,7 @@ public class GetAnimalSummaryByIdQuery
 }
 
 public class GetAnimalSummaryByIdQueryHandler 
-    : IAsyncQueryHandler<GetAnimalSummaryByIdQuery, AnimalSummary>
+    : IQueryHandler<GetAnimalSummaryByIdQuery, AnimalSummary>
 {
     private readonly MyDbContext _dbContext;
 
@@ -58,7 +58,7 @@ public class GetAnimalSummaryByIdQueryHandler
 }
 ```
 
-Queries should return models that are tailored to what the consumer needs, but should still be fairly generic to allow them to be reused in other areas. Typically we will have models to represent a couple of different scenarios that require varying amounts of data. E.g. there might be a model called an `UserSummary` with the bare minimum data, and also a `UserDetails` model that has more information. However if there is a particular scenario that requires very specific data, you can also create a specific query for it - that's the benefit of using CQS, e.g. a UserLoginInfo model might be tailored to information I need to know only when logging a user in.
+Queries should return models that are tailored to what the consumer needs, but should still be fairly generic to allow them to be reused in other areas. Typically we will have models to represent a couple of different scenarios that require varying amounts of data. E.g. there might be a model called an `UserSummary` with the bare minimum data, and also a `UserDetails` model that has more information. However if there is a particular scenario that requires very specific data, you can also create a specific query for it - that's the benefit of using CQS, e.g. a `UserSignInInfo` model might be tailored to information I need to know only when signing a user in.
 
 You should never return models from your ORM or IQuerables attached to your ORM implementation - the data access layer should not be allowed to bleed into your GUI layer which can cause a headache with query optimization or future re-modelling or refactoring.
 
@@ -72,7 +72,7 @@ It's often simpler to access the query executor through [`IContentRepository`](/
 
 ## Commands
 
-Commands work in a similar way to queries, first we define a class that implements `ICommand` and then a handler that implements `IAsyncCommandHandler`. Similarly we have an executor for commands called `ICommandExecutor` which can also be accessed through [`IContentRepository`](/content-management/accessing-data-programmatically) or  [`IDomainRepository`](idomainrepository) using `repository.ExecuteCommandAsync(command)`. 
+Commands work in a similar way to queries, first we define a class that implements `ICommand` and then a handler that implements `ICommandHandler`. Similarly we have an executor for commands called `ICommandExecutor` which can also be accessed through [`IContentRepository`](/content-management/accessing-data-programmatically) or  [`IDomainRepository`](idomainrepository) using `repository.ExecuteCommandAsync(command)`. 
 
 Commands should never return data, which would break the CQS principle. If you need data after a command has been executed, make another query. We have one exception to the rule which is you may return an id when a new entity is created - you can then use this id to perform a query to get any additional data you might want. When returning an output value, create a property on the command named with the prefix *Output* e.g. *OutputUserId* and give it an `[OutputValue]` attribute, which will ensure the value has been set by the command handler.
 
@@ -91,7 +91,7 @@ public class AddAnimalCommand : ICommand
     public int OutputAnimalId { get; set; }
 }
 
-public class AddAnimalCommandHandler : IAsyncCommandHandler<AddAnimalCommand>
+public class AddAnimalCommandHandler : ICommandHandler<AddAnimalCommand>
 {
     private readonly MyDbContext _dbContext;
 

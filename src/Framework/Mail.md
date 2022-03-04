@@ -1,4 +1,6 @@
-﻿Cofoundry includes a mail service abstraction that makes it easy to create and send email from anywhere in your application.
+> This feature is demonstrated in the [Cofoundry.Samples.Mail](https://github.com/cofoundry-cms/Cofoundry.Samples.Mail) sample project.
+
+Cofoundry includes a mail service abstraction that makes it easy to create and send email from anywhere in your application.
 
 The default implementation simply writes out mail to text files to a directory for debugging purposes, but you can use plugins to change this behavior and scale your mail solution as your application demands it.
 

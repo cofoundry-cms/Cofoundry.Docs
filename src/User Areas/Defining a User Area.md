@@ -26,30 +26,37 @@ public class MemberUserArea : IUserAreaDefinition
     public string Name { get; } = "Member";
 
     /// <summary>
-    /// Indicates if users in this area can login using a password. If this is false
-    /// the password field will be null and login will typically be via SSO or some 
-    /// other method.
+    /// Indicates if users in this area can sign in using a password. If this
+    /// is <see langword="false"/> the password field will be <see langword="null"/> 
+    /// and sign in will typically be via SSO or some other method. If this is 
+    /// <see langword="true"/> then the email field is mandatory, because it is
+    /// required for account recovery.
     /// </summary>
-    public bool AllowPasswordLogin { get; } = true;
+    public bool AllowPasswordSignIn { get; } = true;
 
     /// <summary>
-    /// Indicates whether the user should login using thier email address as the username.
+    /// Indicates whether the user should sign in using thier email address as the username.
     /// Some SSO systems might provide only a username and not an email address so in
     /// this case the email address is allowed to be null.
     /// </summary>
     public bool UseEmailAsUsername { get; } = true;
     
     /// <summary>
-    /// The path to a login page to use when a user does not have permission to 
-    /// access a resource. The path to the denied resource is appended to the query
-    /// string of the LoginPath using the parameter name "ReturnUrl".
+    /// The path to redirect to if a user is not signed in, which is typically a
+    /// page where the user can sign in. The path to the denied resource is appended to the
+    /// query string of the <see cref="SignInPath"/> using the parameter name "ReturnUrl".
+    /// If set to <see langword="null"/> then a 403 (Forbidden) error page will be 
+    /// returned instead.
     /// </summary>
-    public string LoginPath { get; } = "/members/auth/login";
+    public string SignInPath { get; } = "/members/auth/signin";
     
     /// <summary>
-    /// Cofoundry creates an auth scheme for each user area. Use this property to set this
-    /// user area as the default auth scheme, which means the HttpContext.User property will
-    /// be set to this identity.
+    /// Cofoundry creates an auth scheme for each user area, but only one can be the 
+    /// default. In an application with multiple user areas a client can be signed in
+    /// to multiple users at the same time, so the default scheme dictates which user
+    /// area is authenticated by default when querying the "current user" and is therefore
+    /// also used for checking permissions. It's rare that a site would implement more 
+    /// than one custom user area, so in most cases this should be set to <see langword="true"/>.
     /// </summary>
     public bool IsDefaultAuthScheme { get; } = true;
     
@@ -78,6 +85,6 @@ A new section for managing your users will be added automatically to the admin p
 
 ## Multiple User Areas
 
-It's rare that you would want to define more than one custom user area, but it is possible. In cases where you have different levels of membership you would typically use roles or permissions to describe that relationship instead. User areas are separate and cannot share users or roles; each area exist in isolation and a user must be signed up to each area independently. However, in rare cases this level of isolation is exactly what you're after! 
+It's rare that you would want to define more than one custom user area, however it is a scenario that is supported by Cofoundry. User areas are separate and cannot share users or roles; each area exist in isolation and a user must be signed up to each area independently. In some cases this level of isolation is exactly what you're after, but if you're only trying to create different levels of membership you can instead use roles or permissions to model this instead.
 
 

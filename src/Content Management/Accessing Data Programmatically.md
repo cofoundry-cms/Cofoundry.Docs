@@ -1,4 +1,4 @@
-﻿## IContentRepository
+## IContentRepository
 
 The recommended way to access Cofoundry data is by using one of our repository abstractions, which offer an easily discoverable fluent API enriched with inline documentation to help you choose the most suitable query or command for you needs. 
 
@@ -42,7 +42,7 @@ While this approach isn't as flexible as a dynamic query builder framework like 
 
 ### Mapping
 
-A mapping function can be chained using a call to `Map`. Note that mapping functions are invoked after query execution, so this is really just a neater way of writing queries with mapped results.
+A mapping function can be chained using a call to `Map`. If the query result is `null`, then mapping is skipped. Note that mapping functions are invoked after query execution, so this is really just a neater way of writing queries with mapped results.
 
 ```csharp
 var entity = await _contentRepository

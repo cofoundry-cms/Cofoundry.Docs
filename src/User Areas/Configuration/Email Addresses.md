@@ -73,20 +73,20 @@ Additionally, if the user area is configured to use the email address as the use
 
 The easiest way to configure more restrictive rules is to add configuration settings to your `app.config` file. Modifying these settings will change the validation process for all user areas, including the Cofoundry admin panel user area. The following settings can be modified:
 
-- **Cofoundry:Identity:EmailAddress:AllowAnyCharacter:** Allows any character in an email, effectively bypassing characters validation. Defaults to `true`, to ensure maximum compatibility to the widest range of email addresses. When `true` any settings for `AllowAnyLetters`, `AllowAnyDigit` and `AdditionalAllowedCharacters` are ignored.
-- **Cofoundry:Identity:EmailAddress:AllowAnyLetters:** Allows an email to contain any character classed as a unicode letter as determined by `Char.IsLetter`. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
-- **Cofoundry:Identity:EmailAddress:AllowAnyDigit:** Allows an email to contain any character classed as a decimal digit as determined by `Char.IsDigit` i.e 0-9. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
-- **Cofoundry:Identity:EmailAddress:AdditionalAllowedCharacters:** Allows any of the specified characters in addition to the letters or digit characters permitted by the `AllowAnyLetters` and `AllowAnyDigit` settings. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior. The @ symbol is always permitted. The default settings specifies the range of special characters permitted in unquoted email addresses, excluding comment parentheses "()", and the square brackets "[]" that are used to denote an IP address instead of a domain i.e "!#$%&'*+-/=?^_`{|}~.@". When enabling or altering these settings please be aware of the [full extent of acceptable email formats](https://en.wikipedia.org/wiki/Email_address#Syntax).
-- **Cofoundry:Identity:EmailAddress:MinLength:** The minimum length of an email address. Defaults to 3. Must be between 3 and 150 characters. 
-- **Cofoundry:Identity:EmailAddress:MaxLength:** The maximum length of an email address. Defaults to 150 characters and must be between 3 and 150 characters.
-- **Cofoundry:Identity:EmailAddress:RequireUnique:** Set this to `true` to ensure that an email cannot be allocated to more than one user per user area. Note that if `IUserAreaDefinition.UseEmailAsUsername` is set to `true` then this setting is ignored because usernames have to be unique. This defaults to `false` because a uniqueness check during registration can expose whether an email is registered or not, which may be sensitive information depending on the nature of the application.
+- **Cofoundry:Users:EmailAddress:AllowAnyCharacter:** Allows any character in an email, effectively bypassing characters validation. Defaults to `true`, to ensure maximum compatibility to the widest range of email addresses. When `true` any settings for `AllowAnyLetters`, `AllowAnyDigit` and `AdditionalAllowedCharacters` are ignored.
+- **Cofoundry:Users:EmailAddress:AllowAnyLetter:** Allows an email to contain any character classed as a unicode letter as determined by `Char.IsLetter`. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
+- **Cofoundry:Users:EmailAddress:AllowAnyDigit:** Allows an email to contain any character classed as a decimal digit as determined by `Char.IsDigit` i.e 0-9. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
+- **Cofoundry:Users:EmailAddress:AdditionalAllowedCharacters:** Allows any of the specified characters in addition to the letters or digit characters permitted by the `AllowAnyLetters` and `AllowAnyDigit` settings. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior. The @ symbol is always permitted. The default settings specifies the range of special characters permitted in unquoted email addresses, excluding comment parentheses "()", and the square brackets "[]" that are used to denote an IP address instead of a domain i.e "!#$%&'*+-/=?^_`{|}~.@". When enabling or altering these settings please be aware of the [full extent of acceptable email formats](https://en.wikipedia.org/wiki/Email_address#Syntax).
+- **Cofoundry:Users:EmailAddress:MinLength:** The minimum length of an email address. Defaults to 3. Must be between 3 and 150 characters. 
+- **Cofoundry:Users:EmailAddress:MaxLength:** The maximum length of an email address. Defaults to 150 characters and must be between 3 and 150 characters.
+- **Cofoundry:Users:EmailAddress:RequireUnique:** Set this to `true` to ensure that an email cannot be allocated to more than one user per user area. Note that if `IUserAreaDefinition.UseEmailAsUsername` is set to `true` then this setting is ignored because usernames have to be unique. This defaults to `false` because a uniqueness check during registration can expose whether an email is registered or not, which may be sensitive information depending on the nature of the application.
 
 **Example:**
 
 ```json
 {
   "Cofoundry": {
-    "Identity:EmailAddress": {
+    "Users:EmailAddress": {
         "AllowAnyCharacter": false,
         "AllowAnyLetter": true,
         "AllowAnyDigit": true,
@@ -99,7 +99,7 @@ The easiest way to configure more restrictive rules is to add configuration sett
 
 ### Customizing via IUserAreaDefinition
 
-If you need to modify validation settings for a specific user area, you can do this by implementing the optional `ConfigureOptions(UserAreaOptions)` interface method on your definition class. In this example we configure the validator to only allow unique email addresses:
+If you need to modify validation settings for a specific user area, you can do this in the `ConfigureOptions(UserAreaOptions)` interface method in your definition class. In this example we configure the validator to only allow unique email addresses:
 
 ```csharp
 using Cofoundry.Domain;

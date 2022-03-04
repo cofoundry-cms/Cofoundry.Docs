@@ -13,7 +13,7 @@ using Cofoundry.Domain;
 using Cofoundry.Domain.CQS;
 
 public class AddPageCommandHandler
-    : IAsyncCommandHandler<AddPageCommand>
+    : ICommandHandler<AddPageCommand>
     , IPermissionRestrictedCommandHandler<AddPageCommand>
 {
     public async Task ExecuteAsync(AddPageCommand command, IExecutionContext executionContext)
@@ -93,9 +93,11 @@ public class DeleteCustomEntityCommandHandler
 }
 ```
 
-## Simple Permission Handling with ILoggedInPermissionCheckHandler and ICofoundryUserPermissionCheckHandler
+## Simple Permission Handling
 
-If your application only requires simple permission checking to make sure a user is logged in, then you can implement `ICofoundryUserPermissionCheckHandler` or `ILoggedInPermissionCheckHandler` which allows you to simply check that a user is logged in or is a Cofoundry admin panel user.
+#### Requiring a signed in user
+
+If your application only requires simple permission checking to make sure a user is signed in, then you can implement `ICofoundryUserPermissionCheckHandler` or `ISignedInPermissionCheckHandler` which allows you to simply check that a user is signed in or is a Cofoundry admin panel user.
 
 This can be a lot simpler than implementing full permissions checking if you know that your application isn't going to need fine-grained permission-based access.
 

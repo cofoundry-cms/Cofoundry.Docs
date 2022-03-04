@@ -12,7 +12,7 @@ The standard set of content management features can be disabled using the follow
 
 The admin panel is included in a separate NuGet package, so one way to remove the admin panel is simply to not install it in the first place. However you can also disable this via a config setting:
 
-- **Cofoundry:Admin:Disabled** Disables the admin panel, removing all routes from the routing table and disabling login.
+- **Cofoundry:Admin:Disabled** Disables the admin panel, removing all routes from the routing table and disabling sign in.
 
 Note that you can also change the admin directory name via config too:
 

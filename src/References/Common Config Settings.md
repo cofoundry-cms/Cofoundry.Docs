@@ -1,6 +1,6 @@
 ## Admin Settings
 
-- **Cofoundry:Admin:Disabled** Disables the admin panel, removing all routes from the routing table and disabling login.
+- **Cofoundry:Admin:Disabled** Disables the admin panel, removing all routes from the routing table and disabling sign in.
 - **Cofoundry:Admin:AutoInjectVisualEditor**  Indicates whether to inject the visual editor into your content managed pages and other MVC results. Enabled by default.
 - **Cofoundry:Admin:DirectoryName** The path to the admin panel. Defaults to "admin". Can only contain letters, numbers and dashes.
 
@@ -42,7 +42,7 @@ Settings that control the [auto-update process](/framework/auto-update) that run
 
 ## ContentSettings
 
-- **Cofoundry:Content:AlwaysShowUnpublishedData** A developer setting which can be used to view unpublished versions of content without being logged into the administrator site.
+- **Cofoundry:Content:AlwaysShowUnpublishedData** A developer setting which can be used to view unpublished versions of content without being signed into the administrator site.
 
 ## DatabaseSettings
 
@@ -121,7 +121,7 @@ These settings can be controlled on a per-user-area basis by implementing `IUser
 
 - **Cofoundry:Users:Authentication:ExecutionDuration:Enabled** Controls whether the randomized execution duration feature is enabled for credential authorization. Defaults to `true`, extending the execution duration on `AuthenticateUserCredentialsQuery` and any commands that utilize credential authentication such as `UpdateUserPasswordByCredentialsCommand`. This helps mitigate time-based enumeration attacks to discover valid usernames.
 - **Cofoundry:Users:Authentication:ExecutionDuration:MinInMilliseconds** The inclusive lower bound of the randomized credential authorization execution duration, measured in milliseconds (1000ms = 1s). Defaults to 1 second.
-- **Cofoundry:Users:Authentication:ExecutionDuration:MaxInMilliseconds** The inclusive upper bound of the randomized credential authorization execution duration, measured in milliseconds (1000ms = 1s). Defaults to 1.5 seconds.
+- **Cofoundry:Users:Authentication:ExecutionDuration:MaxInMilliseconds** The inclusive upper bound of the randomized credential authorization execution duration, measured in milliseconds (2000ms = 2s). Defaults to 1.5 seconds.
 - **Cofoundry:Users:Authentication:IPAddressRateLimit:Quantity** The maximum number of failed authentication attempts allowed per IP address during the rate limit time window. The default value is 50 attempts.
 - **Cofoundry:Users:Authentication:IPAddressRateLimit:Window** The time window to measure authentication attempts when rate limiting by IP address, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "00:30:00" to represent 30 minutes. The default value is 60 minutes.
 - **Cofoundry:Users:Authentication:UsernameRateLimit:Quantity** The maximum number of failed authentication attempts allowed per username during the rate limiting time window. The default value is 20 attempts.
@@ -161,7 +161,7 @@ Controls the default password policy used for all user areas, including the Cofo
 - **Cofoundry:Users:Password:MinLength:** The minimum length of a password. Defaults to 10 and anything less is not recommended. Must be between 6 and 2048 characters.
 - **Cofoundry:Users:Password:MaxLength:** The maximum length of a password. Defaults to 300 characters and must be between 6 and 2048 characters.
 - **Cofoundry:Users:Password:MinUniqueCharacters:** The number of unique characters required in a password. This is to prevent passwords like "aabbccdd". Defaults to 5 unique characters.
-- **Cofoundry:Users:Password:SendNotificationOnUpdate:** Indicates whether to send a confirmation notification to the user to let them know their password has been changed. This only applied when a password is changed by the user and not via a reset e.g. via `UpdateCurrentUserPasswordCommand` or `CompleteUserAccountRecoveryByEmailCommand`. Defaults to `true`.
+- **Cofoundry:Users:Password:SendNotificationOnUpdate:** Indicates whether to send a confirmation notification to the user to let them know their password has been changed. This is only applied when a password is changed by the user and not via a reset e.g. via `UpdateCurrentUserPasswordCommand` or `CompleteUserAccountRecoveryByEmailCommand`. Defaults to `true`.
 
 ### AccountRecovery
 
@@ -170,16 +170,16 @@ Controls the behavior of the self-service account recovery feature for all user 
 - **Cofoundry:Users:AccountRecovery:RecoveryUrlBase:** The relative base path used to construct the URL for the account recovery completion form. A unique token will be added as a query parameter to the URL, it is then resolved using `ISiteUrlResolver.MakeAbsolute` and added to the email notification e.g. "/auth/account-recovery" would be transformed to "https://example.com/auth/account-recovery?t={token}". The path can include other query parameters, which will be merged into the resulting URL. This setting is required when using the account recovery feature, unless you are building the URL yourself in a custom `IDefaultMailTemplateBuilder` implementation. Changing this setting does not affect the Cofoundry Admin account recovery feature.
 - **Cofoundry:Users:AccountRecovery:InitiationRateLimit:Quantity:** The maximum number of account recovery initiation attempts to allow within the rate limit time window. Defaults to 16 attempts. If zero or less, then rate limiting does not occur.
 - **Cofoundry:Users:AccountRecovery:InitiationRateLimit:Window:** The time-window in which to count account recovery initiation attempts when rate limiting, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "01:00:00" to represent 1 hour. Defaults to 24 hours. If zero or less, then rate limiting does not occur.
-- **Cofoundry:Users:AccountRecovery:ExpireAfter:** The number of hours an account recovery token is valid for, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "01:00:00" to represent 1 hour. Defaults to 16 hours. If zero or less, then time-based validation does not occur.
+- **Cofoundry:Users:AccountRecovery:ExpireAfter:** The length of time an account recovery token is valid for, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "01:00:00" to represent 1 hour. Defaults to 16 hours. If zero or less, then time-based validation does not occur.
 - **Cofoundry:Users:AccountRecovery:ExecutionDuration:Enabled** Controls whether the randomized execution duration feature is enabled for the account recovery (forgot password) initiation command. Defaults to `true`, mitigating time-based enumeration attacks to discover valid usernames
 - **Cofoundry:Users:AccountRecovery:ExecutionDuration:MinInMilliseconds** The inclusive lower bound of the randomized execution duration of the `InitiateUserAccountRecoveryByEmailCommand`, measured in milliseconds (1000ms = 1s). Defaults to 1.5 second.
-- **Cofoundry:Users:AccountRecovery:ExecutionDuration:MaxInMilliseconds** The inclusive upper bound of the randomized execution duration of the `InitiateUserAccountRecoveryByEmailCommand`, measured in milliseconds (1000ms = 1s). Defaults to 2 seconds.
+- **Cofoundry:Users:AccountRecovery:ExecutionDuration:MaxInMilliseconds** The inclusive upper bound of the randomized execution duration of the `InitiateUserAccountRecoveryByEmailCommand`, measured in milliseconds (2000ms = 2s). Defaults to 2 seconds.
 
 ### AccountVerification
 
 Controls the behavior of the account verification feature. Note that the Cofoundry admin panel does not support an account verification flow and therefore these settings do not apply.
 
-- **Cofoundry:Users:AccountVerification:RequireVerification:** If set to `true`, then an account is required to be verified before being able to log in. Defaults to `false`.
+- **Cofoundry:Users:AccountVerification:RequireVerification:** If set to `true`, then an account is required to be verified before being able to sign in. Defaults to `false`.
 - **Cofoundry:Users:AccountVerification:ExpireAfter:** The length of time an account verification token is valid for, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "01:00:00" to represent 1 hour. Defaults to 7 days. If zero or less, then expiry validation does not occur.
 - **Cofoundry:Users:AccountVerification:InitiationRateLimit:Quantity:** The maximum number of account verification initiation attempts to allow within the rate limit window. Defaults to 16 attempts. If zero or less, then rate limiting does not occur.
 - **Cofoundry:Users:AccountVerification:InitiationRateLimit:Window:** The time-window in which to count account verification initiation attempts when rate limiting, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "01:00:00" to represent 1 hour. Defaults to 24 hours. If zero or less, then rate limiting does not occur.

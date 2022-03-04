@@ -1,10 +1,10 @@
-﻿There are a few places in Cofoundry that auto-generate data entry forms from annotated POCO data models, such as [Page Block Types](/content-management/page-block-types) and [Custom Entities](/content-management/custom-entities).  
+There are a few places in Cofoundry that auto-generate data entry forms from annotated POCO data models, such as [Page Block Types](/content-management/page-block-types) and [Custom Entities](/content-management/custom-entities).  
 
 ## Primitive Types
 
 Primitive types such as `string` and `int` will be displayed with a basic editor that corresponds with their type. The basic editor can be overridden by adding a data annotation, for example a `string` property automatically generates a single line text input, but you can use the `[MultiLineText]` attribute to turn this into a textarea.
 
-[Read more](data-model-annotations/primitives)
+[Read more](primitives)
 
 ## .NET DataAnnotations
 
@@ -26,31 +26,31 @@ Cofoundry has a range of built in data annotations that either enhance existing 
 
 #### UI/Validation Attributes
 
-- **[[CheckboxList]](data-model-annotations/selection-lists#checkboxlist):** Use this to decorate a collection property to indicate it should be rendered as a list of checkbox inputs in the admin UI. Specify an option source to describe the items to display in the list.
-- **[[Color]](data-model-annotations/miscellaneous#color):** Use this to decorate a string property and provide a UI hint to the admin interface to display an html editor field. Toolbar options can be specified in the constructor and the CustomToolbar property can be used to show a completely custom toolbar.
-- **[[CustomEntity]](data-model-annotations/Custom-Entities):** Use this to decorate an integer property and indicate that it should be the id for a custom entity of a specific type.
-- **[[CustomEntityCollection]](data-model-annotations/Custom-Entities#customentitycollection):** Allows a user to pick multiple custom entities of a specific type, which can optionally have 'drag and drop' ordering. Designed to be applied to an `ICollection<int>` property.
-- **[[CustomEntityMultiTypeCollection]](data-model-annotations/Custom-Entities#customentitymultitypecollection):** Use this to decorate a collection of `CustomEntityIdentity` objects, indicating the property represents a set of custom entities of mixed types. Optional parameters indicate whether the collection is sortable.
-- **[[DateAndTime]](data-model-annotations/dates-and-times#dateandtime):** Use this to decorate a DateTime, DateTimeOffset or string property and provide a UI hint to the admin interface to display a timezone-insensitive date and time picker field.
-- **[[DateAndTimeLocal]](data-model-annotations/dates-and-times#dateandtimelocal):** Use this to decorate a DateTime, DatimeOffset or string property and provide a UI hint to the admin interface to display a timezone-sensitive date and time picker field.
-- **[[Date]](data-model-annotations/dates-and-times#date):** Use this to decorate a DateTime, DateTimeOffset or string property and provide a UI hint to the admin interface to display a timezone-insensitive date picker field.
-- **[[DateLocal]](data-model-annotations/dates-and-times#datelocal):** Use this to decorate a DateTime, DatimeOffset or string property and provide a UI hint to the admin interface to display a timezone-sensitive date picker field.
+- **[[CheckboxList]](selection-lists#checkboxlist):** Use this to decorate a collection property to indicate it should be rendered as a list of checkbox inputs in the admin UI. Specify an option source to describe the items to display in the list.
+- **[[Color]](miscellaneous#color):** Use this to decorate a string property and provide a UI hint to the admin interface to display an html editor field. Toolbar options can be specified in the constructor and the CustomToolbar property can be used to show a completely custom toolbar.
+- **[[CustomEntity]](Custom-Entities):** Use this to decorate an integer property and indicate that it should be the id for a custom entity of a specific type.
+- **[[CustomEntityCollection]](Custom-Entities#customentitycollection):** Allows a user to pick multiple custom entities of a specific type, which can optionally have 'drag and drop' ordering. Designed to be applied to an `ICollection<int>` property.
+- **[[CustomEntityMultiTypeCollection]](Custom-Entities#customentitymultitypecollection):** Use this to decorate a collection of `CustomEntityIdentity` objects, indicating the property represents a set of custom entities of mixed types. Optional parameters indicate whether the collection is sortable.
+- **[[DateAndTime]](dates-and-times#dateandtime):** Use this to decorate a DateTime, DateTimeOffset or string property and provide a UI hint to the admin interface to display a timezone-insensitive date and time picker field.
+- **[[DateAndTimeLocal]](dates-and-times#dateandtimelocal):** Use this to decorate a DateTime, DatimeOffset or string property and provide a UI hint to the admin interface to display a timezone-sensitive date and time picker field.
+- **[[Date]](dates-and-times#date):** Use this to decorate a DateTime, DateTimeOffset or string property and provide a UI hint to the admin interface to display a timezone-insensitive date picker field.
+- **[[DateLocal]](dates-and-times#datelocal):** Use this to decorate a DateTime, DatimeOffset or string property and provide a UI hint to the admin interface to display a timezone-sensitive date picker field.
 - **[[Document]](/content-management/data-model-annotations/Documents):** Use with an (optionally nullable) integer to indicate this is for the id of a document asset.
-- **[[DocumentCollection]](/content-management/data-model-annotations/Documents#documentcollection):** This data annotation can be used to decorate a collection of integers, indicating the property represents a set of document asset ids. The editor allows for sorting and you can set filters for restricting file types.
-- **[[Html]](/content-management/data-model-annotations/Html):** Use this to decorate a string property and provide a UI hint to the admin interface to display an html editor field. Toolbar options can be specified in the constructor and the CustomToolbar property can be used to show a completely custom toolbar.
-- **[[Image]](/content-management/data-model-annotations/Images):** Use with an (optionally nullable) integer to indicate this is for the id of an ImageAsset. A non-null integer indicates this is a required field. Optional parameters allow the search filter to be restricted e.g. width/height etc
-- **[[ImageCollection]](data-model-annotations/Images#imagecollection):** Use this to decorate an integer array of ImageAssetIds and indicate that it should be a collection of image assets. The editor allows for sorting of linked assets and you can set filters for restricting image sizes.
-- **[[MultiLineText]](data-model-annotations/primitives#multilinetext):** Use this to decorate a string property and provide a UI hint to the admin interface to display a text area field
-- **[[NestedDataModelCollection]](data-model-annotations/nested-data-models):** Use this to decorate a collection of `INestedDataModel` objects, allowing them to be edited in the admin UI.
-- **[[Number]](data-model-annotations/primitives#number):** Use this to decorate a numeric property and provide a UI hint to the admin interface to display an html5 number field. The step property can be used to specify the precision of the number e.g. 2 decimal places
-- **[[Placeholder]](data-model-annotations/miscellaneous#placeholder):** Use this to provide a UI hint to the admin interface to add a placeholder attribute to an html input field.
-- **[[PreviewTitle]](data-model-annotations/display-preview):** Indicates the property of a model that can be used as a title, name or short textual identifier. Typically this is used in a grid of items to identify the row.
-- **[[PreviewImage]](data-model-annotations/display-preview):** Indicates the property of a model that can be used as the main image when displaying the model. Typically this is used in a grid of items to show an image representation of the row.
-- **[[PreviewDescription]](data-model-annotations/display-preview):** Indicates the property of a model that can be used as a description field. Typically this is used in a grid of items to describe the item.
-- **[[RadioListList]](data-model-annotations/selection-lists#radiolist):** Use this to decorate a collection property to indicate it should be rendered as a radio input list in the admin UI. Specify an option source to describe the items to display in the list.
-- **[[ReadOnly]](data-model-annotations/miscellaneous#readonly):** This attribute can be used to indicate a property should not be editable in the admin UI. 
-- **[[SelectListList]](data-model-annotations/selection-lists#selectlist):** Use this to decorate a collection property to indicate it should be rendered as a select list (drop down list) in the admin UI. Specify an option source to describe the items to display in the list.
-- **[[Time]](data-model-annotations/dates-and-times#time):** Use this to decorate a TimeSpan or string property and provide a UI hint to the admin interface to display a time picker field.
+- **[[DocumentCollection]](Documents#documentcollection):** This data annotation can be used to decorate a collection of integers, indicating the property represents a set of document asset ids. The editor allows for sorting and you can set filters for restricting file types.
+- **[[Html]](Html):** Use this to decorate a string property and provide a UI hint to the admin interface to display an html editor field. Toolbar options can be specified in the constructor and the CustomToolbar property can be used to show a completely custom toolbar.
+- **[[Image]](Images):** Use with an (optionally nullable) integer to indicate this is for the id of an ImageAsset. A non-null integer indicates this is a required field. Optional parameters allow the search filter to be restricted e.g. width/height etc
+- **[[ImageCollection]](Images#imagecollection):** Use this to decorate an integer array of ImageAssetIds and indicate that it should be a collection of image assets. The editor allows for sorting of linked assets and you can set filters for restricting image sizes.
+- **[[MultiLineText]](primitives#multilinetext):** Use this to decorate a string property and provide a UI hint to the admin interface to display a text area field
+- **[[NestedDataModelCollection]](nested-data-models):** Use this to decorate a collection of `INestedDataModel` objects, allowing them to be edited in the admin UI.
+- **[[Number]](primitives#number):** Use this to decorate a numeric property and provide a UI hint to the admin interface to display an html5 number field. The step property can be used to specify the precision of the number e.g. 2 decimal places
+- **[[Placeholder]](miscellaneous#placeholder):** Use this to provide a UI hint to the admin interface to add a placeholder attribute to an html input field.
+- **[[PreviewTitle]](display-preview):** Indicates the property of a model that can be used as a title, name or short textual identifier. Typically this is used in a grid of items to identify the row.
+- **[[PreviewImage]](display-preview):** Indicates the property of a model that can be used as the main image when displaying the model. Typically this is used in a grid of items to show an image representation of the row.
+- **[[PreviewDescription]](display-preview):** Indicates the property of a model that can be used as a description field. Typically this is used in a grid of items to describe the item.
+- **[[RadioListList]](selection-lists#radiolist):** Use this to decorate a collection property to indicate it should be rendered as a radio input list in the admin UI. Specify an option source to describe the items to display in the list.
+- **[[ReadOnly]](miscellaneous#readonly):** This attribute can be used to indicate a property should not be editable in the admin UI. 
+- **[[SelectListList]](selection-lists#selectlist):** Use this to decorate a collection property to indicate it should be rendered as a select list (drop down list) in the admin UI. Specify an option source to describe the items to display in the list.
+- **[[Time]](dates-and-times#time):** Use this to decorate a TimeSpan or string property and provide a UI hint to the admin interface to display a time picker field.
 
 #### Special Behavior Attributes
 
@@ -61,8 +61,6 @@ Cofoundry has a range of built in data annotations that either enhance existing 
 ## Creating Your Own Attributes
 
 You can create your own attributes, but to get UI integration you'll need to to be familiar with Angular.js. We're not quite ready to document the Angular UI process just yet, but if you're interested you can see some examples of UI components on [github](https://github.com/cofoundry-cms/cofoundry/tree/master/src/Cofoundry.Web.Admin/Admin/Modules/Shared/Js/UIComponents)
-
-TODO: Document admin UI development
 
 When creating your annotations you should implement `IMetadataAttribute` and add any additional data you want to send to the angular client to the `AdditionalValues` collection. These will be rendered into your control with the 'cms-' prefix. 
 

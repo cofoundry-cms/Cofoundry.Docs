@@ -24,7 +24,7 @@ A special [Custom Entity Page](Custom-Entity-Pages) page type can be used to ren
 
 ## Editing Content
 
-While pages and directories can be managed in sections of the admin panel, editing page content is done inline while browsing the page. We refer to this inline editor as the **Visual Editor**. To use the visual editor simply browse to the page you want to edit while logged in and click on the *Edit Draft* button to start editing.
+While pages and directories can be managed in sections of the admin panel, editing page content is done inline while browsing the page. We refer to this inline editor as the **Visual Editor**. To use the visual editor simply browse to the page you want to edit while signed in and click on the *Edit Draft* button to start editing.
 
 ![VisualEditor](images/visual-editor.png)
 

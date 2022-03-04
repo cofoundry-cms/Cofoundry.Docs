@@ -1,15 +1,15 @@
-An authorized task represents a single user-based operation that can be executed without being logged in. Task authorization is validated by a unique cryptographically secure token, often communicated via an out-of-band communication mechanism such as an email. 
+An authorized task represents a single user-based operation that can be executed without being signed in. Task authorization is validated by a unique cryptographically secure token, often communicated via an out-of-band communication mechanism such as an email. 
 
 To better explain this, let's use an example. Cofoundry includes two flows that are built on top of the authorized task framework: "User Account Recovery" and "User Account Verification". Let's look at a user account recovery (AKA "forgot password") flow in more detail:
 
-- A user starts the recovery process by entering their email address into a form
-- If the user account exists then an authorized task is initiated 
-- During initialization, a unique cryptographically secure token is generated
-- The token is added to a password reset URL and emailed to the user
-- When the user follows the link in their email, the token is validated before displaying a password reset form
-- When submitting the form, the task token is validated again before executing the password change
-- The task is marked as complete so that the token cannot be used again
-- Any other account recovery tokens the user has generated are invalidated
+1. A user starts the recovery process by entering their email address into a form
+2. If the user account exists then an authorized task is initiated 
+3. During initialization, a unique cryptographically secure token is generated
+4. The token is added to a password reset URL and emailed to the user
+5. When the user follows the link in their email, the token is validated before displaying a password reset form
+6. When submitting the form, the task token is validated again before executing the password change
+7. The task is marked as complete so that the token cannot be used again
+8. Any other account recovery tokens the user has generated are invalidated
 
 In the example above, the authorized task framework generates the token and tracks the task through to completion. Some other features of the framework include:
 
@@ -61,7 +61,7 @@ using System.Threading.Tasks;
 
 public class InviteMemberCommandHandler
     : ICommandHandler<InviteMemberCommand>
-    , ILoggedInPermissionCheckHandler
+    , ISignedInPermissionCheckHandler
 {
     private readonly IAdvancedContentRepository _contentRepository;
     private readonly IAuthorizedTaskTokenUrlHelper _authorizedTaskTokenUrlHelper;
@@ -99,7 +99,7 @@ public class InviteMemberCommandHandler
         inviteUrl = _siteUrlResolver.MakeAbsolute(inviteUrl);
 
         // Send email 
-        // (ommitted)
+        // (omitted)
     }
 }
 
@@ -256,7 +256,7 @@ public class MembersApiController : ControllerBase
         using (var scope = _contentRepository.Transactions().CreateScope())
         {
             // Register user 
-            // (ommited)
+            // (omitted)
 
             // Mark task completed
             await _contentRepository

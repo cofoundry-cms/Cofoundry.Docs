@@ -8,7 +8,7 @@ For more information on configuring roles and restricting access in code, take a
 
 Access to CMS pages and directories can be configured in the Admin Panel by clicking on the **Access Control** button on an individual page or directory screen. It's possible for rule configuration to get complicated, but typically you'd only ever have a single rule set on a parent directory or individual page.
 
-In the example screen below there is a single rule applied to the parent directory of the page which restricts access only to users in the "Member" user area. If the user is not logged into the member user area then the user is redirected to the member login page.
+In the example screen below there is a single rule applied to the parent directory of the page which restricts access only to users in the "Member" user area. If the user is not signed into the member user area then the user is redirected to the member sign in page.
  
 ![The page access editor in the admin panel](images/page-access-editor-modal.png)
 
@@ -24,8 +24,6 @@ Rules are inherited from parent directories and users must meet the criteria of 
 
 When access is denied, the "violation action" associated with the broken rules is invoked. Options include:
 
-- **Redirect to Login:** If selected, then if the user is not logged in they will be redirected to the login page associated with the user area specified in the rules.
-- **Default Action:** The default action applies if "Redirect to Login" is not selected, or if the user is logged in but does not meet the rule criteria i.e. correct user area, but incorrect role. Options include "Error", which returns a 403 error result, or "Not Found" which returns a 404 result.
-
-
+- **Redirect to Sign In:** If selected, then if the user is not signed in they will be redirected to the sign in page associated with the user area specified in the rules.
+- **Default Action:** The default action applies if "Redirect to Sign In" is not selected, or if the user is signed in but does not meet the rule criteria i.e. correct user area, but incorrect role. Options include "Error", which returns a 403 error result, or "Not Found" which returns a 404 result.
 

@@ -31,7 +31,7 @@ The application is also separated into two projects demonstrating an example of 
 - Web Api and use of `IApiResponseHelper`
 - Structuring commands and queries using CQS 
 - Multiple related custom entities - Cats, Breeds and Features
-- A member area with a sign-up and login process
+- A member area with a registration and sign in process
 - Using an entity framework DbContext to represent custom database tables
 - Executing stored procedures using `IEntityFrameworkSqlExecutor`
 - Integrating custom entity data with entity framework data access
@@ -64,3 +64,45 @@ A bare website showing various examples of how to implement page block types inc
 - Managing related entities and versions
 
 [View on GitHub](https://github.com/cofoundry-cms/Cofoundry.Samples.PageBlockTypes)
+
+### [Cofoundry.Samples.Mail](https://github.com/cofoundry-cms/Cofoundry.Samples.Mail)
+
+TODO
+
+[View on GitHub](https://github.com/cofoundry-cms/Cofoundry.Samples.Mail)
+
+
+### [Cofoundry.Samples.UserAreas](https://github.com/cofoundry-cms/Cofoundry.Samples.UserAreas)
+
+The user areas sample solution contains two projects:
+
+- AuthenticationSample: A standard credential-based authentication flow with account recovery and account management features.
+- RegistrationAndVerificationSample: A self-service user registration and account verification flow.
+
+#### AuthenticationSample
+
+This sample is written using ASP.NET Razor Pages and implements the following features:
+
+- Credential-based authentication (email addresses as usernames)
+- Sign in/sign out
+- Forcing a password change at first sign in
+- Account recovery (AKA "forgot password")
+- Custom mail templates
+- Account management (update, password change, delete)
+- Using `ICofoundryHelper` in views to query the current user
+
+In this sample users are added via the admin panel.
+
+#### RegistrationAndVerificationSample
+
+This sample is written using ASP.NET MVC and implements the following features:
+
+- Self-service user account registration
+- User accounts verified by email
+- Re-sending of verification emails
+- Custom user verification mail template
+- Credential-based authentication (separate username and email address)
+- Sign in/sign out
+- Using `ICofoundryHelper` in views to query the current user
+
+[View on GitHub](https://github.com/cofoundry-cms/Cofoundry.Samples.UserAreas)

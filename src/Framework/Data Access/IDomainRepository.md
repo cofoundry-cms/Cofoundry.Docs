@@ -1,4 +1,4 @@
-﻿## IDomainRepository
+## IDomainRepository
 
 `IDomainRepository` is the base repository that `IContentRepository` and `IAdvancedContentRepository` inherit from. It provides easy access to components such as generic command and query execution, permission escalation and transaction management. Typically you'd use this if your only interested in using Cofoundry as a framework without any of the CMS content APIs.
 
@@ -50,19 +50,13 @@ var results = await _domainRepository
 
 ### Elevating Permissions
 
-Execution of queries and commands is restricted by [permissions](/framework/roles-and-Permissions). If you want to run a query or command that currently logged in user doesn't have permissions for, you'll need to elevate your permissions before executing it.
+Execution of queries and commands is restricted by [permissions](/framework/roles-and-Permissions). If you want to run a query or command that currently signed in user doesn't have permissions for, you'll need to elevate your permissions before executing it.
 
 An example of when this might be useful would be registering a new user from a public sign-up form. The anonymous user role does not typically have permissions to create a user, so we'd need to elevate permissions:
 
 ```csharp
 public async Task RegisterUser(string email, string password)
 {
-    var exampleRole = await _advancedContentRepository
-        .Roles()
-        .GetByCode(ExampleRole.ExampleRoleCode)
-        .AsDetails()
-        .ExecuteAsync();
-
     await _advancedContentRepository
         .WithElevatedPermissions()
         .Users()
@@ -70,8 +64,8 @@ public async Task RegisterUser(string email, string password)
         {
             Email = email,
             Password = password,
-            UserAreaCode = MemberUserArea.AreaCode,
-            RoleId = exampleRole.RoleId
+            UserAreaCode = MemberUserArea.Code,
+            RoleCode = MemberRole.Code
         });
 }
 ```

@@ -33,7 +33,7 @@ public class PermissionChecker
         var memberUserContext = await _userContextService.GetCurrentContextByUserAreaAsync(MemberUserArea.Code);
 
         // "Enforce" versions of method will throw an exception if invalid
-        _permissionValidationService.EnforceIsLoggedIn(memberUserContext);
+        _permissionValidationService.EnforceIsSignedIn(memberUserContext);
 
         // We can also permit the current user to make an action they do not usually have permission to do e.g. if they are the owner of an entity
         var documentOwnerUserId = 3;

@@ -62,7 +62,7 @@ For a timezone-insensitive picker use [`[Date]`](#date).
 
 The `[DateAndTime]` data annotation can be used to decorate a `DateTime`, `DateTimeOffset` or `string` property and provide a UI hint to the admin interface to display a date and time input field. The UI picker and value is timezone insensitive i.e. UTC. 
 
-For a timezone-sensitive value use [`[DateAndTimeLocal]`](#datetimelocal).
+For a timezone-sensitive value use [`[DateAndTimeLocal]`](#dateandtimelocal).
     
 A nullable `DateTime` or `DateTimeOffset` property type indicates the property is optional, whilst `string` properties are optional by default and the `[Required]` should be used to mark them as required.
 

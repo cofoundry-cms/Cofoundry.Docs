@@ -1,7 +1,7 @@
 If your user area is not configured to use an email address as the username, you may want to customize the username formatting and validation behavior. Whenever a user is added or their username is updated, Cofoundry will run the username through a number of processes:
 
 - **[Normalization](#customizing-username-normalization):** The process of tidying up a username into a consistent format. This value may be used for display and so it's rare that you'd want to change it dramatically, therefore the default implementation simply trims the input e.g. " E.Example" becomes "E.Example".
-- **[Uniquification](#customizing-username-uniquification):** The process of formatting a username into a format that can be used for comparing usernames, e.g. to prevent duplicate registrations via a uniqueness check and to lookup a user during login. By default we normalize and lowercase the username, for example "E.Example" becomes "e.example".
+- **[Uniquification](#customizing-username-uniquification):** The process of formatting a username into a format that can be used for comparing usernames, e.g. to prevent duplicate registrations via a uniqueness check and to lookup a user during sign in. By default we normalize and lowercase the username, for example "E.Example" becomes "e.example".
 - **[Validation](#customizing-username-validation):** The process of ensuring a username is in a valid format and passes any domain rules such as uniqueness checks. By default the validator simply checks that username is less than 150 characters and is unique.
 
 By default these processes do minimal formatting and validation, however you can customize all these processes if you want to alter the behavior and be more restrictive.
@@ -59,19 +59,19 @@ The default username validation rules are as follows:
 
 The easiest way to configure more restrictive rules is to add configuration settings to your `app.config` file. Modifying these settings will change the validation process for all user areas. The following settings can be modified:
 
-- **Cofoundry:Identity:Username:AllowAnyCharacter:** Allows any character in a username, effectively bypassing characters validation. Defaults to `true`, to ensure maximum compatibility to the widest range of usernames when integrating with external systems. When `true` any settings for `AllowAnyLetters`, `AllowAnyDigit` and `AdditionalAllowedCharacters` are ignored. Note that username character validation is ignored when `IUserAreaDefinition.UseEmailAsUsername` is set to `true`, because the format is already validated against the configured `EmailAddressOptions`.
-- **Cofoundry:Identity:Username:AllowAnyLetter:** Allows a username to contain any character classed as a unicode letter as determined by `Char.IsLetter`. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
-- **Cofoundry:Identity:Username:AllowAnyDigit:** Allows a username to contain any character classed as a decimal digit as determined by `Char.IsDigit` i.e 0-9. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
-- **Cofoundry:Identity:Username:AdditionalAllowedCharacters:** Allows any of the specified characters in addition to the letters or digit characters permitted by the `AllowAnyLetter` and `AllowAnyDigit` settings. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior. The default settings specifies a handful of special characters commonly found in usernames: "-._' ".
-- **Cofoundry:Identity:Username:MinLength:** The minimum length of a username. Defaults to 1. Must be between 1 and 150 characters. 
-- **Cofoundry:Identity:Username:MaxLength:** The maximum length of a username. Defaults to 150 characters and must be between 1 and 150 characters.
+- **Cofoundry:Users:Username:AllowAnyCharacter:** Allows any character in a username, effectively bypassing characters validation. Defaults to `true`, to ensure maximum compatibility to the widest range of usernames when integrating with external systems. When `true` any settings for `AllowAnyLetters`, `AllowAnyDigit` and `AdditionalAllowedCharacters` are ignored. Note that username character validation is ignored when `IUserAreaDefinition.UseEmailAsUsername` is set to `true`, because the format is already validated against the configured `EmailAddressOptions`.
+- **Cofoundry:Users:Username:AllowAnyLetter:** Allows a username to contain any character classed as a unicode letter as determined by `Char.IsLetter`. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
+- **Cofoundry:Users:Username:AllowAnyDigit:** Allows a username to contain any character classed as a decimal digit as determined by `Char.IsDigit` i.e 0-9. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior.
+- **Cofoundry:Users:Username:AdditionalAllowedCharacters:** Allows any of the specified characters in addition to the letters or digit characters permitted by the `AllowAnyLetter` and `AllowAnyDigit` settings. This setting is ignored when `AllowAnyCharacter` is set to `true`, which is the default behavior. The default settings specifies a handful of special characters commonly found in usernames: "-._' ".
+- **Cofoundry:Users:Username:MinLength:** The minimum length of a username. Defaults to 1. Must be between 1 and 150 characters. 
+- **Cofoundry:Users:Username:MaxLength:** The maximum length of a username. Defaults to 150 characters and must be between 1 and 150 characters.
 
 **Example:**
 
 ```json
 {
   "Cofoundry": {
-    "Identity:Username": {
+    "Users:Username": {
         "AllowAnyCharacter": false,
         "AllowAnyLetter": true,
         "AllowAnyDigit": true,
@@ -85,7 +85,7 @@ The easiest way to configure more restrictive rules is to add configuration sett
 
 ### Customizing via IUserAreaDefinition
 
-If you need to modify validation settings for a specific user area, you can do this by implementing the optional `ConfigureOptions(UserAreaOptions)` interface method on your definition class:
+If you need to modify validation settings for a specific user area, you can do this in the `ConfigureOptions(UserAreaOptions)` interface method in your definition class:
 
 ```csharp
 using Cofoundry.Domain;

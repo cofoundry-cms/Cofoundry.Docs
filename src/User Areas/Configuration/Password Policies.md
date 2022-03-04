@@ -33,7 +33,7 @@ The easiest way to modify the default policy is to add configuration settings to
 
 ## Customizing a user area policy via IUserAreaDefinition
 
-If you need to modify the basic password policy settings for a specific user area, you can do this by implementing the optional `ConfigureOptions(UserAreaOptions)` interface method on your definition class. In this example we increase the minimum number of unique characters required to 6:
+If you need to modify the basic password policy settings for a specific user area, you can do this in the `ConfigureOptions(UserAreaOptions)` interface method in your definition class. In this example we increase the minimum number of unique characters required to 6:
 
 ```csharp
 using Cofoundry.Domain;
@@ -46,7 +46,7 @@ public class MemberUserArea : IUserAreaDefinition
 
     public string Name => "Member";
 
-    public bool AllowPasswordLogin => true;
+    public bool AllowPasswordSignIn => true;
 
     // other properties removed for brevity
 

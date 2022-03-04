@@ -1,7 +1,7 @@
-The [Cofoundry View Helper](/content-management/cofoundry-view-helper) has a `CurrentUser` property that can be used to retrieve information about the currently logged in user. The helper has two overloads:
+The [Cofoundry View Helper](/content-management/cofoundry-view-helper) has a `CurrentUser` property that can be used to retrieve information about the currently signed in user. The helper has two overloads:
 
 - `GetAsync()`: Returns the current user. If multiple user areas are implemented then the current user will be based on the currently applied auth scheme, which by default will be the user area with `IsDefaultAuthScheme` set to `true`, but can be overridden by authorization attributes such as `[AuthorizeUserArea]`.
-- `GetAsync(string userAreaCode)`: Returns the user logged into the specified user area. This is useful when multiple user areas are defined, because users can be logged into multiple user areas at the same time.
+- `GetAsync(string userAreaCode)`: Returns the user signed into the specified user area. This is useful when multiple user areas are defined, because users can be signed into multiple user areas at the same time.
 
 These methods return a model that provides user and role information which can be used to determine user permissions e.g. `user.Role.HasPermission<TPermission>()`.
 
