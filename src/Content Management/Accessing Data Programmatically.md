@@ -86,13 +86,121 @@ await _advancedContentRepository
         });
 ```
 
+## Influencing execution with ModelState
+
+The `Cofoundry.Web` namespace includes extensions that make it easier to work with queries or command execution in ASP.NET controllers and Razor Pages by making use of `ModelState` to work with validation errors:
+
+- Using `WithModelState(Controller|PageModel)` in the call chain wraps query and command execution with error handling code that pushes validation exceptions and error results into model state. Additionally if the model state is invalid prior to execution, then execution will be skipped.
+- If using transactions, `scope.CompleteIfValidAsync(ModelState)` can be used to conditionally complete the transaction if the model state is valid.
+
+#### Query Example
+
+In this ASP.NET MVC example, executing `AuthenticateCredentials` returns a model derived from `ValidationQueryResult`, `WithModelState` will detect this result and automatically add any validation errors to the model state:
+
+```csharp
+using Cofoundry.Domain;
+using Cofoundry.Web;
+
+public class ExampleController : Controller
+{
+    // …constructor (omitted)
+
+    [HttpPost("sign-in")]
+    public async Task<IActionResult> SignIn(SignInViewModel viewModel)
+    {
+        // Wrap the query execution in WithModelState(this)
+        var authResult = await _advancedContentRepository
+            .WithModelState(this)
+            .Users()
+            .Authentication()
+            .AuthenticateCredentials(new AuthenticateUserCredentialsQuery()
+            {
+                UserAreaCode = CustomerUserArea.Code,
+                Username = viewModel.Username,
+                Password = viewModel.Password
+            })
+            .ExecuteAsync();
+
+        if (!ModelState.IsValid)
+        {
+            // If the result isn't successful, the the ModelState will be populated
+            // with the error
+            return View(viewModel);
+        }
+
+        // …sign in and redirect (omitted)
+    }
+}
+```
+
+### Command example
+
+In this ASP.NET API controller example, `WithModelState` is used to wrap command execution, reducing the boilerplate for handling errors. Additionally, `scope.CompleteIfValidAsync(ModelState)` is used to conditionally complete the transaction:
+
+```csharp
+using Cofoundry.Domain;
+using Cofoundry.Web;
+
+[Route("api/members")]
+[ApiController]
+public class MembersApiController : ControllerBase
+{
+    // …constructor (omitted)
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
+    {
+        using (var scope = _advancedContentRepository.Transactions().CreateScope())
+        {
+            // If there are any model validation errors, execution is skipped
+            // If any validation exceptions occur during execution they are added to model state
+            var userId = await _advancedContentRepository
+                .WithModelState(this)
+                .WithElevatedPermissions()
+                .Users()
+                .AddAsync(new AddUserCommand()
+                {
+                    UserAreaCode = CustomerUserArea.Code,
+                    RoleCode = CustomerRole.Code,
+                    Email = registerUserDto.Email,
+                    Password = registerUserDto.Password,
+                });
+
+            // If ModelState is not valid, then execution is skipped
+            // If any validation exceptions occur during execution they are added to model state
+            await _advancedContentRepository
+                .Users()
+                .AccountVerification()
+                .EmailFlow()
+                .InitiateAsync(new InitiateUserAccountVerificationViaEmailCommand()
+                {
+                    UserId = userId
+                });
+
+            // The scope is only completed if the ModelState is valid
+            await scope.CompleteIfValidAsync(ModelState);
+        }
+
+        // ModelState can be used to determine success
+        if (ModelState.IsValid)
+        {
+            return Ok();
+        }
+        else
+        {
+            return BadRequest(ModelState);
+        }
+    }
+}
+```
+
 ## Further Reading
 
 Both content repositories inherit from `IDomainRepository`. This base interface includes a number of other features including:
 
-- Query & command execution
-- Permissions elevation
-- Transaction management
+- [Query & command execution](/framework/data-access/idomainrepository#executing-queries-and-commands)
+- [Permissions elevation](/framework/data-access/idomainrepository#elevating-permissions)
+- [Changing execution context](/framework/data-access/idomainrepository#changing-context)
+- [Transaction management](/framework/data-access/idomainrepository#transactions)
 
 Read more about these features in the [IDomainRepository docs](/framework/data-access/idomainrepository)
-

@@ -1,4 +1,4 @@
-﻿Cofoundry uses Entity Framework Core as its ORM strategy. You are free to use other tools and methodologies for your data access but using EF will allow you to re-use some of the existing Cofoundry features.
+Cofoundry uses Entity Framework Core as its ORM strategy. You are free to use other tools and methodologies for your data access but using EF will allow you to re-use some of the existing Cofoundry features.
 
 ## DbContext Tools
 
@@ -120,6 +120,3 @@ public class SetCatFavoriteCommandHandler
     }
 }
 ```
-
-
-

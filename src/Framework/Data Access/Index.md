@@ -1,4 +1,4 @@
-﻿## CQS, IQuery & ICommand 
+## CQS, IQuery & ICommand 
 
 Under the covers Cofoundry uses a lightweight [CQS](/framework/data-access/CQS) framework to structure data access. You can structure your data access any way you want, but this framework is there for you to use if you want to benefit from:
 
@@ -7,31 +7,31 @@ Under the covers Cofoundry uses a lightweight [CQS](/framework/data-access/CQS) 
 - Integrated permission handling
 - Integrated logging
 
-[Go to section](/framework/data-access/CQS) 
+[Go to section](CQS) 
 
 ## IDomainRepository
 
 `IDomainRepository` is the base repository that `IContentRepository` and `IAdvancedContentRpository` inherit from. It provides easy access to components such as generic command and query execution, permission escalation and transaction management. 
 
-[Go to section](/framework/data-access/idomainrepository)
+[Go to section](IDomainRepository)
 
 ## File Sources
 
 When passing files to commands you'll encounter the `IFileSource` abstraction. This section covers the range of `IFileSource` implementations that you can use to upload files to Cofoundry.
 
-[Go to section](/framework/data-access/file-sources)
+[Go to section](File-Sources)
 
 ## Transactions
 
 Cofoundry has a transaction manager abstraction that provides a few benefits over `System.Transactions`.
 
-[Go to section](/framework/data-access/transactions) 
+[Go to section](Transactions) 
 
 ## Entity Framework
 
 Cofoundry uses Entity Framework Core for data access and includes a few tools you may wish to use if you are also using EF Core for your own data.
 
-[Go to section](/framework/data-access/Entity-Framework-and-DbContext-Tools) 
+[Go to section](Entity-Framework-and-DbContext-Tools) 
 
 ## Database Migrations
 

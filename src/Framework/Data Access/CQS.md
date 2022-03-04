@@ -8,7 +8,7 @@ More information available [here](https://lostechies.com/chrispatterson/2014/01/
 
 We've tried to keep the CQS library fairly simple. No event sourcing, just a simple way to write Query and Command classes, have them automatically registered for DI and have them executed.
 
-The inspiration is taken from [this post](https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=91) but has been adapted a fair bit.
+The inspiration is taken from [this post by Steven van Deursen](https://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-command-side-of-my-architecture/) but has been adapted a fair bit.
 
 ## Queries
 
@@ -68,7 +68,7 @@ Queries are read only and should never cause changes to be made to the data stor
 
 You can execute queries using an instance of `IQueryExecutor`  using `queryExecutor.ExecuteAsync(query)`, this will automatically lookup the handler and run it, providing the contextual information needed to run the query.
 
-It's often simpler to access the query executor through [`IContentRepository`](/content-management/accessing-data-programmatically) or  [`IDomainRepository`](idomainrepository) using `repository.ExecuteQueryAsync(query)`.
+It's often better to access the query executor through [`IContentRepository`](/content-management/accessing-data-programmatically) or  [`IDomainRepository`](idomainrepository) using `repository.ExecuteQueryAsync(query)`. These repositories are more fully featured and makes it simpler to coordinate query execution with other functionality.
 
 ## Commands
 

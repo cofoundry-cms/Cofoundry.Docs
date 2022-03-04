@@ -1,4 +1,4 @@
-﻿Commands such as `AddImageAssetCommand` and `UpdateDocumentAssetCommand` allow you to upload files to Cofoundry by passing in an instance of a class that implements `IFileSource`. There are several `IFileSource` built into Cofoundry:
+Commands such as `AddImageAssetCommand` and `UpdateDocumentAssetCommand` allow you to upload files to Cofoundry by passing in an instance of a class that implements `IFileSource`. There are several `IFileSource` built into Cofoundry:
 
 - [FormFileSource](#FormFileSource): For uploading a file from an ASP.NET `IFormFile` source.
 - [EmbeddedResourceFileSource](#EmbeddedResourcefileSource): For uploading a file from an embedded resource.
