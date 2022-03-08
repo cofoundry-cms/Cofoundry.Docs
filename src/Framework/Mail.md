@@ -53,7 +53,6 @@ Note that the html template file should have the **'_html'** postfix
 
 ```html
 @model ExampleNotificationMailTemplate
-@using Cofoundry.Core.Mail
 
 @{
     Layout = "/Views/EmailTemplates/OptionalLayoutFile_html.cshtml";
@@ -76,8 +75,7 @@ Note that the html template file should have the **'_html'** postfix
 Note that the plain text template file should have the **'_text'** postfix
 
 ```csharp
-@inherits EmailTemplateBase<ExampleNotificationMailTemplate>
-@using Cofoundry.Core.Mail
+@model ExampleNotificationMailTemplate
 
 @{
     Layout = "/Views/EmailTemplates/OptionalLayoutFile_Text.cshtml";
@@ -91,13 +89,13 @@ Thanks,
 Cofoundry
 ```
 
-#### Template Rendering
+### Template Rendering
 
 Templates are rendered using razor, and is done outside of the http request scope using a faked `ViewContext`. This provides the important benefit of being able to render razor templates outside of a web request, e.g. in a background task or external service. Most razor features should work, however be aware that anything that relies on an http request will fail.
 
 You can customize the mail rending process by implementing `IMailViewRenderer` and overriding the base implementation using the [DI system](Dependency-Injection).
 
-#### File Placement
+### File Placement
 
 Where you place your template files is up to you, but here's two suggested scenarios:
 

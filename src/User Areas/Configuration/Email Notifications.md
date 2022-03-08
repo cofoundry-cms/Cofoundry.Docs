@@ -20,50 +20,43 @@ Each email notification has it's own builder function with a context parameter t
 
 ## Making use of IDefaultMailTemplateBuilder
 
-Each builder method only needs to return an `IMailTemplate` instance, so you are free to use any template class and build it in any way you want. However, you may prefer to only make adaptations to the existing templates, such as changing the layout, subjects or view files.
+Each builder method only needs to return an `IMailTemplate` instance, so you are free to use any template class and build it in any way you want. However, you may prefer to only make adaptations to the default templates, such as changing the layout, subjects or view files.
 
-You can take advantage of the the default builder functions by making use of `IDefaultMailTemplateBuilder<TUserAreaDefinition>`, simply inject it into your builder and use the equivalent methods.
-
-Here is a baseline implementation without any customization:
+You can take advantage of the the default templates by calling `BuildDefaultTemplateAsync()` on the context parameter. Here is a baseline implementation without any customization:
 
 ```csharp
 using Cofoundry.Core.Mail;
-using Cofoundry.Domain;
 using Cofoundry.Domain.MailTemplates;
-using Cofoundry.Domain.MailTemplates.DefaultMailTemplates;
 
 public class MemberMailTemplateBuilder : IUserMailTemplateBuilder<MemberUserAreaDefinition>
 {
-    private readonly IDefaultMailTemplateBuilder<MemberUserAreaDefinition> _defaultMailTemplateBuilder;
-
-    public MemberMailTemplateBuilder(
-        IDefaultMailTemplateBuilder<MemberUserAreaDefinition> defaultMailTemplateBuilder
-        )
+    public async Task<IMailTemplate> BuildNewUserWithTemporaryPasswordTemplateAsync(INewUserWithTemporaryPasswordTemplateBuilderContext context)
     {
-        _defaultMailTemplateBuilder = defaultMailTemplateBuilder;
-    }
-
-    public async Task<IMailTemplate> BuildNewUserWithTemporaryPasswordTemplateAsync(NewUserWithTemporaryPasswordTemplateBuilderContext context)
-    {
-        var template = await _defaultMailTemplateBuilder.BuildNewUserWithTemporaryPasswordTemplateAsync(context);
+        var template = await context.BuildDefaultTemplateAsync();
         return template;
     }
 
-    public async Task<IMailTemplate> BuildPasswordChangedTemplateAsync(PasswordChangedTemplateBuilderContext context)
+    public async Task<IMailTemplate> BuildPasswordChangedTemplateAsync(IPasswordChangedTemplateBuilderContext context)
     {
-        var template = await _defaultMailTemplateBuilder.BuildPasswordChangedTemplateAsync(context);
+        var template = await context.BuildDefaultTemplateAsync();
         return template;
     }
 
-    public async Task<IMailTemplate> BuildPasswordResetTemplateAsync(PasswordResetTemplateBuilderContext context)
+    public async Task<IMailTemplate> BuildPasswordResetTemplateAsync(IPasswordResetTemplateBuilderContext context)
     {
-        var template = await _defaultMailTemplateBuilder.BuildPasswordResetTemplateAsync(context);
+        var template = await context.BuildDefaultTemplateAsync();
         return template;
     }
     
-    public async Task<IMailTemplate> BuildAccountVerificationTemplateAsync(AccountRecoveryTemplateBuilderContext context)
+    public async Task<IMailTemplate> BuildAccountRecoveryTemplateAsync(IAccountRecoveryTemplateBuilderContext context)
     {
-        var template = await _defaultMailTemplateBuilder.BuildAccountVerificationTemplateAsync(context);
+        var template = await context.BuildDefaultTemplateAsync();
+        return template;
+    }
+    
+    public async Task<IMailTemplate> BuildAccountVerificationTemplateAsync(IAccountVerificationTemplateBuilderContext context)
+    {
+        var template = await context.BuildDefaultTemplateAsync();
         return template;
     }
 }
@@ -78,10 +71,10 @@ Full examples can be found in the [Cofoundry.Samples.UserAreas sample project](h
 This example simply customizes the layout file using the `LayoutFile` property, which can be useful for wrapping the default content with your own branding.
 
 ```csharp
-public async Task<IMailTemplate> BuildNewUserWithTemporaryPasswordTemplateAsync(NewUserWithTemporaryPasswordTemplateBuilderContext context)
+public async Task<IMailTemplate> BuildNewUserWithTemporaryPasswordTemplateAsync(INewUserWithTemporaryPasswordTemplateBuilderContext context)
 {
     // build the default template so we can modify any properties we want to customize
-    var template = await _defaultMailTemplateBuilder.BuildNewUserWithTemporaryPasswordTemplateAsync(context);
+    var template = await context.BuildDefaultTemplateAsync();
 
     // Change the layout file
     template.LayoutFile = "~/MailTemplates/_MemberMailLayout";
@@ -95,10 +88,10 @@ public async Task<IMailTemplate> BuildNewUserWithTemporaryPasswordTemplateAsync(
 This example shows you how to change the email subject:
 
 ```csharp
-public async Task<IMailTemplate> BuildPasswordChangedTemplateAsync(PasswordChangedTemplateBuilderContext context)
+public async Task<IMailTemplate> BuildPasswordChangedTemplateAsync(IPasswordChangedTemplateBuilderContext context)
 {
     // build the default template
-    var template = await _defaultMailTemplateBuilder.BuildPasswordChangedTemplateAsync(context);
+    var template = await context.BuildDefaultTemplateAsync();
 
     // customize the subject, the optional {0} token is replaced with the application name
     template.SubjectFormat = "{0} Member: You've changed your password!";
@@ -112,10 +105,10 @@ public async Task<IMailTemplate> BuildPasswordChangedTemplateAsync(PasswordChang
 In this example, the view file is customized, which is useful if you want to change the wording of the email, but don't need any additional properties in the template model.
 
 ```csharp
-public async Task<IMailTemplate> BuildPasswordResetTemplateAsync(PasswordResetTemplateBuilderContext context)
+public async Task<IMailTemplate> BuildPasswordResetTemplateAsync(IPasswordResetTemplateBuilderContext context)
 {
     // build the default template
-    var template = await _defaultMailTemplateBuilder.BuildPasswordResetTemplateAsync(context);
+    var template = await context.BuildDefaultTemplateAsync();
 
     // customize the view file
     template.ViewFile = "~/MailTemplates/MemberPasswordResetByAdminMailTemplate";
