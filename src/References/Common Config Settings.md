@@ -120,8 +120,8 @@ These settings can be controlled on a per-user-area basis by implementing `IUser
 ### Authentication
 
 - **Cofoundry:Users:Authentication:ExecutionDuration:Enabled** Controls whether the randomized execution duration feature is enabled for credential authorization. Defaults to `true`, extending the execution duration on `AuthenticateUserCredentialsQuery` and any commands that utilize credential authentication such as `UpdateUserPasswordByCredentialsCommand`. This helps mitigate time-based enumeration attacks to discover valid usernames.
-- **Cofoundry:Users:Authentication:ExecutionDuration:MinInMilliseconds** The inclusive lower bound of the randomized credential authorization execution duration, measured in milliseconds (1000ms = 1s). Defaults to 1 second.
-- **Cofoundry:Users:Authentication:ExecutionDuration:MaxInMilliseconds** The inclusive upper bound of the randomized credential authorization execution duration, measured in milliseconds (2000ms = 2s). Defaults to 1.5 seconds.
+- **Cofoundry:Users:Authentication:ExecutionDuration:MinInMilliseconds** The inclusive lower bound of the randomized credential authorization execution duration, measured in milliseconds (1000ms = 1s). Defaults to 1.5 second.
+- **Cofoundry:Users:Authentication:ExecutionDuration:MaxInMilliseconds** The inclusive upper bound of the randomized credential authorization execution duration, measured in milliseconds (2000ms = 2s). Defaults to 2 seconds.
 - **Cofoundry:Users:Authentication:IPAddressRateLimit:Quantity** The maximum number of failed authentication attempts allowed per IP address during the rate limit time window. The default value is 50 attempts.
 - **Cofoundry:Users:Authentication:IPAddressRateLimit:Window** The time window to measure authentication attempts when rate limiting by IP address, specified as a `TimeSpan` or in JSON configuration as a time format string e.g. "00:30:00" to represent 30 minutes. The default value is 60 minutes.
 - **Cofoundry:Users:Authentication:UsernameRateLimit:Quantity** The maximum number of failed authentication attempts allowed per username during the rate limiting time window. The default value is 20 attempts.
