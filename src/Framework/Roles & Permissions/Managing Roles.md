@@ -60,8 +60,8 @@ public class MarketingRole : IRoleDefinition
             .ExcludeAllDelete()
             .ExcludeUserInAllUserAreas()
             .ExcludeRole()
-            .IncludeRole(c => c.Read())
-            .ExcludeSettings(c => c.UpdateGeneral());
+            .IncludeRole(rolePermissions => rolePermissions.Read())
+            .ExcludeSettings(settingsPermissions => settingsPermissions.UpdateGeneral());
     }
 }
 

@@ -1,4 +1,4 @@
-﻿When using Cofoundry in an asp.net web application, Cofoundry needs to manage the application startup process so that it can make sure everything is registered in the correct order and allow plugins to self-register.
+When using Cofoundry in an asp.net web application, Cofoundry needs to manage the application startup process so that it can make sure everything is registered in the correct order and allow plugins to self-register.
 
 Integrating Cofoundry into your site is easy, simply add the `.AddCofoundry()` and `.UseCofoundry()` extension methods to your startup.cs file.
 
@@ -55,7 +55,7 @@ This method sets up the dependency resolver for Cofoundry, registering all inter
 
 Once dependencies are registered, Cofoundry will look for classes that implement `IStartupServiceConfigurationTask` and execute them. Cofoundry itself only includes a couple of configuration tasks, but plugin developers can use this as an integration point.
 
-- **[AutoUpdateServiceConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ServiceConfigurationTasks/AutoUpdateServiceConfigurationTask.cs) Sets up the auto-update hosted service.
+- **[AutoUpdateServiceConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ServiceConfigurationTasks/AutoUpdateServiceConfigurationTask.cs)** Sets up the auto-update hosted service.
 - **[CofoundryStartupServiceConfigurationTask:](https://github.com/cofoundry-cms/cofoundry/blob/master/src/Cofoundry.Web/App_Start/StartupTasks/ServiceConfigurationTasks/CofoundryStartupServiceConfigurationTask.cs)** Sets up auth (user areas) and configures a number of MVC settings
 
 See the [Startup Tasks](Startup-Tasks) documentation for information on creating your own startup tasks.

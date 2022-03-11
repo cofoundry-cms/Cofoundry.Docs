@@ -21,6 +21,12 @@ When passing files to commands you'll encounter the `IFileSource` abstraction. T
 
 [Go to section](File-Sources)
 
+## Paged Queries
+
+Cofoundry uses a standardized approach to paging queries that return large sets of data. You can take advantage of this standardized framework if you want to be consistent with Cofoundry, but it's entirely optional.
+
+[Go to section](Paged-Queries)
+
 ## Transactions
 
 Cofoundry has a transaction manager abstraction that provides a few benefits over `System.Transactions`.

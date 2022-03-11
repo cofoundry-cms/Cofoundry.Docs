@@ -1,6 +1,7 @@
 [
 	"CQS",
 	"IDomainRepository",
+	"Paged Queries",
 	"File Sources",
 	"Transactions",
 	"Entity Framework & DbContext Tools",

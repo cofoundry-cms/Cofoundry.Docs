@@ -1,4 +1,4 @@
-﻿Cofoundry uses a standardized approach to paging queries that return large sets of data. You can take advantage of this standardized framework if you want to be consistent with Cofoundry, but it's entirely optional.
+Cofoundry uses a standardized approach to paging queries that return large sets of data. You can take advantage of this standardized framework if you want to be consistent with Cofoundry, but it's entirely optional.
 
 ## IPageableQuery
 
