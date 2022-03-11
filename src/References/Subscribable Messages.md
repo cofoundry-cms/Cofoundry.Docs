@@ -1,4 +1,4 @@
-To learn how the message subscriptions work, see the documentation for the [Message Aggregator](/framework/message-aggregator)
+﻿To learn how the message subscriptions work, see the documentation for the [Message Aggregator](/framework/message-aggregator)
 
 ## Custom Entities
 
