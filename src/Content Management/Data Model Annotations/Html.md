@@ -1,4 +1,4 @@
-﻿The `[Html]` data annotation can be used to decorate a string property and provides a UI hint to the admin interface to display an html editor field. Cofoundry uses the [TinyMCE](https://www.tinymce.com/) editor to edit html content.
+The `[Html]` data annotation can be used to decorate a string property and provides a UI hint to the admin interface to display an html editor field. Cofoundry uses the [TinyMCE](https://www.tinymce.com/) editor to edit html content.
 
 ```csharp
 public class ExampleDataModel : ICustomEntityDataModel
@@ -31,12 +31,14 @@ public class ExampleDataModel : ICustomEntityDataModel
 
 ### Adding a custom toolbar
 
-You can use the `HtmlToolbarPreset.Custom` enum value to insert a custom toolbar, and use the `CustomToolbar` property to define the buttons. You can see a full list of buttons in the [TinyMCE toolbar documentation](https://www.tinymce.com/docs/advanced/editor-control-identifiers/#toolbarcontrols), and use the pipe separator to split toolbars.
+You can use the `HtmlToolbarPreset.Custom` enum value to insert a custom toolbar, and use the `CustomToolbar` property to define the buttons. You can see a full list of buttons in the [TinyMCE toolbar documentation](https://www.tinymce.com/docs/advanced/editor-control-identifiers/#toolbarcontrols), and use the pipe separator to split toolbars. 
+
+In addition to the buttons included with TinyMCE, there is also a button for inserting images from the Cofoundry image library which you can reference with the keyword `cfimage`:
 
 ```csharp
 public class ExampleDataModel : ICustomEntityDataModel
 {
-    [Html(HtmlToolbarPreset.Custom, CustomToolbar = "undo redo | bold italic underline | link unlink")]
+    [Html(HtmlToolbarPreset.Custom, CustomToolbar = "undo redo | bold italic underline | link unlink | cfimage")]
     public string Content { get; set; }
 }
 ```
@@ -59,7 +61,7 @@ You can completely control the configuration of TinyMCE by defining your own con
 
 #### ConfigSource
 
-A type to use to determine any additional configuration options to apply to the html editor. This should be a class that inherits from `IHtmlEditorConfigSource`, which provides a .net code generated set of options.
+A type to use to determine any additional configuration options to apply to the html editor. This should be a class that inherits from `IHtmlEditorConfigSource`, which provides a .NET code generated set of options.
 
 ```csharp
 public class ExampleHtmlEditorConfigSource : IHtmlEditorConfigSource
@@ -85,7 +87,20 @@ public class ExampleDataModel : ICustomEntityDataModel
 
 #### ConfigFilePath
 
-You can also define a path to a JSON configuration file if you prefer to write your config in JSON.
+You can also define a path to a JSON configuration file if you prefer to write your config in JSON:
+
+**html-editor-config.json**
+
+```js
+{
+  "resize": false,
+  "browser_spellcheck": false,
+  "toolbar": "undo redo | bold italic underline | link unlink | preview forecolor backcolor",
+  "plugins": "link preview textcolor",
+}
+```
+
+**ExampleDataModel.cs**
 
 ```csharp
 public class ExampleDataModel : ICustomEntityDataModel
