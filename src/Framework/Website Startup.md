@@ -1,57 +1,37 @@
 When using Cofoundry in an asp.net web application, Cofoundry needs to manage the application startup process so that it can make sure everything is registered in the correct order and allow plugins to self-register.
 
-Integrating Cofoundry into your site is easy, simply add the `.AddCofoundry()` and `.UseCofoundry()` extension methods to your startup.cs file.
+Integrating Cofoundry into your site is easy, simply add the `.AddCofoundry(IConfiguration)` and `.UseCofoundry()` extension methods to your Program.cs file.
 
 **Example Startup.cs**
 
 ```csharp
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using Cofoundry.Web;
 
-namespace MySite 
-{
-    public class Startup
-    {
-        public IConfiguration Configuration { get; }
+var builder = WebApplication.CreateBuilder(args);
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+// Register Cofoundry with the DI container. 
+// Must be run after AddMvc(), AddControllersWithViews() or similar method that returns IMvcBuilder
+builder.Services
+    .AddControllersWithViews()
+    .AddCofoundry(builder.Configuration);
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            // Register Cofoundry with the DI container. Must be run after AddMvc
-            services
-                .AddControllersWithViews()
-                .AddCofoundry(Configuration);
-        }
+var app = builder.Build();
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            // You can register other middleware as normal
-            if (!env.IsDevelopment())
-            {
-                app.UseHsts();
-            }
-        
-            // Register Cofoundry into the pipeline. As part of this process it also initializes 
-            // the MVC middleware and runs additional startup tasks.
-            app.UseCofoundry();
-        }
-    } 
-}
+// You can register other middleware as normal
+app.UseHttpsRedirection();
+
+// Register Cofoundry into the pipeline. As part of this process it also initializes 
+// the MVC middleware and runs additional startup tasks.
+app.UseCofoundry();
+
+app.Run();
 ```
 
 ## What happens at startup?
 
-### AddCofoundry()
+### AddCofoundry(IConfiguration)
 
-This method sets up the dependency resolver for Cofoundry, registering all internal components, modules and any auto-registered types such as command and query handlers. `AddCofoundry()` is called after `AddControllersWithViews()` which allows you to customize your MVC configuration independently.
+This method sets up the dependency resolver for Cofoundry, registering all internal components, modules and any auto-registered types such as command and query handlers. `AddCofoundry(IConfiguration)` is called after `AddControllersWithViews()` which allows you to customize your MVC configuration independently.
 
 Once dependencies are registered, Cofoundry will look for classes that implement `IStartupServiceConfigurationTask` and execute them. Cofoundry itself only includes a couple of configuration tasks, but plugin developers can use this as an integration point.
 

@@ -1,4 +1,4 @@
-﻿Cofoundry automatically sets up the static file middleware, serving files from the website content root (using `IHostingEnvironment.WebRootFileProvider`) as well as files embedded in Cofoundry and any plugin assemblies.
+Cofoundry automatically sets up the static file middleware, serving files from the website content root (using `IHostingEnvironment.WebRootFileProvider`) as well as files embedded in Cofoundry and any plugin assemblies.
 
 ## IStaticFileViewHelper
 
@@ -75,7 +75,7 @@ public class ExampleEmbeddedResourcetRouteRegistration : IEmbeddedResourceRouteR
 }
 ```
 
-Note that url for the files will mirror their location in the embedded assembly.
+Note that the URL for the files will mirror their location in the embedded assembly.
 
 ## Adding MIME type mappings to FileExtensionContentTypeProvider
 

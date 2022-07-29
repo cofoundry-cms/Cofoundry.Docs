@@ -1,4 +1,4 @@
-﻿Cofoundry has an automatic update system that runs when the application is started. This mainly runs SQL scripts, but it can also run .net code too.
+Cofoundry has an automatic update system that runs when the application is started. This mainly runs SQL scripts, but it can also run .net code too.
 
 When adding your own custom objects it is advised that you take advantage of this framework to manipulate the database or make any other changes. This means that any changes are tracked in version control and can be automatically applied to any development or deployment environment.
 
@@ -143,5 +143,5 @@ public IEnumerable<UpdatePackage> Create(IEnumerable<ModuleVersion> versionHisto
 
 ## Help with creating Sql Scripts
 
-We have a [SQL DML Cheat Sheet](/references/sql-dml-cheat-sheet) if you're not too familiar with creating sql scripts by hand.
+We have a [SQL DDL Cheat Sheet](/references/sql-ddl-cheat-sheet) if you're not too familiar with creating SQL scripts by hand.
 

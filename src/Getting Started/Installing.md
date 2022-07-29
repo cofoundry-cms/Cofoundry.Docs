@@ -1,7 +1,7 @@
 ## Requirements
 
-- .NET Core 3.1
-- SqlServer (Express) 2012 or later, or Azure SQL
+- .NET 6
+- SqlServer (Express) 2014 or later, or Azure SQL
 
 ## Creating a new project using the .NET CLI
 
@@ -33,19 +33,17 @@ This is just an example of how you'd typically create a new site, but you can qu
 
 ### Creating the site
 
-1. Open Visual Studio 2019 and select *Create a new project*
+1. Open Visual Studio 2022 and select **Create a new project**
 
-2. Select the *ASP.NET Core Web Application* template and press *Next*
+2. Select the "ASP.NET Core Web App" template and press **Next**
 
-3. Fill in the project name, select a location and press *Create*
+3. Fill in the project name, select a location and press **Next**
 
-4. Choose the *Empty* project template and press *Create*.
+4. Ensure ".NET 6.0 (Long-term support)" is selected as the framework and "None" is selected as the authentication type, then press *Create*
 
 5. Create an empty database in SQL Server.
 
 6. Install the [Cofoundry.Web.Admin](https://www.nuget.org/packages/Cofoundry.Web.Admin/) NuGet package
-
-*Note that Visual Studio 2019 doesn't let you select the framework version when creating a new project, so if you have multiple versions of .NET Core installed, make sure your project is targeting .NET 3.1.* 
 
 ### Configuring the site
 
@@ -65,44 +63,25 @@ The NuGet installation is intended to be unobtrusive to avoid causing conflicts 
 }
 ```
 
-2. Amend your Startup.cs file to bootstrap Cofoundry:
+2. Amend your Program.cs file to bootstrap Cofoundry:
 
-Note that exception handling and static file handling is initialized by Cofoundry so we can remove these parts from the startup file.
+Note that exception handling, static file handling and routing is initialized by Cofoundry so we can remove these parts from the program file.
 
 ```csharp
 using Cofoundry.Web;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace MySite
-{
-    public class Startup
-    {
-        public IConfiguration Configuration { get; }
+var builder = WebApplication.CreateBuilder(args);
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+builder.Services
+    .AddControllersWithViews()
+    .AddCofoundry(builder.Configuration);
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            // Register Cofoundry with the DI container. Must be run after AddMvc
-            services
-                .AddControllersWithViews()
-                .AddCofoundry(Configuration);
-        }
+var app = builder.Build();
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            // Register Cofoundry into the pipeline. As part of this process it also initializes 
-            // the MVC middleware and runs additional startup tasks.
-            app.UseCofoundry();
-        }
-    }
-}
+app.UseHttpsRedirection();
+app.UseCofoundry();
+
+app.Run();
 ```
 
 3. Ensure your Cofoundry project is compatible with view pre-compilation by setting `MvcRazorExcludeViewFilesFromPublish` and `MvcRazorExcludeRefAssembliesFromPublish` to false in your .csproj project file (see [deployment documentation](publishing-and-deployment) for reasons why):
@@ -111,9 +90,10 @@ namespace MySite
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <MvcRazorExcludeViewFilesFromPublish>false</MvcRazorExcludeViewFilesFromPublish>
-    <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
+    <TargetFramework>net6.0</TargetFramework>
+	<MvcRazorExcludeViewFilesFromPublish>false</MvcRazorExcludeViewFilesFromPublish>
+	<MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   
   <!-- other nodes removed for clarity -->
@@ -129,9 +109,9 @@ Congratulations, you've installed Cofoundry!
 
 Some features of Cofoundry require plugins to be installed in order to use them, this includes:
 
-- **Images:** Image resizing isn't supported natively by .NET Core, and so a plugin is required if you want to use images. The `cofoundry-web` project template automatically installes the [Imaging.SkiaSharp](https://github.com/cofoundry-cms/Cofoundry.Plugins.Imaging.SkiaSharp) plugin for you. For more information see the [images documentation](/content-management/images). 
+- **Images:** Image resizing isn't supported natively by .NET Core, and so a plugin is required if you want to use images. The `cofoundry-web` project template automatically installs the [Imaging.SkiaSharp](https://github.com/cofoundry-cms/Cofoundry.Plugins.Imaging.SkiaSharp) plugin for you. For more information see the [images documentation](/content-management/images). 
 - **Background Tasks:** Cofoundry currently does not have a built-in background task runner, so you need to install a plugin if you want to use this feature. For more information see the [background tasks documentation](/framework/background-tasks).
-- **Email:** Notifications such as those from the admin panel require a mail host. You will need to install a plugin and configure your 3rd party mail host to send emails. See the [mail documention](/framework/mail) for more information.
+- **Email:** Notifications such as those from the admin panel require a mail host. You will need to install a plugin and configure your 3rd party mail host to send emails. See the [mail documentation](/framework/mail) for more information.
 
 ## Next steps
 

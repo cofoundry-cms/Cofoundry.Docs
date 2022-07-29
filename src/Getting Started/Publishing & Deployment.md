@@ -1,4 +1,4 @@
-﻿The process for publishing and deploying a Cofoundry website is the same as [deploying a regular ASP.NET Core website](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/). There are however some things to consider:
+The process for publishing and deploying a Cofoundry website is the same as [deploying a regular ASP.NET Core website](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/). There are however some things to consider:
 
 ## View pre-compilation
 
@@ -15,9 +15,10 @@ To work around this issue you'll need to add two settings to your .csproj projec
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <MvcRazorExcludeViewFilesFromPublish>false</MvcRazorExcludeViewFilesFromPublish>
-    <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
+    <TargetFramework>net6.0</TargetFramework>
+	<MvcRazorExcludeViewFilesFromPublish>false</MvcRazorExcludeViewFilesFromPublish>
+	<MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   
   <!-- other nodes removed for clarity -->
