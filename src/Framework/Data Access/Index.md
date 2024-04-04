@@ -21,6 +21,12 @@ When passing files to commands you'll encounter the `IFileSource` abstraction. T
 
 [Go to section](File-Sources)
 
+## File Storage
+
+Cofoundry uses a storage abstraction when it needs to work with files. Most commonly this is used when saving or loading image or document assets, but the abstraction can also be used for other files. This section covers the usage and configuration of the `IFileStoreService` abstraction.
+
+[Go to section](File-Storage)
+
 ## Paged Queries
 
 Cofoundry uses a standardized approach to paging queries that return large sets of data. You can take advantage of this standardized framework if you want to be consistent with Cofoundry, but it's entirely optional.

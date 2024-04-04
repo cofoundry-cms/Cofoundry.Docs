@@ -4,7 +4,11 @@ Document assets can be any non-media file that you might want to make available 
 
 The admin panel has a whole section devoted to managing documents where users can add, update and delete document assets from a central place.
 
-## Generating Document Urls
+## Document File Location
+
+By default Cofoundry will save document files into the "App_Data" folder inside your project. See the [File Storage docs](/framework/data-access/file-storage) for more information on configuration file storage options.
+
+## Generating Document URLs
 
 ### From a View or Template
 

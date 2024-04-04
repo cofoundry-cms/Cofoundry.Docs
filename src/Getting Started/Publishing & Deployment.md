@@ -40,3 +40,7 @@ You'll need to configure caching to support a multi-server environment, otherwis
 ### Data Protection
 
 You'll need to configure the ASP.NET Core data protection system to support multiple machines. This is not specific to Cofoundry so please refer to the [ASP.NET Core data protection documentation](https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/configuration/overview) for more information.
+
+## Asset File Location
+
+By default Cofoundry will save assets into the "App_Data" folder inside your project. This is fine for local development, but when moving to a hosted environment you will usually want a more persistent location. See the [File Storage docs](/framework/data-access/file-storage) for more information on configuration options.
