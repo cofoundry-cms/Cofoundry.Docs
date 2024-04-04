@@ -1,4 +1,4 @@
-﻿*Cofoundry currently supports only basic customization of the admin panel dashboard, allowing you to replace the content with custom html. We intend to develop more advanced features in a future release, so if you want to contribute suggestions please check out [Issue #150](https://github.com/cofoundry-cms/cofoundry/issues/150).*
+*Cofoundry currently supports only basic customization of the admin panel dashboard, allowing you to replace the content with custom html. We intend to develop more advanced features in a future release, so if you want to contribute suggestions please check out [Issue #150](https://github.com/cofoundry-cms/cofoundry/issues/150).*
 
 ## Replacing the default content
 
@@ -31,23 +31,29 @@ using System.Threading.Tasks;
 
 public class ExampleDashboardContentProvider : IDashboardContentProvider
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IContentRepository _contentRepository;
         
     public ExampleDashboardContentProvider(
-        IUserRepository userRepository
+        IContentRepository contentRepository
         )
     {
-        _userRepository = userRepository;
+        _contentRepository = contentRepository;
     }
 
     public async Task<IHtmlContent> GetAsync()
-    {
-        var user = await _userRepository.GetCurrentUserDetailsAsync();
+    {        
+        var user = await _contentRepository
+            .Users()
+            .Current()
+            .Get()
+            .AsDetails()
+            .ExecuteAsync();
+        EntityNotFoundException.ThrowIfNull(user, "current");
 
         // Just some examples of changing the content depending on user properties
         // You could also load in an external file using IResourceLocator, which is
         // what the default provider does.
-        if (user.Role.IsSuperAdministrator)
+        if (user.Role.IsSuperAdminRole)
         {
             return new HtmlString("<h2>Hello Super Admin!</h2>"); 
         }

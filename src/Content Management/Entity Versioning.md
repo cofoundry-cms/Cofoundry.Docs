@@ -1,4 +1,4 @@
-﻿Both pages and custom entities support versioning, so you work on an entity in draft status before publishing it to the live site. A historical record of changes are kept so that you can revert to a previous version if need be.
+Both pages and custom entities support versioning, so you work on an entity in draft status before publishing it to the live site. A historical record of changes are kept so that you can revert to a previous version if need be.
 
 ## Working with versioned entities
 
@@ -37,7 +37,6 @@ public class PageSnippetDisplayModelMapper : IPageBlockTypeDisplayModelMapper<Pa
         // We pass through the PublishStatusQuery to ensure this is respected
         // when querying related data i.e. if we're viewing a draft version then
         // we should also be able to see connected entities in draft status.
-        var pagesQuery = new GetPageRenderDetailsByIdRangeQuery(allPageIds, context.PublishStatusQuery);
         var allPages = await _contentRepository
                 .Pages()
                 .GetByIdRange(allPageIds)

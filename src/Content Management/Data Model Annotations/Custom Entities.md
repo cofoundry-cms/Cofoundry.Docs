@@ -1,4 +1,4 @@
-﻿There are three different types of custom entity data model annotations:
+There are three different types of custom entity data model annotations:
 
 - [`[CustomEntity]`](#customentity)
 - [`[CustomEntityCollection]`](#customentitycollection)
@@ -39,10 +39,10 @@ The `[CustomEntityCollection]` data annotation can be used to decorate a collect
 public class ExampleDataModel : ICustomEntityDataModel
 {
     [CustomEntityCollection(CategoryCustomEntityDefinition.DefinitionCode)]
-    public ICollection<int> CategoryIds { get; set; }
+    public int[] CategoryIds { get; set; } = [];
 
     [CustomEntityCollection(CategoryCustomEntityDefinition.DefinitionCode, IsOrderable = true)]
-    public ICollection<int> OrderableCategoryIds { get; set; }
+    public int[] OrderableCategoryIds { get; set; } = [];
 }
 ```
 
@@ -66,12 +66,12 @@ public class ExampleDataModel : ICustomEntityDataModel
     [CustomEntityMultiTypeCollection(
             BlogPostCustomEntityDefinition.DefinitionCode, 
             CaseStudyCustomEntityDefinition.DefinitionCode)]
-    public ICollection<CustomEntityIdentity> CustomEntityIds { get; set; }
+    public CustomEntityIdentity[] CustomEntityIds { get; set; } = [];
 
     [CustomEntityMultiTypeCollection(
             BlogPostCustomEntityDefinition.DefinitionCode, 
             CaseStudyCustomEntityDefinition.DefinitionCode, 
             IsOrderable = true)]
-    public ICollection<CustomEntityIdentity> OrderableCustomEntityIds { get; set; }
+    public CustomEntityIdentity[] OrderableCustomEntityIds { get; set; } = [];
 }
 ```

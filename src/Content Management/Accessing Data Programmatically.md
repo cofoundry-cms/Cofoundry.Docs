@@ -24,7 +24,7 @@ public class ExampleController : Controller
         var categories = await _contentRepository
             .CustomEntities() // select entity type
             .GetByDefinition<CategoryCustomEntityDefinition>() // select query type
-            .AsRenderSummary() // select projection
+            .AsRenderSummaries() // select projection
             .ExecuteAsync(); // execute
 
         return Json(categories);
@@ -42,14 +42,14 @@ While this approach isn't as flexible as a dynamic query builder framework like 
 
 ### Mapping
 
-A mapping function can be chained using a call to `Map`. If the query result is `null`, then mapping is skipped. Note that mapping functions are invoked after query execution, so this is really just a neater way of writing queries with mapped results.
+A mapping function can be chained using a call to `Map`. If the result type is nullable you can use `MapWhenNotNull` to skip mapping when the result is null and avoid hanlding it in your mapping code. Note that mapping functions are invoked after query execution, so this is really just a neater way of writing queries with mapped results.
 
 ```csharp
 var entity = await _contentRepository
     .CustomEntities()
     .GetById(1)
     .AsRenderSummary()
-    .Map(e => new
+    .MapWhenNotNull(e => new
     {
         e.CustomEntityId,
         e.Title
@@ -77,13 +77,13 @@ var entities = await _contentRepository
 
 ```csharp
 await _advancedContentRepository
-        .PageDirectories()
-        .AddAsync(new AddPageDirectoryCommand()
-        {
-            Name = "Products",
-            UrlPath = "products",
-            ParentPageDirectoryId = 1
-        });
+    .PageDirectories()
+    .AddAsync(new()
+    {
+        Name = "Products",
+        UrlPath = "products",
+        ParentPageDirectoryId = 1
+    });
 ```
 
 ## Influencing execution with ModelState
@@ -113,7 +113,7 @@ public class ExampleController : Controller
             .WithModelState(this)
             .Users()
             .Authentication()
-            .AuthenticateCredentials(new AuthenticateUserCredentialsQuery()
+            .AuthenticateCredentials(new()
             {
                 UserAreaCode = CustomerUserArea.Code,
                 Username = viewModel.Username,
@@ -158,7 +158,7 @@ public class MembersApiController : ControllerBase
                 .WithModelState(this)
                 .WithElevatedPermissions()
                 .Users()
-                .AddAsync(new AddUserCommand()
+                .AddAsync(new()
                 {
                     UserAreaCode = CustomerUserArea.Code,
                     RoleCode = CustomerRole.Code,
@@ -172,7 +172,7 @@ public class MembersApiController : ControllerBase
                 .Users()
                 .AccountVerification()
                 .EmailFlow()
-                .InitiateAsync(new InitiateUserAccountVerificationViaEmailCommand()
+                .InitiateAsync(new()
                 {
                     UserId = userId
                 });

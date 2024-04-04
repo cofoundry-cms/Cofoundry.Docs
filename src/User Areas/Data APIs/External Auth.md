@@ -23,7 +23,7 @@ public async Task SignMemberInAsync(string username)
         userId = await _advancedContentRepository
             .WithElevatedPermissions()
             .Users()
-            .AddAsync(new AddUserCommand()
+            .AddAsync(new()
             {
                 UserAreaCode = MemberUserArea.Code,
                 RoleCode = MemberRole.Code,
@@ -39,7 +39,7 @@ public async Task SignMemberInAsync(string username)
     await _advancedContentRepository
         .Users()
         .Authentication()
-        .SignInAuthenticatedUserAsync(new SignInAuthenticatedUserCommand()
+        .SignInAuthenticatedUserAsync(new()
         {
             UserId = userId,
             RememberUser = true

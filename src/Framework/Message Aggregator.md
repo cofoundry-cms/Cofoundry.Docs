@@ -1,4 +1,4 @@
-﻿Cofoundry includes a simple Message Aggregator / Event Bus implementation to allow subscribable message communication.
+Cofoundry includes a simple Message Aggregator / Event Bus implementation to allow subscribable message communication.
 
 This is particularly useful when you want to tap into Cofoundry events. An example of this is if you want to update a search index whenever an entity is saved.
 
@@ -88,7 +88,7 @@ public class PageDraftVersionUpdatedMessage: IPageContentUpdatedMessage
     /// Because the draft version has been modified this will
     /// always be false
     /// </summary>
-    public bool HasPublishedVersionChanged { get { return false; } }
+    public bool HasPublishedVersionChanged => false;
 
     /// <summary>
     /// Id of the page version that has been updated

@@ -51,7 +51,7 @@ public async Task RegisterUser(string email, string password)
     await _advancedContentRepository
         .WithElevatedPermissions()
         .Users()
-        .AddAsync(new AddUserCommand()
+        .AddAsync(new()
         {
             Email = email,
             Password = password,

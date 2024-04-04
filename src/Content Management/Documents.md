@@ -1,4 +1,4 @@
-﻿## Managing Document Assets
+## Managing Document Assets
 
 Document assets can be any non-media file that you might want to make available for download on your site e.g. pdfs, word docs or zip files.
 
@@ -32,7 +32,7 @@ You can request `IDocumentAssetRouteLibrary` from the DI container and use this 
 ```csharp
 public class DocumentExample
 {
-    private IDocumentAssetRouteLibrary _documentAssetRouteLibrary;
+    private readonly IDocumentAssetRouteLibrary _documentAssetRouteLibrary;
 
     public DocumentExample(IDocumentAssetRouteLibrary documentAssetRouteLibrary)
     {
@@ -46,7 +46,6 @@ public class DocumentExample
         return url;
     }
 }
-
 ```
 
 ## Getting Document Data
@@ -56,7 +55,7 @@ The simplest way to get document data is by resolving an instance of `IContentRe
 ```csharp
 public class DocumentExample
 {
-    private IDocumentAssetRouteLibrary _documentAssetRouteLibrary;
+    private readonly IDocumentAssetRouteLibrary _documentAssetRouteLibrary;
     private readonly IContentRepository _contentRepository;
 
     public DocumentExample(

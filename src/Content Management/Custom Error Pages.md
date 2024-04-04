@@ -1,4 +1,4 @@
-﻿Cofoundry automatically bootstraps the ASP.NET Core error handling middleware to provide you with friendly error pages out of the box for exceptions and for other error status codes such as 404s. 
+Cofoundry automatically bootstraps the ASP.NET Core error handling middleware to provide you with friendly error pages out of the box for exceptions and for other error status codes such as 404s. 
 
 ## The Developer Exception Page
 
@@ -81,7 +81,7 @@ public class ProductController : Controller
 
         if (product == null)
         {
-            return await _notFoundViewHelper.GetViewAsync();
+            return await _notFoundViewHelper.GetViewAsync(this);
         }
 
         return View(product);

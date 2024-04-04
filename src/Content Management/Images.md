@@ -1,4 +1,4 @@
-﻿## Managing Image Assets
+## Managing Image Assets
 
 The admin panel has a whole section devoted to managing images where users can add, update and delete images assets from a central place.
 
@@ -8,10 +8,10 @@ Images assets are only supported by installing a plugin, this is because there i
 
 Currently there are two plugin options:
 
-- [Cofoundry.Plugins.Imaging.SkiaSharp](https://github.com/cofoundry-cms/Cofoundry.Plugins.Imaging.SkiaSharp): Uses the [SkiaSharp](https://github.com/mono/SkiaSharp)/[Skia](https://skia.org/) libraries which are MIT/BSD licenced. Does not support animated GIF resizing and has limited options for configuration. It is supported on a wide range of platforms but may not be supported in some linux configurations without a custom build of the native libraries.
-- [Cofoundry.Plugins.Imaging.ImageSharp](https://github.com/cofoundry-cms/Cofoundry.Plugins.Imaging.ImageSharp): Uses the [ImageSharp](https://github.com/SixLabors/ImageSharp) library which is dual licenced under Apache 2.0 and a reasonably priced commercial support licence. It's currently in beta but it is fully cross-platform, supports a wide range of formats including animated gifs and has a comprehensive range of configuration options.
+- [Cofoundry.Plugins.Imaging.SkiaSharp](https://github.com/cofoundry-cms/Cofoundry.Plugins.Imaging.SkiaSharp): Uses the [SkiaSharp](https://github.com/mono/SkiaSharp)/[Skia](https://skia.org/) libraries which are MIT/BSD licensed. Does not support animated GIF resizing and has limited options for configuration. It is supported on a wide range of platforms but may not be supported in some Linux configurations without a custom build of the native libraries.
+- [Cofoundry.Plugins.Imaging.ImageSharp](https://github.com/cofoundry-cms/Cofoundry.Plugins.Imaging.ImageSharp): Uses the [ImageSharp](https://github.com/SixLabors/ImageSharp) library which is licensed under the [Six Labors Split License](https://github.com/SixLabors/ImageSharp/blob/main/LICENSE). It is fully cross-platform, supports a wide range of formats including animated GIFs and has a comprehensive range of configuration options.
 
-## Generating Image Urls
+## Generating Image URLs
 
 ### From a View or Template
 
@@ -34,7 +34,6 @@ The [Cofoundry View Helper](Cofoundry-View-Helper) is the best way to access thi
 
 /* Resizing by passing in a constant of type IImageResizeSettings */
 <img src="@Cofoundry.Routing.ImageAsset(Model.ThumbnailImageAsset, MyImageSizes.Thumbnail)">
-
 ```
 
 Warning: Generating a URL from just an image asset id involves getting more information about the image from the database. Although caching is used to speed this up, it is recommended that you try to include the full `ImageAssetRenderDetails` object in your view model to take advantage of batch requests and async methods.
@@ -48,7 +47,7 @@ using Cofoundry.Domain;
 
 public class ImageExample
 {
-    private IImageAssetRouteLibrary _imageAssetRouteLibrary;
+    private readonly IImageAssetRouteLibrary _imageAssetRouteLibrary;
 
     public ImageExample(IImageAssetRouteLibrary imageAssetRouteLibrary)
     {
@@ -62,7 +61,6 @@ public class ImageExample
         return url;
     }
 }
-
 ```
 
 ## Getting Image Data
@@ -74,7 +72,7 @@ using Cofoundry.Domain;
 
 public class ImageExample
 {
-    private IImageAssetRouteLibrary _imageAssetRouteLibrary;
+    private readonly IImageAssetRouteLibrary _imageAssetRouteLibrary;
     private readonly IContentRepository _contentRepository;
 
     public ImageExample(

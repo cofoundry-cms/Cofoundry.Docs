@@ -1,4 +1,4 @@
-﻿There are three data annotations for rendering list-style elements:
+There are three data annotations for rendering list-style elements:
 
 - [`[SelectList]`](#selectlist): A drop-down list of options.
 - [`[RadioList]`](#radiolist): A list of radio buttons that allows only a single option to be selected.
@@ -118,7 +118,7 @@ public enum ColorOption
 public class ExampleDataModel : ICustomEntityDataModel
 {
     [CheckboxList(typeof(ColorOption))]
-    public ICollection<ColorOption> FavoriteColors { get; set; }
+    public ColorOption[] FavoriteColors { get; set; } = [];
 }
 ```
 
@@ -148,12 +148,14 @@ using System.Collections.Generic;
 
 public class ExampleListOptionSource : IListOptionSource
 {
-    public ICollection<ListOption> Create()
+    public IReadOnlyCollection<ListOption> Create()
     {
-        var options = new List<ListOption>();
-        options.Add(new ListOption("Negative", 1));
-        options.Add(new ListOption("Neutral", 2));
-        options.Add(new ListOption("Positive", 3));
+        var options = new ListOption[]
+        {
+            new("Negative", 1),
+            new("Neutral", 2),
+            new("Positive", 3)
+        };
 
         return options;
     }
@@ -164,7 +166,6 @@ public class ExampleDataModel : ICustomEntityDataModel
     [RadioList(typeof(ExampleListOptionSource), DefaultItemText = "Not Specified")]
     public int? Feedback { get; set; }
 }
-
 ```
 
 ### IListOptionApiSource
@@ -252,6 +253,6 @@ public class PetsApiOptionSource : IListOptionApiSource
 public class ExampleDataModel : ICustomEntityDataModel
 {
     [CheckboxList(typeof(PetsApiOptionSource))]
-    public ICollection<int> PetIds { get; set; }
+    public int[] PetIds { get; set; } = [];
 }
 ```

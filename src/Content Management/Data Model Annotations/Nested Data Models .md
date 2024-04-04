@@ -1,4 +1,4 @@
-﻿Nested data models allow you to define a model that can be used as child property of another data model. 
+Nested data models allow you to define a model that can be used as child property of another data model. 
 
 This is useful for creating rich data structures for your block types and custom entities, and enables the creation of more complex components such as multi-layered menus, advanced carousels and other nested content scenarios.
 
@@ -29,14 +29,14 @@ public class CarouselSlideDataModel : INestedDataModel
 
     [PreviewTitle]
     [Required]
-    [Display(Description ="Title to display in the slide.")]
+    [Display(Description = "Title to display in the slide.")]
     [MaxLength(100)]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
-    [Display(Description ="Formatted text to display in the slide.")]
+    [Display(Description = "Formatted text to display in the slide.")]
     [Required]
     [Html(HtmlToolbarPreset.BasicFormatting)]
-    public string Text { get; set; }
+    public string Text { get; set; } = string.Empty;
 }
 ```
 
@@ -66,11 +66,11 @@ public class CarouselDataModel : IPageBlockTypeDataModel, IPageBlockTypeDisplayM
 {
     [MaxLength(100)]
     [Required]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     [Required]
     [NestedDataModelCollection(IsOrderable = true, MinItems = 2, MaxItems = 6)]
-    public ICollection<CarouselSlideDataModel> Items { get; set; }
+    public CarouselSlideDataModel[] Items { get; set; } = [];
 }
 ```
 
@@ -99,18 +99,18 @@ using Cofoundry.Domain;
 public class ExampleDataModel : ICustomEntityDataModel
 {
     [NestedDataModelMultiTypeCollection(
-        new Type[] {
+        [
             typeof(FacebookProfileDataModel),
             typeof(TwitterProfileDataModel),
             typeof(LinkedInProfileDataModel),
             typeof(BlogLinkDataModel)
-        },
+        ],
         IsOrderable = true,
         MinItems = 1,
         MaxItems = 3,
         TitleColumnHeader = "Profile"
         )]
-    public ICollection<NestedDataModelMultiTypeItem> SocialProfiles { get; set; }
+    public NestedDataModelMultiTypeItem[] SocialProfiles { get; set; } = [];
 }
 ```
 
@@ -118,7 +118,7 @@ Output:
 
 ![Social profiles editor example using the nested data model multi-type collection attribute.](images/nested-data-model-multi-type-collection-example.png)
 
-The nested data models references in the example are shown below:
+The nested data models referenced in the example are shown below:
 
 ```csharp
 using Cofoundry.Domain;
@@ -128,14 +128,16 @@ public class FacebookProfileDataModel : INestedDataModel
 {
     [Display(Name = "Facebook Id")]
     [PreviewTitle]
-    public string FacebookId { get; set; }
+    [Required]
+    public string FacebookId { get; set; } = string.Empty;
 }
 
 [Display(Name = "Twitter")]
 public class TwitterProfileDataModel : INestedDataModel
 {
     [PreviewTitle]
-    public string TwitterHandle { get; set; }
+    [Required]
+    public string TwitterHandle { get; set; } = string.Empty;
 }
 
 [Display(Name = "LinkedIn")]
@@ -143,7 +145,8 @@ public class LinkedInProfileDataModel : INestedDataModel
 {
     [Display(Name = "Profile Id")]
     [PreviewTitle]
-    public string ProfileId { get; set; }
+    [Required]
+    public string ProfileId { get; set; } = string.Empty;
 }
 
 [Display(Name = "Blog")]
@@ -151,7 +154,8 @@ public class BlogLinkDataModel : INestedDataModel
 {
     [PreviewTitle]
     [Url]
-    public string Url { get; set; }
+    [Required]
+    public string Url { get; set; } = string.Empty;
 }
 ```
 

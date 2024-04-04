@@ -13,7 +13,7 @@ public async Task SaveFile(string title, IFormFile formFile)
 {
     var imageAssetId = await _advancedContentRepository
         .ImageAssets()
-        .AddAsync(new AddImageAssetCommand()
+        .AddAsync(new()
         {
             Title = title,
             File = new FormFileSource(formFile)
@@ -31,7 +31,7 @@ public async Task SaveFile()
     var fileSource = new EmbeddedResourceFileSource(this.GetType().Assembly, "MyProject.MyNamespace.MyFolder", "myimage.jpg");
     var imageAssetId = await _advancedContentRepository
         .ImageAssets()
-        .AddAsync(new AddImageAssetCommand()
+        .AddAsync(new()
         {
             Title = "My Embedded Image",
             File = fileSource
@@ -52,7 +52,7 @@ public async Task SaveFile()
 
     var imageAssetId = await _advancedContentRepository
         .ImageAssets()
-        .AddAsync(new AddImageAssetCommand()
+        .AddAsync(new()
         {
             Title = Path.GetFileNameWithoutExtension(fileName),
             File = fileSource

@@ -141,11 +141,11 @@ public class RequireDigitNewPasswordValidator : INewPasswordValidator
 {
     public string Criteria => "Must contain a digit.";
 
-    public ValidationError Validate(INewPasswordValidationContext context)
+    public ValidationError? Validate(INewPasswordValidationContext context)
     {
-        ValidationError result = null;
+        ValidationError? result = null;
 
-        if (!context.Password.Any(c => Char.IsDigit(c)))
+        if (!context.Password.Any(char.IsDigit))
         {
             result = new ValidationError("Password must contain a digit", context.PropertyName);
         }
@@ -234,11 +234,11 @@ public class RequireDigitNewPasswordValidator
         NumberOfDigitsRequired = numberOfDigitsRequired;
     }
 
-    public ValidationError Validate(INewPasswordValidationContext context)
+    public ValidationError? Validate(INewPasswordValidationContext context)
     {
-        ValidationError result = null;
+        ValidationError? result = null;
 
-        var numberOfDigits = context.Password.Count(c => Char.IsDigit(c));
+        var numberOfDigits = context.Password.Count(char.IsDigit);
         if (numberOfDigits < NumberOfDigitsRequired)
         {
             result = new ValidationError($"Password must contain at least {NumberOfDigitsRequired} digits", context.PropertyName);

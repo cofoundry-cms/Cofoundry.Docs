@@ -1,4 +1,4 @@
-﻿## Dynamic Page Routing
+## Dynamic Page Routing
 
 Cofoundry has content management features that let you create and manage your website pages dynamically using templates.
 
@@ -54,10 +54,10 @@ public void LocateUrls(
     ImageAssetRenderDetails imageAssetRenderDetails
     )
 {
-    string url;
+    string? url;
             
-    url = pageRoute.FullPath;
-    url = pageRenderDetails.PageRoute.FullPath;
+    url = pageRoute.FullUrlPath;
+    url = pageRenderDetails.PageRoute.FullUrlPath;
     url = customEntityRenderSummary.PageUrls.FirstOrDefault();
     url = imageAssetRenderDetails.Url;
 }
@@ -65,7 +65,7 @@ public void LocateUrls(
 
 ### IContentRouteLibrary
 
-Sometime you need to construct a url, such as for a resized image asset or a downloadable document. `IContentRouteLibrary` is an injectable helper that you can use to do this and can also be used as a consistent way of retrieving urls for entities without having to dig around and find the right property.
+Sometime you need to construct a URL, such as for a resized image asset or a downloadable document. `IContentRouteLibrary` is an injectable helper that you can use to do this and can also be used as a consistent way of retrieving URLs for entities without having to dig around and find the right property.
 
 ```csharp
 using System.Threading.Tasks;
@@ -96,7 +96,7 @@ public class ExampleController : Controller
             .ExecuteAsync();
         var url = _contentRouteLibrary.Page(page);
 
-        return this.Json(new
+        return Json(new
         {
             page,
             url
@@ -114,7 +114,7 @@ public class ExampleController : Controller
         var url = _contentRouteLibrary.DocumentAssetDownload(document);
         var absoluteUrl = _contentRouteLibrary.ToAbsolute(url);
 
-        return this.Json(new
+        return Json(new
         {
             document,
             url,

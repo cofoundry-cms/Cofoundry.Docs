@@ -51,7 +51,7 @@ To initiate an account recovery request, execute `InitiateUserAccountRecoveryVia
 await _advancedContentRepository
     .Users()
     .AccountRecovery()
-    .InitiateAsync(new InitiateUserAccountRecoveryViaEmailCommand()
+    .InitiateAsync(new()
     {
         UserAreaCode = MemberUserArea.Code,
         Username = "ExampleUsername"
@@ -107,7 +107,7 @@ public class MemberController : Controller
     public async Task<IActionResult> ResetPassword(string t)
     {
         // t == token
-        var token = _authorizedTaskTokenUrlHelper.ParseTokenFromQuery(this.Request.Query);
+        var token = _authorizedTaskTokenUrlHelper.ParseTokenFromQuery(Request.Query);
 
         // ... other code omitted
     }
@@ -122,7 +122,7 @@ Once you have the token you can execute the validation query:
 var tokenValidationResult = await _advancedContentRepository
     .Users()
     .AccountRecovery()
-    .Validate(new ValidateUserAccountRecoveryByEmailQuery()
+    .Validate(new()
     {
         UserAreaCode = MemberUserArea.Code,
         Token = "{token-from-url}"
@@ -150,10 +150,10 @@ The period in which an account recovery request is valid can be configured via `
 To complete the request, execute `CompleteUserAccountRecoveryViaEmailCommand` using the same authorization token and the new password:
 
 ```csharp
-await _contentRepository
+await _advancedContentRepository
     .Users()
     .AccountRecovery()
-    .CompleteAsync(new CompleteUserAccountRecoveryViaEmailCommand()
+    .CompleteAsync(new()
     {
         UserAreaCode = MemberUserArea.Code,
         Token = "{token-from-url}",

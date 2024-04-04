@@ -1,4 +1,4 @@
-﻿A *Custom Entity Page* is a special *Page Type* that dynamically serves a page for every custom entity using a URL routing rule like *'{id}/{urlSlug}'*.
+A *Custom Entity Page* is a special *Page Type* that dynamically serves a page for every custom entity using a URL routing rule like *'{id}/{urlSlug}'*.
 
 This is useful if you have a custom entity like blog posts or products where you want the advantages of having a dedicated custom entity type, but also have the advantages of the page templating and content block system. 
 
@@ -14,15 +14,15 @@ using Cofoundry.Web;
 
 public class BlogPostDisplayModel : ICustomEntityPageDisplayModel<BlogPostDataModel>
 {
-    public string PageTitle { get; set; }
+    public string PageTitle { get; set; } = string.Empty;
 
-    public PageMetaData MetaData { get; set; }
+    public string? MetaDescription { get; set; }
 
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     public DateTime Date { get; set; }
 
-    public string Author { get; set; }
+    public string? Author { get; set; }
 }
 ```
 
@@ -38,13 +38,14 @@ public class BlogPostDisplayModelMapper
         PublishStatusQuery publishStatusQuery
         )
     {
-        var displayModel = new BlogPostDisplayModel();
-
-        displayModel.PageTitle = renderDetails.Title;
-        displayModel.MetaDescription = dataModel.ShortDescription;
-        displayModel.Title = renderDetails.Title;
-        displayModel.Date = renderDetails.CreateDate;
-        displayModel.Author = dataModel.Author;
+        var displayModel = new BlogPostDisplayModel
+        {
+            PageTitle = renderDetails.Title,
+            MetaDescription = dataModel.ShortDescription,
+            Title = renderDetails.Title,
+            Date = renderDetails.CreateDate,
+            Author = dataModel.Author
+        };
 
         return Task.FromResult(displayModel);
     }
@@ -128,7 +129,7 @@ public class BlogPostDataModel : ICustomEntityDataModel
     [MaxLength(1000)]
     [Required]
     [MultiLineText]
-    public string ShortDescription { get; set; }
+    public string ShortDescription { get; set; } = string.Empty;
 
     [CustomEntityRouteData]
     [CustomEntity(BlogCategoryDefinition.DefinitionCode)]
@@ -159,11 +160,10 @@ public class BlogPostRouteDataBuilder : ICustomEntityRouteDataBuilder<BlogPostCu
     public async Task BuildAsync(IReadOnlyCollection<CustomEntityRouteDataBuilderParameter<BlogPostDataModel>> builderParameters)
     {
         // get all categories to use in the mapping
-        var query = new GetCustomEntityRenderSummariesByDefinitionCodeQuery(BlogCategoryCustomEntityDefinition.DefinitionCode);
         var categories = await _contentRepository
             .CustomEntities()
             .GetByDefinition<BlogCategoryCustomEntityDefinition>()
-            .AsRenderSummary()
+            .AsRenderSummaries()
             .ExecuteAsync();
 
         // index the categories to speed up the lookup
@@ -173,8 +173,11 @@ public class BlogPostRouteDataBuilder : ICustomEntityRouteDataBuilder<BlogPostCu
         foreach (var builderParameter in builderParameters)
         {
             // find the category and add it to the routing data
-            var category = categoriesLookup.GetOrDefault(builderParameter.DataModel.BlogCategoryId);
-            builderParameter.AdditionalRoutingData.Add("CategoryUrlSlug", category.UrlSlug);
+            var category = categoriesLookup.GetValueOrDefault(builderParameter.DataModel.BlogCategoryId);
+            if (category != null)
+            {
+                builderParameter.AdditionalRoutingData.Add("CategoryUrlSlug", category.UrlSlug);
+            }
         }
     }
 }

@@ -86,21 +86,19 @@ public class MySiteDbContext : CofoundryDbContext
 
 ```csharp
 using Cofoundry.Core.EntityFramework;
-using Cofoundry.Domain;
 using Cofoundry.Domain.CQS;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 
 public class SetCatFavoriteCommandHandler 
     : ICommandHandler<SetCatFavoriteCommand>
     , ISignedInPermissionCheckHandler
 {
     private readonly IEntityFrameworkSqlExecutor _entityFrameworkSqlExecutor;
-    private readonly CofoundryDbContext _dbContext;
+    private readonly MyDbContext _dbContext;
     
     public SetCatFavoriteCommandHandler(
         IEntityFrameworkSqlExecutor entityFrameworkSqlExecutor,
-        CofoundryDbContext dbContext
+        MyDbContext dbContext
         )
     {
         _entityFrameworkSqlExecutor = entityFrameworkSqlExecutor;

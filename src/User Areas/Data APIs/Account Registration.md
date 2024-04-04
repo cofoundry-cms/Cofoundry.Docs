@@ -11,7 +11,7 @@ To add a new user, execute `AddUserCommand` via the `IAdvancedContentRepository`
 ```csharp
 var userId = await _advancedContentRepository
     .Users()
-    .AddAsync(new AddUserCommand()
+    .AddAsync(new()
     {
         UserAreaCode = MemberUserArea.Code,
         RoleCode = MemberRole.Code,
@@ -47,7 +47,7 @@ public async Task Register(RegisterViewModel viewModel)
         var userId = await _advancedContentRepository
             .WithElevatedPermissions()
             .Users()
-            .AddAsync(new AddUserCommand()
+            .AddAsync(new()
             {
                 UserAreaCode = MemberUserArea.Code,
                 RoleCode = MemberRole.Code,
@@ -63,7 +63,7 @@ public async Task Register(RegisterViewModel viewModel)
             .Users()
             .AccountVerification()
             .EmailFlow()
-            .InitiateAsync(new InitiateUserAccountVerificationViaEmailCommand()
+            .InitiateAsync(new()
             {
                 UserId = userId
             });

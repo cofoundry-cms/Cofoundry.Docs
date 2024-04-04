@@ -1,4 +1,4 @@
-﻿In order for Cofoundry to correctly configure itself with the hosting environment it needs to control the order in which certain configuration tasks are run. If you too want to tap into this startup process you can implement your own startup task classes.
+In order for Cofoundry to correctly configure itself with the hosting environment it needs to control the order in which certain configuration tasks are run. If you too want to tap into this startup process you can implement your own startup task classes.
 
 This is particularly useful if you're creating a plugin or just want to keep your application code modular.
 
@@ -28,10 +28,7 @@ public class MessageAggregatorStartupConfigurationTask : IStartupConfigurationTa
         _messageSubscriptionInitializer = messageSubscriptionInitializer;
     }
 
-    public int Ordering
-    {
-        get { return (int)StartupTaskOrdering.Normal; }
-    }
+    public int Ordering => (int)StartupTaskOrdering.Normal;
 
     public void Configure(IApplicationBuilder app)
     {

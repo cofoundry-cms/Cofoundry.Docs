@@ -12,7 +12,7 @@ Authentication and sign in can be completed in a single operation using `SignInW
 await _advancedContentRepository
     .Users()
     .Authentication()
-    .SignInWithCredentialsAsync(new SignInUserWithCredentialsCommand()
+    .SignInWithCredentialsAsync(new()
     {
         UserAreaCode = MemberUserArea.Code,
         Username = "user@example.com",
@@ -36,11 +36,11 @@ This flow is more flexible and allows you to inject any custom requirements you 
 var authResult = await _advancedContentRepository
     .Users()
     .Authentication()
-    .AuthenticateCredentials(new AuthenticateUserCredentialsQuery()
+    .AuthenticateCredentials(new()
     {
         UserAreaCode = MemberUserArea.Code,
-        Username = Email,
-        Password = Password
+        Username = "user@example.com",
+        Password = "ExamplePassword"
     })
     .ExecuteAsync();
 
@@ -63,7 +63,7 @@ else if (!authResult.User.IsAccountVerified)
 await _advancedContentRepository
     .Users()
     .Authentication()
-    .SignInAuthenticatedUserAsync(new SignInAuthenticatedUserCommand()
+    .SignInAuthenticatedUserAsync(new()
     {
         UserId = authResult.User.UserId,
         RememberUser = true
@@ -131,9 +131,9 @@ Users can be forced to change their password at sign in by setting the `RequireP
 To update the password, execute `UpdateUserPasswordByCredentialsCommand` via the `IAdvancedContentRepository`:
 
 ```csharp
-await _contentRepository
+await _advancedContentRepository
     .Users()
-    .UpdatePasswordByCredentialsAsync(new UpdateUserPasswordByCredentialsCommand()
+    .UpdatePasswordByCredentialsAsync(new()
     {
         UserAreaCode = MemberUserArea.Code,
         Username = "Example Username",

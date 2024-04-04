@@ -2,7 +2,7 @@ When using Cofoundry in an asp.net web application, Cofoundry needs to manage th
 
 Integrating Cofoundry into your site is easy, simply add the `.AddCofoundry(IConfiguration)` and `.UseCofoundry()` extension methods to your Program.cs file.
 
-**Example Startup.cs**
+**Example Program.cs**
 
 ```csharp
 using Cofoundry.Web;
@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Register Cofoundry with the DI container. 
 // Must be run after AddMvc(), AddControllersWithViews() or similar method that returns IMvcBuilder
 builder.Services
-    .AddControllersWithViews()
+    .AddMvc()
     .AddCofoundry(builder.Configuration);
 
 var app = builder.Build();
@@ -68,24 +68,15 @@ Additionally each startup task tends to use an injectable initializer that can b
 As a last resort we also provide a configuration option that lets you filter the startup task collection in any way you choose:
 
 ```csharp
-public class Startup
-{
-    // ..other startup code ommited
-    
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-    {
-        app.UseCofoundry(c =>
-        {
-            c.StartupTaskFilter = MyStartupTaskFilter;
-        });
-    }
+// ..other app builder code ommited
 
-    private IEnumerable<IStartupConfigurationTask> MyStartupTaskFilter(IEnumerable<IStartupConfigurationTask> startupTasks)
+app.UseCofoundry(c =>
+{
+    c.StartupTaskFilter = startupTasks =>
     {
-        // e.g. maybe we wanted to remove the JsonConverter config task for some reason
-        return startupTasks.Where(t => !(t is JsonConverterStartupConfigurationTask));
-    }
-}
+        return startupTasks.Where(t => t is not JsonConverterStartupConfigurationTask);
+    };
+});
 ```
 
 ### AssemblyDiscoveryRules
@@ -111,24 +102,17 @@ public class ExampleAssemblyDiscoveryRule : IAssemblyDiscoveryRule
         return libraryToCheck.Name == "MyCompany.CofoundryHelpers";
     }
 }
-
 ```
 
 **Startup.cs**
 
 ```csharp
-public class Startup
-{
-    // ..other startup code ommited
-    
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services
-            .AddMvc()
-            .AddCofoundry(Configuration, c =>
-            {
-                c.AssemblyDiscoveryRules.Add(new ExampleAssemblyDiscoveryRule());
-            });
-    }
-}
+// ..other app builder code ommited
 
+builder.Services
+    .AddMvc()
+    .AddCofoundry(builder.Configuration, c =>
+    {
+        c.AssemblyDiscoveryRules.Add(new ExampleAssemblyDiscoveryRule());
+    });
+```

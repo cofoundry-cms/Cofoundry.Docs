@@ -46,7 +46,7 @@ public class Example
         var pagedResult = await _domainRepository.ExecuteQueryAsync(query);
 
         // Examples of various properties and methods on IPagedResult<TResult>
-        ICollection<CustomEntityRenderSummary> pagedItems = pagedResult.Items;
+        IReadOnlyCollection<CustomEntityRenderSummary> pagedItems = pagedResult.Items;
         int totalNumberOfItemsWithoutPaging = pagedResult.TotalItems;
         bool isFirstPage = pagedResult.IsFirstPage();
         bool isLastPage = pagedResult.IsLastPage();
@@ -105,7 +105,6 @@ public async Task<IPagedQueryResult<ProductSummary>> GetProducts(GetProductsQuer
         .Select(Map)
         .ToList();
 
-    return result.ChangeType(mappedItems);
     PagedQueryResult<ProductSummary> mappedResult = result.ChangeType(mappedItems);
 
     return mappedResult;

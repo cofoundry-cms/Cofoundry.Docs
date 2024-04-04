@@ -38,7 +38,7 @@ if (currentUserContext.IsAccountVerified)
 More often you'll want to verify that a user account is verified before you sign them in:
 
 ```csharp
-var authResult = await _contentRepository
+var authResult = await _advancedContentRepository
     .Users()
     .Authentication()
     .AuthenticateCredentials(new AuthenticateUserCredentialsQuery()
@@ -114,7 +114,7 @@ The path can include other query parameters, which will be merged into the resul
 To initiate an account verification request, execute `InitiateUserAccountVerificationViaEmailCommand` via the `IAdvancedContentRepository`:
 
 ```csharp
-await _contentRepository
+await _advancedContentRepository
     .Users()
     .AccountVerification()
     .EmailFlow()
@@ -165,7 +165,7 @@ public class MemberController : Controller
     public async Task<IActionResult> Verify(string t)
     {
         // t == token
-        var token = _authorizedTaskTokenUrlHelper.ParseTokenFromQuery(this.Request.Query);
+        var token = _authorizedTaskTokenUrlHelper.ParseTokenFromQuery(Request.Query);
 
         // ... other code omitted
     }
@@ -181,7 +181,7 @@ var tokenValidationResult = await _advancedContentRepository
     .Users()
     .AccountVerification()
     .EmailFlow()
-    .Validate(new ValidateUserAccountVerificationByEmailQuery()
+    .Validate(new()
     {
         UserAreaCode = MemberUserArea.Code,
         Token = "{token-from-url}"

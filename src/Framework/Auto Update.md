@@ -33,7 +33,7 @@ public class UpdatePackageFactory : BaseDbOnlyUpdatePackageFactory
     /// on. In this case we are dependent on the Cofoundry installation
     /// being run before this one
     /// </summary>
-    public override ICollection<string> DependentModules { get; } = new string[] { CofoundryModuleInfo.ModuleIdentifier };
+    public override IReadOnlyCollection<string> DependentModules { get; } = [CofoundryModuleInfo.ModuleIdentifier];
 }
 ```
 
@@ -88,11 +88,10 @@ public class CofoundryUpdatePackageFactory : IUpdatePackageFactory
     /// Typically you'd only ever return one UpdatePackage here, but
     /// multiple are supported.
     /// </summary>
-    public IEnumerable<UpdatePackage> Create(IEnumerable<ModuleVersion> versionHistory)
+    public IEnumerable<UpdatePackage> Create(IReadOnlyCollection<ModuleVersion> versionHistory)
     {
         var moduleVersion = versionHistory.SingleOrDefault(m => m.Module == CofoundryModuleInfo.ModuleIdentifier);
 
-        var package = new UpdatePackage();
         // The DbUpdateCommandFactory is used to get database updates using the standard conventions
         var dbCommandFactory = new DbUpdateCommandFactory();
 
@@ -100,9 +99,12 @@ public class CofoundryUpdatePackageFactory : IUpdatePackageFactory
         commands.AddRange(dbCommandFactory.Create(GetType().Assembly, moduleVersion));
         commands.AddRange(GetAdditionalCommands(moduleVersion));
 
-        package.VersionedCommands = commands;
-        package.AlwaysUpdateCommands = GetAlwaysUpdateCommand().ToList();
-        package.ModuleIdentifier = CofoundryModuleInfo.ModuleIdentifier;
+        var package = new UpdatePackage()
+        {
+            ModuleIdentifier = CofoundryModuleInfo.ModuleIdentifier,
+            AlwaysUpdateCommands = GetAlwaysUpdateCommand().ToArray(),
+            VersionedCommands = commands
+        };
 
         yield return package;
     }
@@ -120,7 +122,7 @@ public class CofoundryUpdatePackageFactory : IUpdatePackageFactory
     /// These are additional commands to be run based on the currently
     /// installed module versions
     /// </summary>
-    private IEnumerable<IVersionedUpdateCommand> GetAdditionalCommands(ModuleVersion moduleVersion)
+    private IEnumerable<IVersionedUpdateCommand> GetAdditionalCommands(ModuleVersion? moduleVersion)
     {
         // ... code to get non-db versioned commands
     }
@@ -134,14 +136,14 @@ Update Commands can do anything you want them to, just implement one and add it 
 **NB** Every command that is run will be logged and will increment the version number but it's up to you to determine what commands get run when. You can do this by using the `versionHistory` property of the `Create` method:
 
 ```csharp
-public IEnumerable<UpdatePackage> Create(IEnumerable<ModuleVersion> versionHistory)
+public IEnumerable<UpdatePackage> Create(IReadOnlyCollection<ModuleVersion> versionHistory)
 {
     var moduleVersion = versionHistory.SingleOrDefault(m => m.Module == ModuleInfo.ModuleCode);
     // use moduleVersion to determine if a command should be run.
 }
 ```
 
-## Help with creating Sql Scripts
+## Help with creating SQL Scripts
 
 We have a [SQL DDL Cheat Sheet](/references/sql-ddl-cheat-sheet) if you're not too familiar with creating SQL scripts by hand.
 

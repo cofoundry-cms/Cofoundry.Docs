@@ -1,4 +1,4 @@
-﻿***Note: Cofoundry currently uses JSON.NET and configures the default ASP.NET Core parser to use JSON.NET. Once .NET 6 is released we intend to move to the new System.Text.Json parser for Cofoundry, and make any changes to the default parser opt-in.***
+***Note: Cofoundry currently uses JSON.NET and configures the default ASP.NET Core parser to use JSON.NET. We intend to move to the new System.Text.Json parser for Cofoundry at some point, and make any changes to the default parser opt-in.***
 
 ## Cofoundry default JSON settings
 
@@ -19,21 +19,18 @@ The Cofoundry `JsonSerializerSettings` are also applied as the default settings 
 
 Cofoundry uses these settings in isolation and so it is safe to change the JSON.NET or ASP.NET defaults if you need to without breaking Cofoundry. 
 
-This can be done in your `startup.cs` file in the `ConfigureServices` method by re-applying the `AddNewtonsoftJson` configuration after Cofoundry has been added:
+This can be done in your `Program.cs` file by re-applying the `AddNewtonsoftJson` configuration after Cofoundry has been added:
 
 ```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services
-        .AddControllersWithViews()
-        .AddCofoundry(Configuration)
-        .AddNewtonsoftJson(o =>
-        {
-            // e.g. reset the contract resolver to use PascalCase.
-            o.SerializerSettings.ContractResolver = new DefaultContractResolver();
-            JsonConvert.DefaultSettings = () => o.SerializerSettings;
-        });
-}
+builder.Services
+    .AddMvc()
+    .AddCofoundry(builder.Configuration)
+    .AddNewtonsoftJson(o =>
+    {
+        // e.g. reset the contract resolver to use PascalCase.
+        o.SerializerSettings.ContractResolver = new DefaultContractResolver();
+        JsonConvert.DefaultSettings = () => o.SerializerSettings;
+    });
 ```
 
 ## Enhancing the Cofoundry default JSON configuration

@@ -46,7 +46,7 @@ public class MarketingRole : IRoleDefinition
     /// A role must be assigned to a user area, in this case we are adding it to
     /// the Cofoundry user area so they will have access to the Cofoundry admin panel.
     /// </summary>
-    public string UserAreaCode => CofoundryAdminUserArea.AreaCode;
+    public string UserAreaCode => CofoundryAdminUserArea.Code;
     
     /// <summary>
     /// This method determines which permissions the role is granted when it is first created. 
@@ -64,7 +64,6 @@ public class MarketingRole : IRoleDefinition
             .ExcludeSettings(settingsPermissions => settingsPermissions.UpdateGeneral());
     }
 }
-
 ```
 
 ### Configuring permissions in code

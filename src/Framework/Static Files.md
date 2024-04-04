@@ -42,6 +42,8 @@ using Microsoft.AspNetCore.StaticFiles;
 
 public class SimpleStaticFileOptionsConfiguration : IStaticFileOptionsConfiguration
 {
+    private static readonly string[] CACHE_CONTEROL_VALUE = ["public,max-age=31536000"];
+
     public void Configure(StaticFileOptions options)
     {
         options.OnPrepareResponse = OnPrepareResponse;
@@ -49,7 +51,7 @@ public class SimpleStaticFileOptionsConfiguration : IStaticFileOptionsConfigurat
 
     private void OnPrepareResponse(StaticFileResponseContext context)
     {
-        context.Context.Response.Headers.Add("Cache-Control", new[] { "public,max-age=31536000" });
+        context.Context.Response.Headers.Append("Cache-Control", CACHE_CONTEROL_VALUE);
     }
 }
 ```

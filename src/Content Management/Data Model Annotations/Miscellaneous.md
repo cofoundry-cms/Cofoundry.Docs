@@ -1,4 +1,4 @@
-﻿This section covers the following data annotations:
+This section covers the following data annotations:
 
 - [`[Color]`](#color)
 - [`[Placeholder]`](#placeholder)
@@ -40,7 +40,7 @@ using Cofoundry.Domain;
 public class ExampleDataModel : ICustomEntityDataModel
 {
     [Placeholder("Type here")]
-    public string ExamplePlaceholder { get; set; }
+    public string? ExamplePlaceholder { get; set; }
 }
 ```
 

@@ -1,4 +1,4 @@
-﻿Cofoundry relies heavily on dependency injection, building on top of the [.NET Core dependency abtractions](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection) to provide additional features such as:
+Cofoundry relies heavily on dependency injection, building on top of the [.NET Core dependency abtractions](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection) to provide additional features such as:
 
 - Automatic registrations
 - Modular dependency registrations
@@ -36,7 +36,7 @@ public class ExampleRegistration : IDependencyRegistration
     {
         container
             .Register<IMyService, MyService>()
-            .RegisterInstance<ExampleHelper>()
+            .RegisterSingleton<ExampleHelper>()
             .RegisterAll<IExampleTask>()
             .RegisterGeneric(typeof(IRepository<>), typeof(Repository<>));
     }
@@ -99,17 +99,15 @@ public class MyAssemblyDiscoveryRule : IAssemblyDiscoveryRule
 }
 ```
 
-**Startup.cs**
+**Program.cs**
 ```csharp
 // other code removed
 
-public void ConfigureServices(IServiceCollection services)
-{
-    services
-        .AddMvc()
-        .AddCofoundry(Configuration, c =>
-        {
-            c.AssemblyDiscoveryRules.Add(new MyAssemblyDiscoveryRule());
-        });
-}
+builder
+    .Services
+    .AddMvc()
+    .AddCofoundry(builder.Configuration, c =>
+    {
+        c.AssemblyDiscoveryRules.Add(new MyAssemblyDiscoveryRule());
+    });
 ```

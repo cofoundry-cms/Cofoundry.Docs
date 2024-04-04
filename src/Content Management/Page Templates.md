@@ -1,4 +1,4 @@
-﻿Cofoundry has content management features that let you create and manage your website pages dynamically using templates. Multiple pages can be created from a single template, and each template can have multiple regions of modular content that makes content editing flexible yet manageable.
+Cofoundry has content management features that let you create and manage your website pages dynamically using templates. Multiple pages can be created from a single template, and each template can have multiple regions of modular content that makes content editing flexible yet manageable.
 
 ## Page Templates Files
 
@@ -30,7 +30,6 @@ There's no file naming convention so it's up to you, however the display name of
 
 @model IPageViewModel
 @inject ICofoundryTemplateHelper<IPageViewModel> Cofoundry
-
 
 <div class="container">
 
@@ -97,19 +96,24 @@ using Cofoundry.Web;
 
 public class ExamplePageViewModelFactory : IPageViewModelFactory
 {
+    public IPageViewModel CreatePageViewModel()
+    {
+        return new ExamplePageViewModel();
+    }
+    
     public ICustomEntityPageViewModel<TDisplayModel> CreateCustomEntityPageViewModel<TDisplayModel>() where TDisplayModel : ICustomEntityPageDisplayModel
     {
         return new ExampleCustomEntityPageViewModel<TDisplayModel>();
     }
 
-    public IPageViewModel CreatePageViewModel()
-    {
-        return new ExamplePageViewModel();
-    }
-
     public INotFoundPageViewModel CreateNotFoundPageViewModel()
     {
         return new ExampleNotFoundPageViewModel();
+    }
+
+    public IErrorPageViewModel CreateErrorPageViewModel()
+    {
+        return new ExampleErrorPageViewModel();
     }
 }
 ```
@@ -136,7 +140,6 @@ public class ExamplePageViewModelBuilder : IPageViewModelBuilder
         _pageViewModelFactory = pageViewModelFactory;
         _pageViewModelMapper = pageViewModelMapper;
     }
-
 
     public async Task<IPageViewModel> BuildPageViewModelAsync(PageViewModelBuilderParameters mappingParameters)
     {
@@ -178,7 +181,7 @@ public class ExamplePageViewModelBuilder : IPageViewModelBuilder
         return viewModel;
     }
 
-    private Task ExampleCustomMappingAsync<TDisplayModel>(ICustomEntityPageViewModel<TDisplayModel> model)
+    private static Task ExampleCustomMappingAsync<TDisplayModel>(ICustomEntityPageViewModel<TDisplayModel> model)
         where TDisplayModel : ICustomEntityPageDisplayModel
     {
         return Task.CompletedTask;

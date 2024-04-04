@@ -4,7 +4,7 @@ The `[Html]` data annotation can be used to decorate a string property and provi
 public class ExampleDataModel : ICustomEntityDataModel
 {
     [Html]
-    public string Content { get; set; }
+    public string? Content { get; set; }
 }
 ```
 
@@ -25,7 +25,7 @@ By default the `Headings` and `BasicFormatting` toolbars will be displayed. You 
 public class ExampleDataModel : ICustomEntityDataModel
 {
     [Html(HtmlToolbarPreset.BasicFormatting, HtmlToolbarPreset.Media, HtmlToolbarPreset.Source)]
-    public string Content { get; set; }
+    public string? Content { get; set; }
 }
 ```
 
@@ -39,7 +39,7 @@ In addition to the buttons included with TinyMCE, there is also a button for ins
 public class ExampleDataModel : ICustomEntityDataModel
 {
     [Html(HtmlToolbarPreset.Custom, CustomToolbar = "undo redo | bold italic underline | link unlink | cfimage")]
-    public string Content { get; set; }
+    public string? Content { get; set; }
 }
 ```
 
@@ -51,7 +51,7 @@ You can set the editor height using the `Rows` property, the same way you can wi
 public class ExampleDataModel : ICustomEntityDataModel
 {
     [Html(Rows=10)]
-    public string Content { get; set; }
+    public string? Content { get; set; }
 }
 ```
 
@@ -106,7 +106,7 @@ You can also define a path to a JSON configuration file if you prefer to write y
 public class ExampleDataModel : ICustomEntityDataModel
 {
     [Html(ConfigFilePath = "/content/html-editor-config.json")]
-    public string Content { get; set; }
+    public string? Content { get; set; }
 }
 ```
 
@@ -123,7 +123,7 @@ To prevent TinyMCE from cleaning up code you can override the config to allow al
 ```csharp
 public class AllowAllElementsHtmlEditorConfigSource : IHtmlEditorConfigSource
 {
-    public IDictionary<string, object> Create()
+    public IReadOnlyDictionary<string, object> Create()
     {
         // configure TinyMCE to permit all elements
         return new Dictionary<string, object>() 
@@ -136,7 +136,7 @@ public class AllowAllElementsHtmlEditorConfigSource : IHtmlEditorConfigSource
 public class ExampleDataModel : ICustomEntityDataModel
 {
     [Html(ConfigSource = typeof(AllowAllElementsHtmlEditorConfigSource))]
-    public string Content { get; set; }
+    public string? Content { get; set; }
 }
 ```
 

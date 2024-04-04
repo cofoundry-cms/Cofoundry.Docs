@@ -1,4 +1,4 @@
-﻿Cofoundry has a built-in abstraction of background task registrations, this enables the framework and any plugins to use the same interface for registering background tasks while giving you the freedom to choose how those tasks are run. 
+Cofoundry has a built-in abstraction of background task registrations, this enables the framework and any plugins to use the same interface for registering background tasks while giving you the freedom to choose how those tasks are run. 
 
 Currently there isn't default implementation included in the main package, instead you'll need to install a plugin like [Cofoundry.Plugins.BackgroundTasks.Hangfire](https://github.com/cofoundry-cms/Cofoundry.Plugins.BackgroundTasks.Hangfire) to get them to run.
 

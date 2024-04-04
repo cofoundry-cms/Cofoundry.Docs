@@ -1,4 +1,4 @@
-﻿Cofoundry includes a service for cleaning and sanitizing html which helps you prevent XSS attacks when rendering user input. 
+Cofoundry includes a service for cleaning and sanitizing html which helps you prevent XSS attacks when rendering user input. 
 
 To use this you can simply request `IHtmlSanitizer` from the DI container, or more commonly you might use the [Cofoundry View Helper](/content-management/cofoundry-view-helper) directly from a view:
 
@@ -21,18 +21,46 @@ The Cofoundry HtmlSanitizer relies on the excellent [mganss/HtmlSanitizer](https
 Here's an example that shows how to create a ruleset, using the mganss sanitizer defaults.
 
 ```csharp
-var ruleSet = new HtmlSanitizationRuleSet();
+using Cofoundry.Core.Web;
+using Ganss.Xss;
+using System.Collections.Immutable;
 
-// Add defaults
-ruleSet.PermittedAttributes = Ganss.XSS.HtmlSanitizer.DefaultAllowedAttributes;
-ruleSet.PermittedCssProperties = Ganss.XSS.HtmlSanitizer.DefaultAllowedCssProperties;
-ruleSet.PermittedSchemes = Ganss.XSS.HtmlSanitizer.DefaultAllowedSchemes;
-ruleSet.PermittedTags = Ganss.XSS.HtmlSanitizer.DefaultAllowedTags;
-ruleSet.PermittedUriAttributes = Ganss.XSS.HtmlSanitizer.DefaultUriAttributes;
+private static HtmlSanitizationRuleSet CreateRuleSet()
+{
+    var ruleSet = new HtmlSanitizationRuleSet();
 
-// modify rules
-ruleSet.PermittedAttributes.Add("class");
+    ruleSet.PermittedAtRules = HtmlSanitizerDefaults
+        .AllowedAtRules
+        .ToImmutableHashSet();
 
+    ruleSet.PermittedAttributes = HtmlSanitizerDefaults
+        .AllowedAttributes
+        .Append("class")
+        .ToImmutableHashSet();
+
+    ruleSet.PermittedCssClasses = HtmlSanitizerDefaults
+        .AllowedClasses
+        .ToImmutableHashSet();
+
+    ruleSet.PermittedCssProperties = HtmlSanitizerDefaults
+        .AllowedCssProperties
+        .ToImmutableHashSet();
+
+    ruleSet.PermittedSchemes = HtmlSanitizerDefaults
+        .AllowedSchemes
+        .Append("mailto")
+        .ToImmutableHashSet();
+
+    ruleSet.PermittedTags = HtmlSanitizerDefaults
+        .AllowedTags
+        .ToImmutableHashSet();
+
+    ruleSet.PermittedUriAttributes = HtmlSanitizerDefaults
+        .UriAttributes
+        .ToImmutableHashSet();
+
+    return ruleSet;
+}
 ```
 
 To use the ruleset you can pass it in as a parameter to the sanitize method:
@@ -51,11 +79,13 @@ Here's an example `IDefaultHtmlSanitizationRuleSetFactory` implementation.
 
 ```csharp
 using Cofoundry.Core.Web;
+using Ganss.Xss;
+using System.Collections.Immutable;
 
 public class ExampleHtmlSanitizationRuleSetFactory : IDefaultHtmlSanitizationRuleSetFactory
 {
-    private Lazy<HtmlSanitizationRuleSet> _defaultRulset = new Lazy<HtmlSanitizationRuleSet>(Initizalize);
-    
+    private readonly Lazy<HtmlSanitizationRuleSet> _defaultRulset = new(Initizalize);
+
     public IHtmlSanitizationRuleSet Create()
     {
         return _defaultRulset.Value;
@@ -65,12 +95,35 @@ public class ExampleHtmlSanitizationRuleSetFactory : IDefaultHtmlSanitizationRul
     {
         var ruleSet = new HtmlSanitizationRuleSet();
 
-        ruleSet.PermittedAttributes = Ganss.XSS.HtmlSanitizer.DefaultAllowedAttributes;
-        ruleSet.PermittedCssProperties = Ganss.XSS.HtmlSanitizer.DefaultAllowedCssProperties;
-        ruleSet.PermittedSchemes = Ganss.XSS.HtmlSanitizer.DefaultAllowedSchemes;
-        ruleSet.PermittedTags = Ganss.XSS.HtmlSanitizer.DefaultAllowedTags;
-        ruleSet.PermittedUriAttributes = Ganss.XSS.HtmlSanitizer.DefaultUriAttributes;
-        ruleSet.PermittedAttributes.Add("class");
+        ruleSet.PermittedAtRules = HtmlSanitizerDefaults
+            .AllowedAtRules
+            .ToImmutableHashSet();
+
+        ruleSet.PermittedAttributes = HtmlSanitizerDefaults
+            .AllowedAttributes
+            .Append("class")
+            .ToImmutableHashSet();
+
+        ruleSet.PermittedCssClasses = HtmlSanitizerDefaults
+            .AllowedClasses
+            .ToImmutableHashSet();
+
+        ruleSet.PermittedCssProperties = HtmlSanitizerDefaults
+            .AllowedCssProperties
+            .ToImmutableHashSet();
+
+        ruleSet.PermittedSchemes = HtmlSanitizerDefaults
+            .AllowedSchemes
+            .Append("mailto")
+            .ToImmutableHashSet();
+
+        ruleSet.PermittedTags = HtmlSanitizerDefaults
+            .AllowedTags
+            .ToImmutableHashSet();
+
+        ruleSet.PermittedUriAttributes = HtmlSanitizerDefaults
+            .UriAttributes
+            .ToImmutableHashSet();
 
         return ruleSet;
     }

@@ -1,4 +1,4 @@
-﻿Cofoundry allows you to define custom data types which can be fully managed in the admin panel with minimal configuration. We call these *Custom Entities* and they are useful for quickly defining custom content for your site that isn't easily represented by a page. The classic example is a blog post, but this could easily be a product or other piece of data used in various places around your site. Custom entities have the following features:
+Cofoundry allows you to define custom data types which can be fully managed in the admin panel with minimal configuration. We call these *Custom Entities* and they are useful for quickly defining custom content for your site that isn't easily represented by a page. The classic example is a blog post, but this could easily be a product or other piece of data used in various places around your site. Custom entities have the following features:
 
 - Configuration is done in code via a simple definition class
 - Any custom data you want to add to the custom entity is defined in code in a simple object, which is persisted as JSON in the database.
@@ -39,15 +39,15 @@ using System.ComponentModel.DataAnnotations;
 public class CatDataModel : ICustomEntityDataModel
 {
     [Display(Description = "A short description to describe the cat")]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     [Display(Name = "Features", Description = "Extra properties that help categorize this cat")]
     [CustomEntityCollection(FeatureCustomEntityDefinition.DefinitionCode)]
-    public int[] FeatureIds { get; set; }
+    public int[] FeatureIds { get; set; } = [];
 
     [Display(Name = "Images", Description = "The top image will be the main image that displays in the grid")]
     [ImageCollection]
-    public int[] ImageAssetIds { get; set; }
+    public int[] ImageAssetIds { get; set; } = [];
 }
 ```
 

@@ -1,4 +1,4 @@
-﻿## Official Plugins
+## Official Plugins
 
 ### [Cofoundry.Plugins.Azure](https://github.com/cofoundry-cms/Cofoundry.Plugins.Azure)
 
@@ -14,15 +14,15 @@ This plugin contains a simple implementation of `IErrorLoggingService` that logs
 
 ###  [Cofoundry.Plugins.Imaging.ImageSharp](https://github.com/cofoundry-cms/Cofoundry.Plugins.Imaging.ImageSharp)
 
-Handle image validation and resizing in Cofoundry using [ImageSharp](https://github.com/SixLabors/ImageSharp), which is dual licenced under Apache 2.0 and a reasonably priced commercial support licence. 
+Handle image validation and resizing in Cofoundry using [ImageSharp](https://github.com/SixLabors/ImageSharp), which is licensed under the [Six Labors Split License](https://github.com/SixLabors/ImageSharp/blob/main/LICENSE).
 
-It's currently in beta but it is fully cross-platform, supports a wide range of formats including animated gifs and has a comprehensive range of configuration options.
+It is fully cross-platform, supports a wide range of formats including animated GIFs and has a comprehensive range of configuration options.
 
 ###  [Cofoundry.Plugins.Imaging.SkiaSharp](https://github.com/cofoundry-cms/Cofoundry.Plugins.Imaging.SkiaSharp)
 
-Handle image validation and resizing in Cofoundry using [SkiaSharp](https://github.com/mono/SkiaSharp)/[Skia](https://skia.org/), which are MIT/BSD licenced. 
+Handle image validation and resizing in Cofoundry using [SkiaSharp](https://github.com/mono/SkiaSharp)/[Skia](https://skia.org/), which are MIT/BSD licensed. 
 
-Does not support animated GIF resizing and has limited options for configuration. It is supported on a wide range of platforms but may not be supported in some linux configurations without a custom build of the native libraries.
+Does not support animated GIF resizing and has limited options for configuration. It is supported on a wide range of platforms but may not be supported in some Linux configurations without a custom build of the native libraries.
 
 ### [Cofoundry.Plugins.Mail.MailKit](https://github.com/cofoundry-cms/Cofoundry.Plugins.Mail.MailKit)
 
@@ -43,9 +43,3 @@ This plugin adds a single data attribute `[Vimeo]` that can be used to markup a 
 ### [Cofoundry.Plugins.YouTube](https://github.com/cofoundry-cms/Cofoundry.Plugins.YouTube)
 
 This plugin adds a single data attribute `[YouTube]` that can be used to markup a property of type `YouTubeVideo`. This will show as a YouTube Video picker in the admin UI.
-
-## Community Plugins
-
-### [Claytondus.Cofoundry.Plugins.Mail.AmazonSes](https://github.com/claytondus/Cofoundry.Plugins.Mail.AmazonSes)
-
-Cofoundry mail service implemention for Amazon Simple Email Service (SES) API.

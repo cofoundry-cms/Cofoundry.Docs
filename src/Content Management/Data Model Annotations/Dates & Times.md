@@ -42,7 +42,7 @@ public class ExampleDataModel : ICustomEntityDataModel
     /// </summary>
     [Date]
     [Required]
-    public string DateString { get; set; }
+    public string DateString { get; set; } = string.Empty;
 }
 ```
 
@@ -65,8 +65,6 @@ The `[DateAndTime]` data annotation can be used to decorate a `DateTime`, `DateT
 For a timezone-sensitive value use [`[DateAndTimeLocal]`](#dateandtimelocal).
     
 A nullable `DateTime` or `DateTimeOffset` property type indicates the property is optional, whilst `string` properties are optional by default and the `[Required]` should be used to mark them as required.
-
-*Note: The field is rendered using a native datetime-local input field, which (as of Jan 2021) is supported in mobile and chromium-based browsers, but not FireFox or desktop Safari. See [docs on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local#browser_compatibility)* for up to date information.
 
 #### Optional parameters
 
@@ -97,7 +95,7 @@ public class ExampleDataModel : ICustomEntityDataModel
     /// </summary>
     [Date]
     [Required]
-    public string DateAndTimeString { get; set; }
+    public string DateAndTimeString { get; set; } = string.Empty;
 }
 ```
 
@@ -148,7 +146,7 @@ public class ExampleDataModel : ICustomEntityDataModel
     /// </summary>
     [Time]
     [Required]
-    public string TimeString { get; set; }
+    public string TimeString { get; set; } = string.Empty;
 }
 ```
 

@@ -1,4 +1,4 @@
-﻿Cofoundry includes `ITransactionScopeManager` for managing transactions across multiple statements. This is actually a light wrapper around [`System.Transaction.TransactionScope`](https://docs.microsoft.com/en-us/dotnet/api/system.transactions.transactionscope?view=net-6.0) and supports the same functionality, but includes some extra features to help with coordinating transactions when executing nested commands.
+Cofoundry includes `ITransactionScopeManager` for managing transactions across multiple statements. This is actually a light wrapper around [`System.Transaction.TransactionScope`](https://docs.microsoft.com/en-us/dotnet/api/system.transactions.transactionscope?view=net-6.0) and supports the same functionality, but includes some extra features to help with coordinating transactions when executing nested commands.
 
 Here's an example:
 
@@ -68,17 +68,19 @@ public class TransactionExample
     {
         using (var scope = _contentRepository.Transactions().CreateScope())
         {
-            var addDirectoryCommand = new AddPageDirectoryCommand();
-            // …set some properties on the command
             await _contentRepository
                 .PageDirectories()
-                .AddAsync(addDirectoryCommand);
+                .AddAsync(new()
+                {
+                    // …set some properties on the command
+                });
 
-            var addPageCommand = new AddPageCommand();
-            // …set some properties on the command
             await _contentRepository
                 .Pages()
-                .AddAsync(addPageCommand);
+                .AddAsync(new()
+                {
+                    // …set some properties on the command
+                });
 
             await scope.CompleteAsync();
         }
@@ -108,21 +110,22 @@ public class DeletePageCommandHandler
     {
         var page = await _dbContext
             .Pages
-            .FilterByPageId(command.PageId)
-            .SingleOrDefaultAsync()
+            .FilterById(command.PageId)
+            .SingleOrDefaultAsync();
 
-        if (page == null) return;
+        if (page == null)
+        {
+            return;
+        }
 
         _dbContext.Pages.Remove(page);
             
-        using (var scope = _transactionScopeFactory.Create(_dbContext))
+        using (var scope = _transactionScopeManager.Create(_dbContext))
         {
-            await _commandExecutor.ExecuteAsync(new DeleteUnstructuredDataDependenciesCommand(PageEntityDefinition.DefinitionCode, command.PageId), executionContext);
             await _dbContext.SaveChangesAsync();
             await _pageStoredProcedures.UpdatePublishStatusQueryLookupAsync(command.PageId);
 
             scope.QueueCompletionTask(() => OnTransactionComplete(command));
-
             await scope.CompleteAsync();
         }
     }

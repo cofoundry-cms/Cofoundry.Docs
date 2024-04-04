@@ -1,4 +1,4 @@
-﻿Sometimes you may want to customize the data sent to your views by the dynamic page system. There are four types of view models Cofoundry uses for dynamic views:
+Sometimes you may want to customize the data sent to your views by the dynamic page system. There are four types of view models Cofoundry uses for dynamic views:
 
 - **IPageViewModel:** Used for most dynamic pages. The base type is `PageViewModel`.
 - **ICustomEntityPageViewModel<TDisplayModel>:** Generic view model type used for [custom entity pages](Custom-Entity-Pages). Base type is `CustomEntityPageViewModel<TDisplayModel>`.
@@ -16,7 +16,7 @@ using Cofoundry.Web;
 
 public class ExamplePageViewModel : PageViewModel
 {
-    public string ExampleMessage { get; set; }
+    public string? ExampleMessage { get; set; }
 }
 ```
 
@@ -35,7 +35,6 @@ using Cofoundry.Web;
 
 public class ExamplePageViewModelFactory : IPageViewModelFactory
 {
-
     public IPageViewModel CreatePageViewModel()
     {
         return new ExamplePageViewModel();
@@ -46,14 +45,14 @@ public class ExamplePageViewModelFactory : IPageViewModelFactory
         return new ExampleCustomEntityPageViewModel<TDisplayModel>();
     }
     
-   public INotFoundPageViewModel CreateNotFoundPageViewModel()
+    public INotFoundPageViewModel CreateNotFoundPageViewModel()
     {
         return new ExampleNotFoundPageViewModel();
     }
 
-    public INotFoundPageViewModel CreateNotFoundPageViewModel()
+    public IErrorPageViewModel CreateErrorPageViewModel()
     {
-        return new ExampleNotFoundPageViewModel();
+        return new ExampleErrorPageViewModel();
     }
 }
 ```
@@ -72,8 +71,9 @@ public class ExampleDependencyRegistration : IDependencyRegistration
     {
         var overrideOptions = RegistrationOptions.Override();
 
-        container.RegisterType<IPageViewModelFactory, ExamplePageViewModelFactory>(overrideOptions);
+        container.Register<IPageViewModelFactory, ExamplePageViewModelFactory>(overrideOptions);
     }
+}
 ```
 
 ## Overriding IPageViewModelBuilder
@@ -104,8 +104,7 @@ public class ExamplePageViewModelBuilder : IPageViewModelBuilder
         _pageViewModelMapper = pageViewModelMapper;
     }
 
-
-    public Task<IPageViewModel> BuildPageViewModelAsync(PageViewModelBuilderParameters mappingParameters)
+    public async Task<IPageViewModel> BuildPageViewModelAsync(PageViewModelBuilderParameters mappingParameters)
     {
         // Create the custom view model instance
         var viewModel = new ExamplePageViewModel();
@@ -116,8 +115,7 @@ public class ExamplePageViewModelBuilder : IPageViewModelBuilder
         // TODO: insert your custom custom mapping
         viewModel.ExampleMessage = "I have a cunning plan.";
         
-        // async is supported but not used here
-        return Task.FromResult<IPageViewModel>(viewModel);
+        return viewModel;
     }
 
     public async Task<ICustomEntityPageViewModel<TDisplayModel>> BuildCustomEntityPageViewModelAsync<TDisplayModel>(
@@ -147,7 +145,7 @@ public class ExamplePageViewModelBuilder : IPageViewModelBuilder
         return viewModel;
     }
     
-    public Task<INotFoundPageViewModel> BuildNotFoundPageViewModelAsync(NotFoundPageViewModelBuilderParameters mappingParameters)
+    public async Task<INotFoundPageViewModel> BuildNotFoundPageViewModelAsync(NotFoundPageViewModelBuilderParameters mappingParameters)
     {
         // This example show using the default behaviour without any customization
         // You could alternatively inherit from PageViewModelBuilder and use the base implementation
@@ -155,10 +153,10 @@ public class ExamplePageViewModelBuilder : IPageViewModelBuilder
 
         await _pageViewModelMapper.MapNotFoundPageViewModelAsync(viewModel, mappingParameters);
 
-        return Task.FromResult(viewModel);
+        return viewModel;
     }
 
-    private Task ExampleCustomMappingAsync<TDisplayModel>(ICustomEntityPageViewModel<TDisplayModel> model)
+    private static Task ExampleCustomMappingAsync<TDisplayModel>(ICustomEntityPageViewModel<TDisplayModel> model)
         where TDisplayModel : ICustomEntityPageDisplayModel
     {
         return Task.CompletedTask;

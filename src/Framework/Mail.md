@@ -43,7 +43,7 @@ public class ExampleNotificationMailTemplate : IMailTemplate
     /// want to render in the template file as properties
     /// in this class
     /// </summary>
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 }
 ```
 
@@ -127,8 +127,10 @@ public class MailExample
 
     public Task SendMail()
     {
-        var template = new ExampleNotificationMailTemplate();
-        template.Message = "Wibble, wibble";
+        var template = new ExampleNotificationMailTemplate
+        {
+            Message = "Wibble, wibble"
+        };
 
         return _mailService.SendAsync("hq@example.com", template);
     }

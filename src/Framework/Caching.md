@@ -1,4 +1,4 @@
-﻿Cofoundry has an object caching abstraction that it uses internally to store frequently accessed data. Currently the only supported implementation is our in-memory cache.
+Cofoundry has an object caching abstraction that it uses internally to store frequently accessed data. Currently the only supported implementation is our in-memory cache.
 
 ## Supporting Multi-Server Deployments
 
@@ -26,12 +26,12 @@ We hope to add additional distributed caching options soon - see [Issue #46](htt
 
 ## Using IObjectCacheFactory
 
-You can use our caching frameework by requesting `IObjectCacheFactory` from the DI container. `IObjectCacheFactory` will manage the cache state, so all we need to is request a cache store using a unique name:
+You can use our caching framework by requesting `IObjectCacheFactory` from the DI container. `IObjectCacheFactory` will manage the cache state, so all we need to is request a cache store using a unique name:
 
 ```csharp
 using Cofoundry.Core.Caching;
 
-public class CacheSample()
+public class CacheSample
 {
     public CacheSample(IObjectCacheFactory cacheFactory)
     {
@@ -45,10 +45,9 @@ public class CacheSample()
 Internally we modularize our caches by creating one for each entity type we're caching. This pattern is optional, but you might find it useful if you're using the cache in many places:
 
 ```csharp
-public class ImageAssetCache : IImageAssetCache
+public class ImageAssetCache
 {
     private const string IMAGE_ASSET_RENDER_DETAILS_CACHEKEY = "ImageAssetRenderDetails:";
-
     private readonly IObjectCache _cache;
 
     public ImageAssetCache(
@@ -58,24 +57,22 @@ public class ImageAssetCache : IImageAssetCache
         _cache = cacheFactory.Get("COF_ImageAssets");
     }
 
-    public Task<ImageAssetRenderDetails> GetOrAddAsync(int imageAssetId, Func<Task<ImageAssetRenderDetails>> getter)
+    public async Task<ImageAssetRenderDetails?> GetOrAddAsync(int imageAssetId, Func<Task<ImageAssetRenderDetails?>> getter)
     {
-        return _cache.GetOrAddAsync(IMAGE_ASSET_RENDER_DETAILS_CACHEKEY + imageAssetId, getter);
-    }
+        var cacheKey = IMAGE_ASSET_RENDER_DETAILS_CACHEKEY + imageAssetId;
+        var result = await _cache.GetOrAddAsync(cacheKey, getter);
 
-    public ImageAssetRenderDetails GetOrAdd(int imageAssetId, Func<ImageAssetRenderDetails> getter)
-    {
-        return _cache.GetOrAdd(IMAGE_ASSET_RENDER_DETAILS_CACHEKEY + imageAssetId, getter);
-    }
-
-    public void Clear(int imageAssetId)
-    {
-        _cache.Clear(IMAGE_ASSET_RENDER_DETAILS_CACHEKEY + imageAssetId);
+        return result;
     }
 
     public void Clear()
     {
         _cache.Clear();
+    }
+
+    public void Clear(int imageAssetId)
+    {
+        _cache.Clear(IMAGE_ASSET_RENDER_DETAILS_CACHEKEY + imageAssetId);
     }
 }
 ```

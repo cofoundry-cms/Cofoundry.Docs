@@ -4,17 +4,14 @@ Scott Brady [outlines some of these issues in this blog post ](https://www.scott
 
 ## Configuring the default password hasher
 
-Because the default hasher uses the ASP.NET Core Identity `IPasswordHasher`, it can be configured as normal outside of Cofoundry via `PasswordHasherOptions`:
+Because the default hasher uses the ASP.NET Core Identity `IPasswordHasher`, it can be configured as normal outside of Cofoundry via `PasswordHasherOptions` in your `Program.cs` file:
 
 ```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services
-        .AddControllersWithViews()
-        .AddCofoundry(Configuration);
+builder.Services
+    .AddMvc()
+    .AddCofoundry(builder.Configuration);
 
-    services.Configure<PasswordHasherOptions>(options => options.IterationCount = 512000);
-}
+builder.Services.Configure<PasswordHasherOptions>(options => options.IterationCount = 512000);
 ```
 
 ## Overriding the default password hasher

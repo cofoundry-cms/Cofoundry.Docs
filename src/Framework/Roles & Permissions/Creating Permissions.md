@@ -12,9 +12,9 @@ Using [Pages](https://github.com/cofoundry-cms/cofoundry/tree/master/src/Cofound
 #### Example IPermission Implementation
 
 ```csharp
-public class VIPDealsPermission : IPermission
+public class VipDealsPermission : IPermission
 {
-    public PermissionType PermissionType => new PermissionType("VIPDEA", "VIP Deals", "Access to VIP deals");
+    public PermissionType PermissionType => new("VIPDEA", "VIP Deals", "Access to VIP deals");
 }
 ```
 

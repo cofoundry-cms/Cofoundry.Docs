@@ -20,7 +20,7 @@ public class MemberUserArea : IUserAreaDefinition
     // ...other properties removed for brevity
 }
 
-public class VIPMemberRole : IRoleDefinition
+public class VipMemberRole : IRoleDefinition
 {
     public const string Code = "VIP";
 
@@ -34,7 +34,7 @@ public class VIPMemberRole : IRoleDefinition
     {
         builder
             .ApplyAnonymousRoleConfiguration()
-            .Include<VIPDealsPermission>();
+            .Include<VipDealsPermission>();
     }
 }
 ```
@@ -48,7 +48,7 @@ Use the `[AuthorizeUserArea]` attribute to restrict access to users associated w
 public class DealsController : Controller
 {
     [Route("vip-deals")]
-    [AuthorizeRole(MemberUserArea.Code, VIPMemberRole.Code)]
+    [AuthorizeRole(MemberUserArea.Code, VipMemberRole.Code)]
     public IActionResult VIPDeals()
     {
         return View();
@@ -65,7 +65,7 @@ Use the `[AuthorizeRole]` attribute to restrict access to users associated with 
 public class DealsController : Controller
 {
     [Route("vip-deals")]
-    [AuthorizeRole(MemberUserArea.Code, VIPMemberRole.Code)]
+    [AuthorizeRole(MemberUserArea.Code, VipMemberRole.Code)]
     public IActionResult ExclusiveDeals()
     {
         return View();
@@ -81,9 +81,9 @@ includes the specified permission. The permission needs to be passed in as a typ
 **VIPDealsPermission.cs**
 
 ```csharp
-public class VIPDealsPermission : IPermission
+public class VipDealsPermission : IPermission
 {
-    public PermissionType PermissionType => new PermissionType("VIPDEA", "VIP Deals", "Access to VIP deals");
+    public PermissionType PermissionType => new("VIPDEA", "VIP Deals", "Access to VIP deals");
 }
 ```
 
@@ -93,7 +93,7 @@ public class VIPDealsPermission : IPermission
 public class DealsController : Controller
 {
     [Route("vip-deals")]
-    [AuthorizePermission(typeof(VIPDealsPermission))]
+    [AuthorizePermission(typeof(VipDealsPermission))]
     public IActionResult VIPDeals()
     {
         return View();

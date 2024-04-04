@@ -1,4 +1,4 @@
-﻿Under the covers Cofoundry uses a lightweight framework for the domain layer based on the *Command-Query-Separation* (CSQ) principle.
+Under the covers Cofoundry uses a lightweight framework for the domain layer based on the *Command-Query-Separation* (CSQ) principle.
 
 In simple terms CQS is about accepting the fact that the data your application needs to display views (Queries) is different to the data required to write changes back to the data store (Commands). Sometimes you may even read from a different data store that you write to, for example you may write to a SQL database, but you may read from a lucene search index. 
 
@@ -25,19 +25,19 @@ using Cofoundry.Domain.CQS;
 
 public class AnimalSummary
 {
-    public int AnimalId { get; set; }
+    public required int AnimalId { get; set; }
 
-    public string Name { get; set; }
+    public required string Name { get; set; }
 }
 
 public class GetAnimalSummaryByIdQuery 
-    : IQuery<AnimalSummary>
+    : IQuery<AnimalSummary?>
 {
     public int AnimalId { get; set; }
 }
 
 public class GetAnimalSummaryByIdQueryHandler 
-    : IQueryHandler<GetAnimalSummaryByIdQuery, AnimalSummary>
+    : IQueryHandler<GetAnimalSummaryByIdQuery, AnimalSummary?>
 {
     private readonly MyDbContext _dbContext;
 
@@ -46,11 +46,16 @@ public class GetAnimalSummaryByIdQueryHandler
         _dbContext = dbContext;
     }
 
-    public async Task<AnimalSummary> ExecuteAsync(GetAnimalSummaryByIdQuery query, IExecutionContext executionContext)
+    public async Task<AnimalSummary?> ExecuteAsync(GetAnimalSummaryByIdQuery query, IExecutionContext executionContext)
     {
         var result = await _dbContext
-            .AsNoTracking()
             .Animals
+            .AsNoTracking()
+            .Select(a => new AnimalSummary()
+            {
+                AnimalId = a.AnimalId,
+                Name = a.Name
+            })
             .SingleOrDefaultAsync(a => a.AnimalId == query.AnimalId);
 
         return result;
@@ -85,7 +90,7 @@ public class AddAnimalCommand : ICommand
 {
     [MaxLength(50)]
     [Required]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     [OutputValue]
     public int OutputAnimalId { get; set; }
@@ -102,8 +107,10 @@ public class AddAnimalCommandHandler : ICommandHandler<AddAnimalCommand>
 
     public async Task ExecuteAsync(AddAnimalCommand command, IExecutionContext executionContext)
     {
-        var animal = new Animal();
-        animal.Name = command.Name;
+        var animal = new Animal
+        {
+            Name = command.Name
+        };
 
         _dbContext.Animals.Add(animal);
         await _dbContext.SaveChangesAsync();
@@ -126,7 +133,7 @@ Query and Command object are validated before execution using `IModelValidationS
 
 Any properties that fail validation will cause a `ValidationException` to be thrown. This might not seem optimal, but this is really a last line of defense and any validation errors at this stage are considered exceptional. This kind of validation should be enforced further up the calling chain without relying on exceptions, either in the UI layer or in the application layer; `IModelValidationService` provides mechanisms for getting validation errors that helps you do this as do the Cofoundry MVC and WebApi helpers.
 
-For validation that requires a database check e.g. 'uniqueness', this can be done inside the handler execute method. If validation fails throw a `ValidationException`, `PropertyValidationException` or `UniqueConstraintViolationException` that can be handled appropriately by the caller.
+For validation that requires a database check e.g. 'uniqueness', this can be done inside the handler execute method. If validation fails throw a `ValidationException`, `ValidationErrorException` or `UniqueConstraintViolationException` that can be handled appropriately by the caller.
 
 ## Permissions
 

@@ -1,7 +1,7 @@
 ## Requirements
 
-- .NET 6
-- SqlServer (Express) 2014 or later, or Azure SQL
+- .NET 8
+- SqlServer (Express) 2016 or later, or Azure SQL
 
 ## Creating a new project using the .NET CLI
 
@@ -35,11 +35,11 @@ This is just an example of how you'd typically create a new site, but you can qu
 
 1. Open Visual Studio 2022 and select **Create a new project**
 
-2. Select the "ASP.NET Core Web App" template and press **Next**
+2. Select the "ASP.NET Core Web App (Model-View-Controller)" template and press **Next**
 
 3. Fill in the project name, select a location and press **Next**
 
-4. Ensure ".NET 6.0 (Long-term support)" is selected as the framework and "None" is selected as the authentication type, then press *Create*
+4. Ensure ".NET 8.0 (Long-term support)" is selected as the framework and "None" is selected as the authentication type, then press *Create*
 
 5. Create an empty database in SQL Server.
 
@@ -56,9 +56,8 @@ The NuGet installation is intended to be unobtrusive to avoid causing conflicts 
   "Cofoundry": {
 
     "Database": {
-      "ConnectionString": "Server=.\\sqlexpress;Database=MyCofoundrySite;Integrated Security=True;MultipleActiveResultSets=True"
+      "ConnectionString": "Server=.\\sqlexpress;Database=MyCofoundrySite;Integrated Security=True;Encrypt=False;MultipleActiveResultSets=True"
     }
-
   }
 }
 ```
@@ -73,7 +72,7 @@ using Cofoundry.Web;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddControllersWithViews()
+    .AddMvc()
     .AddCofoundry(builder.Configuration);
 
 var app = builder.Build();
@@ -90,10 +89,11 @@ app.Run();
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
 	<MvcRazorExcludeViewFilesFromPublish>false</MvcRazorExcludeViewFilesFromPublish>
 	<MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
-    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   
   <!-- other nodes removed for clarity -->

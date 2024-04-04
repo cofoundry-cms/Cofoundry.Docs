@@ -1,4 +1,4 @@
-﻿A *Page Block Type* represents a type of content that can be inserted into a region of a *page template* such as *Image*, *Plain Text* or *Raw Html*. Cofoundry includes some common types built in, but you can easily create your own custom types to represent more bespoke concepts, this gives you fine grained control over the data and markup building blocks that end users can use to create content on your website.
+A *Page Block Type* represents a type of content that can be inserted into a region of a *page template* such as *Image*, *Plain Text* or *Raw Html*. Cofoundry includes some common types built in, but you can easily create your own custom types to represent more bespoke concepts, this gives you fine grained control over the data and markup building blocks that end users can use to create content on your website.
 
 ## Built-in Page Block Types
 
@@ -39,10 +39,10 @@ public class MyContentDataModel : IPageBlockTypeDataModel, IPageBlockTypeDisplay
 {
     [MaxLength(1000)]
     [Required]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     [MultiLineText]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 }
 ```
 
@@ -51,12 +51,10 @@ public class MyContentDataModel : IPageBlockTypeDataModel, IPageBlockTypeDisplay
 ```html
 @using Cofoundry.Web
 
-@model PageListDisplayModel
-@inject ICofoundryBlockTypeHelper<PageListDisplayModel> Cofoundry
+@model MyContentDataModel
+@inject ICofoundryBlockTypeHelper<MyContentDataModel> Cofoundry
 
-@{
-    Cofoundry.BlockType.UseDescription("This is the description that shows up in the page block type selection UI");
-}
+@Cofoundry.BlockType.UseDescription("This is the description that shows up in the page block type selection UI")
 
 <h2>@Model.Title</h2>
 <p>@Model.Description</p>
@@ -97,10 +95,10 @@ public class MyContentDataModel : IPageBlockTypeDataModel
 {
     [MaxLength(1000)]
     [Required]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     [Html(HtmlToolbarPreset.BasicFormatting)]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     [Image]
     public int ThumbnailImageAssetId { get; set; }
@@ -127,6 +125,7 @@ public class MyContentDisplayModel : IPageBlockTypeDisplayModel
 ```
 
 **MyContentDisplayModelMapper.cs**
+
 ```csharp
 using Cofoundry.Domain;
 using Cofoundry.Core;
@@ -155,7 +154,7 @@ public class MyContentDisplayModelMapper : IPageBlockTypeDisplayModelMapper<MyCo
     {
         var imageAssetIds = context.Items.SelectDistinctModelValuesWithoutEmpty(i => i.ThumbnailImageAssetId);
         var imageAssets = await _contentRepository
-            .WithExecutionContext(context.ExecutionContext)
+            .WithContext(context.ExecutionContext)
             .ImageAssets()
             .GetByIdRange(imageAssetIds)
             .AsRenderDetails()
@@ -163,10 +162,12 @@ public class MyContentDisplayModelMapper : IPageBlockTypeDisplayModelMapper<MyCo
 
         foreach (var item in context.Items)
         {
-            var displayModel = new MyContentDisplayModel(); ;
-            displayModel.Title = item.DataModel.Title;
-            displayModel.Description = new HtmlString(item.DataModel.Description);
-            displayModel.ThumbnailImageAsset = imageAssets.GetOrDefault(item.DataModel.ThumbnailImageAssetId);
+            var displayModel = new MyContentDisplayModel
+            {
+                Title = item.DataModel.Title,
+                Description = new HtmlString(item.DataModel.Description),
+                ThumbnailImageAsset = imageAssets.GetValueOrDefault(item.DataModel.ThumbnailImageAssetId)
+            };
 
             result.Add(item, displayModel);
         }
@@ -183,10 +184,7 @@ public class MyContentDisplayModelMapper : IPageBlockTypeDisplayModelMapper<MyCo
 @model MyContentDisplayModel
 @inject ICofoundryBlockTypeHelper<MyContentDisplayModel> Cofoundry
 
-@{
-    Cofoundry.BlockType.UseDescription("This is the description that shows up in the page block type selection UI");
-    Layout = null;
-}
+@Cofoundry.BlockType.UseDescription("This is the description that shows up in the page block type selection UI")
 
 <img src="@Cofoundry.Routing.ImageAsset(Model.ThumbnailImageAsset)">
 <h2>@Model.Title</h2>

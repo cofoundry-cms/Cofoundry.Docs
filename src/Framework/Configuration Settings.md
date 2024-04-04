@@ -36,7 +36,7 @@ public class ContactFormSettings : IConfigurationSettings
     
     [Required]
     [EmailAddress]
-    public string NotificationToAddress { get; set; }
+    public string NotificationToAddress { get; set; } = string.Empty;
 }
 ```
 
@@ -56,6 +56,5 @@ public class ContactController : Controller
     
     // .. implementation
 }
-
 ```
 

@@ -34,7 +34,7 @@ The easiest way to run this command is via `IAdvancedContentRepository`:
 await _advancedContentRepository
     .Users()
     .Current()
-    .UpdatePasswordAsync(new UpdateCurrentUserPasswordCommand()
+    .UpdatePasswordAsync(new()
     {
         OldPassword = "ExampleOldPassword",
         NewPassword = "ExampleNewPassword"
@@ -52,7 +52,7 @@ Log tables that contain IP references are not deleted, however they will be clea
 The easiest way to run this command is via `IAdvancedContentRepository`:
 
 ```csharp
-await _contentRepository
+await _advancedContentRepository
     .Users()
     .Current()
     .DeleteAsync();

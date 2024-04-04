@@ -1,6 +1,6 @@
-﻿*While Cofoundry does technically support localized sites, this area has been a little neglected and not given a thorough update since the .NET Core conversion.*
+*While Cofoundry does technically support localized sites, this area has been a little neglected and not given a thorough update since the .NET Core conversion.*
 
-*We do plan on working on this in the not too distant future, the work is tracked in issue #43. There will almost certainly be breaking changes when we do this work as localization changed significantly in .NET Core.*
+*The work for this is tracked in issue #43. There will almost certainly be breaking changes when we do this work as localization changed significantly in .NET Core.*
 
 *If you can't wait for #43 to be completed and want to use the existing locale system then please bear in mind that it has not been extensively tested with .NET Core and there will be future breaking changes.*
 

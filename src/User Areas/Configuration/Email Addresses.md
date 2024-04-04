@@ -29,17 +29,20 @@ public class CustomerEmailAddressUniquifier : IEmailAddressUniquifier<CustomerUs
         _emailAddressNormalizer = emailAddressNormalizer;
     }
 
-    public NormalizedEmailAddress UniquifyAsParts(string emailAddress)
+    public NormalizedEmailAddress? UniquifyAsParts(string? emailAddress)
     {
         var normalized = _emailAddressNormalizer.NormalizeAsParts(emailAddress);
         return UniquifyAsParts(normalized);
     }
 
-    public NormalizedEmailAddress UniquifyAsParts(NormalizedEmailAddress emailAddressParts)
+    public NormalizedEmailAddress? UniquifyAsParts(NormalizedEmailAddress? emailAddressParts)
     {
         const string GMAIL_DOMAIN = "gmail.com";
 
-        if (emailAddressParts == null) return null;
+        if (emailAddressParts == null)
+        {
+            return null;
+        }
 
         // merge both gmail domains as they point to the same inbox
         // ignore any plus addressing and remove superflous dots for gmail addresses only
@@ -141,10 +144,13 @@ public class ExampleEmailAddressValidator : EmailAddressValidator
     {
     }
 
-    public override async Task<ICollection<ValidationError>> GetErrorsAsync(IEmailAddressValidationContext context)
+    public override async Task<IReadOnlyCollection<ValidationError>> GetErrorsAsync(IEmailAddressValidationContext context)
     {
         var errors = await base.GetErrorsAsync(context);
-        if (errors.Any()) return errors;
+        if (errors.Count != 0)
+        {
+            return errors;
+        }
 
         // TODO: your custom validation
 

@@ -1,4 +1,4 @@
-﻿Preview annotations can be used to enhance the way data models are displayed in certain scenarios. 
+Preview annotations can be used to enhance the way data models are displayed in certain scenarios. 
 
 An example of this is when displaying custom entities in grids where by default the `Title` property is displayed to identify the item, however we could enhance the listing by including an image or other field as a description.
 
@@ -27,12 +27,12 @@ public class CarouselSlideDataModel : INestedDataModel
     [Required]
     [Display(Description ="Title to display in the slide.")]
     [MaxLength(100)]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     [Display(Description ="Formatted text to display in the slide.")]
     [Required]
     [Html(HtmlToolbarPreset.BasicFormatting)]
-    public string Text { get; set; }
+    public string Text { get; set; } = string.Empty;
 }
 ```
 

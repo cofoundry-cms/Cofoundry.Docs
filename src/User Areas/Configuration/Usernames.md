@@ -33,14 +33,17 @@ public class CustomerUsernameUniquifier : IUsernameUniquifier<CustomerUserArea>
         _usernameNormalizer = usernameNormalizer;
     }
 
-    public string Uniquify(string username)
+    public string? Uniquify(string? username)
     {
-        if (string.IsNullOrWhiteSpace(username)) return null;
+        var normalizedUsername = _usernameNormalizer.Normalize(username);
+        if (string.IsNullOrWhiteSpace(normalizedUsername))
+        {
+            return null;
+        }
 
-        var result = _usernameNormalizer
-            .Normalize(username)
+        var result = normalizedUsername
             .ToLowerInvariant()
-            .Where(c => Char.IsLetterOrDigit(c));
+            .Where(char.IsLetterOrDigit);
 
         return string.Concat(result);
     }
@@ -126,11 +129,14 @@ public class ExampleUsernameValidator : UsernameValidator
         : base(userAreaDefinitionRepository, contentRepository)
     {
     }
-    
-    public override async Task<ICollection<ValidationError>> GetErrorsAsync(IUsernameValidationContext context)
+
+    public override async Task<IReadOnlyCollection<ValidationError>> GetErrorsAsync(IUsernameValidationContext context)
     {
         var errors = await base.GetErrorsAsync(context);
-        if (errors.Any()) return errors;
+        if (errors.Any())
+        {
+            return errors;
+        }
 
         // TODO: custom validation
 

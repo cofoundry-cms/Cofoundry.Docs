@@ -1,4 +1,4 @@
-﻿*Search engine optimization* is an important consideration for most public sites. There are a number of elements that make up a good SEO strategy which will largely be driven by non-technical considerations such as content and link building.
+*Search engine optimization* is an important consideration for most public sites. There are a number of elements that make up a good SEO strategy which will largely be driven by non-technical considerations such as content and link building.
 
 For the technical side of SEO, Cofoundry has a number of tools you might find useful, however since Cofoundry is unobtrusive by nature, it's up to you to use these tools in a way that fits your SEO needs.
 
@@ -94,8 +94,8 @@ You could even cast to a more specific model such as `IPageViewModel` but be awa
     {
         var metaDataModel = (IPageWithMetaDataViewModel)Model;
 
-        title = StringHelper.FirstNonEmpty(metaDataModel.PageTitle, title);
-        description = StringHelper.FirstNonEmpty(metaDataModel.MetaDescription, description);
+        title = StringHelper.FirstNotNullOrWhitespace(metaDataModel.PageTitle, title);
+        description = StringHelper.FirstNotNullOrWhitespace(metaDataModel.MetaDescription, description);
     }
 }
 <!DOCTYPE html>

@@ -1,4 +1,4 @@
-﻿Primitive and basic types such as `string` and `int` display using a default editor that corresponds with their type. The default editor can be overridden by adding data annotations.
+Primitive and basic types such as `string` and `int` display using a default editor that corresponds with their type. The default editor can be overridden by adding data annotations.
 
 Supported primitive types include:
 
@@ -59,7 +59,7 @@ The `[MultiLineText]` data annotation can be used to decorate a `string` propert
 public class ExampleDataModel : ICustomEntityDataModel
 {
     [MultiLineText(Rows = 8)]
-    public string ExampleMultiLine { get; set; }
+    public string? ExampleMultiLine { get; set; }
 }
 ```
 

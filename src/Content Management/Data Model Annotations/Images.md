@@ -1,4 +1,4 @@
-﻿There are two different types of image data model annotations:
+There are two different types of image data model annotations:
 
 - [`[Image]`](#image)
 - [`[ImageCollection]`](#imagecollection)
@@ -96,26 +96,26 @@ public class ExampleDataModel : ICustomEntityDataModel
     /// A non nullable property indicated the image is required.
     /// </summary>
     [ImageCollection]
-    public ICollection<int> ImageIds { get; set; }
+    public int[] ImageIds { get; set; } = [];
 
     /// <summary>
     /// The image selector is filtered to images that are exactly 600 pixels wide, but
     /// can be any height.
     /// </summary>
     [ImageCollection(Width = 600)]
-    public ICollection<int> FilteredTo600WidthImageIds { get; set; }
+    public int[] FilteredTo600WidthImageIds { get; set; } = [];
 
     /// <summary>
     /// The image selector is filtered to images that are exactly 400 x 400.
     /// </summary>
     [ImageCollection(Width = 400, Height = 400)]
-    public ICollection<int> FilteredTo400SquareImageIds { get; set; }
+    public int[] FilteredTo400SquareImageIds { get; set; } = [];
 
     /// <summary>
     /// The image selector is filtered to images that are at least 800 x 600, but can
     /// be larger.
     /// </summary>
     [ImageCollection(MinWidth = 800, MinHeight = 600)]
-    public ICollection<int> FilteredToMinDimensionsImageIds { get; set; }
+    public int[] FilteredToMinDimensionsImageIds { get; set; } = [];
 }
 ```

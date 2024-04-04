@@ -57,7 +57,6 @@ public class MemberInviteAuthorizedTaskType : IAuthorizedTaskTypeDefinition
 using Cofoundry.Core.Web;
 using Cofoundry.Domain;
 using Cofoundry.Domain.CQS;
-using System.Threading.Tasks;
 
 public class InviteMemberCommandHandler
     : ICommandHandler<InviteMemberCommand>
@@ -80,14 +79,16 @@ public class InviteMemberCommandHandler
 
     public async Task ExecuteAsync(InviteMemberCommand command, IExecutionContext executionContext)
     {
+        var user = executionContext.UserContext.ToRequiredSignedInContext();
+        
         // Create a new task and token. Here we use task data to capture
         // the email address so it can be retrieved later on
         var token = await _contentRepository
             .AuthorizedTasks()
-            .AddAsync(new AddAuthorizedTaskCommand()
+            .AddAsync(new()
             {
                 AuthorizedTaskTypeCode = MemberInviteAuthorizedTaskType.Code,
-                UserId = executionContext.UserContext.UserId.Value,
+                UserId = user.UserId,
                 TaskData = command.EmailAddressToInvite
             });
 
@@ -102,7 +103,6 @@ public class InviteMemberCommandHandler
         // (omitted)
     }
 }
-
 ```
 
 ## Token Validation
@@ -154,7 +154,7 @@ public class MemberController : Controller
         // Validating the token will return a result that describes any errors
         var result = await _contentRepository
             .AuthorizedTasks()
-            .ValidateAsync(new ValidateAuthorizedTaskTokenQuery()
+            .ValidateAsync(new()
             {
                 AuthorizedTaskTypeCode = MemberInviteAuthorizedTaskType.Code,
                 Token = token
@@ -186,12 +186,17 @@ Errors that can occur are as follows:
 In the example above, you could replace the standard error message with a call to this method:
 
 ```csharp
-private string AddCustomErrorMessage(AuthorizedTaskTokenValidationResult result)
+private void AddCustomErrorMessage(AuthorizedTaskTokenValidationResult result)
 {
+    if (result.IsSuccess)
+    {
+        return;
+    }
+
     // Error codes are namespaced, so we remove the namespace here 
     // to cut down on repeated text
     const string ns = "cf-authorized-tasks-token-validation-";
-    var codeWithoutNamespace = result.Error.ErrorCode.Replace(ns, string.Empty);
+    var codeWithoutNamespace = result.Error.ErrorCode?.Replace(ns, string.Empty);
 
     var message = codeWithoutNamespace switch
     {
@@ -237,7 +242,7 @@ public class MembersApiController : ControllerBase
         var validationResult = await _contentRepository
             .WithModelState(this)
             .AuthorizedTasks()
-            .ValidateAsync(new ValidateAuthorizedTaskTokenQuery()
+            .ValidateAsync(new()
             {
                 AuthorizedTaskTypeCode = MemberInviteAuthorizedTaskType.Code,
                 Token = registerUserDto.Token
@@ -262,7 +267,7 @@ public class MembersApiController : ControllerBase
             await _contentRepository
                 .WithModelState(this)
                 .AuthorizedTasks()
-                .CompleteAsync(new CompleteAuthorizedTaskCommand()
+                .CompleteAsync(new()
                 {
                     AuthorizedTaskId = validationResult.Data.AuthorizedTaskId
                 });
@@ -282,12 +287,12 @@ Sometimes you may need to invalidate a task or set of tasks because another acti
 You can invalidate all tasks for a user by executing `InvalidateAuthorizedTaskBatchCommand` with just a `UserId`, but often you'll also want to limit the operation to a specified task type:
 
 ```csharp
-await _contentRepository
+await _advancedContentRepository
     .AuthorizedTasks()
-    .InvalidateBatchAsync(new InvalidateAuthorizedTaskBatchCommand()
+    .InvalidateBatchAsync(new()
     {
         UserId = userId,
-        AuthorizedTaskTypeCodes = new string[] { MemberInviteAuthorizedTaskType.Code }
+        AuthorizedTaskTypeCodes = [MemberInviteAuthorizedTaskType.Code]
     })
     .ExecuteAsync();
 ```
@@ -299,12 +304,12 @@ await _contentRepository
 When adding a task, you can optionally set the time period that a task is valid. It is expected that this would be set in most cases, but it is not mandatory:
 
 ```csharp
-var token = await _contentRepository
+var token = await _advancedContentRepository
     .AuthorizedTasks()
-    .AddAsync(new AddAuthorizedTaskCommand()
+    .AddAsync(new()
     {
         AuthorizedTaskTypeCode = ExampleAuthorizedTaskType.Code,
-        UserId = user.UserId.Value,
+        UserId = userId,
         ExpireAfter = TimeSpan.FromDays(1)
     });
 ```
@@ -314,14 +319,17 @@ var token = await _contentRepository
 When adding a task, you can optionally set a rate limit as a way to mitigate abuse:
 
 ```csharp
-var token = await _contentRepository
+var token = await _advancedContentRepository
     .AuthorizedTasks()
-    .AddAsync(new AddAuthorizedTaskCommand()
+    .AddAsync(new()
     {
         AuthorizedTaskTypeCode = ExampleAuthorizedTaskType.Code,
-        UserId = user.UserId.Value,
-        RateLimitQuantity = 3,
-        RateLimitWindow = TimeSpan.FromHours(6)
+        UserId = userId,
+        RateLimit = new()
+        {
+            Quantity = 3,
+            Window = TimeSpan.FromHours(6)
+        }
     });
 ```
 
