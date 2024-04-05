@@ -6,7 +6,7 @@ The admin panel has a whole section devoted to managing documents where users ca
 
 ## Document File Location
 
-By default Cofoundry will save document files into the "App_Data" folder inside your project. See the [File Storage docs](/framework/data-access/file-storage) for more information on configuration file storage options.
+By default Cofoundry will save document files into the "App_Data" folder inside your project. See the [File Storage docs](/framework/data-access/file-storage) for more information on configuring file storage options.
 
 ## Generating Document URLs
 

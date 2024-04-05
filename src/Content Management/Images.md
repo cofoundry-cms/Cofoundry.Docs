@@ -13,7 +13,7 @@ Currently there are two plugin options:
 
 ## Image File Location
 
-By default Cofoundry will save image files into the "App_Data" folder inside your project. See the [File Storage docs](/framework/data-access/file-storage) for more information on configuration file storage options.
+By default Cofoundry will save image files into the "App_Data" folder inside your project. See the [File Storage docs](/framework/data-access/file-storage) for more information on configuring file storage options.
 
 ## Generating Image URLs
 
